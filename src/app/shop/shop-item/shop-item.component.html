@@ -1,0 +1,78 @@
+<div class="card h-100">
+  <img
+    src="https://localhost:7293/{{ Product.photos[0].imageName }}"
+    class="card-img-top h-50"
+    alt=""
+  />
+  <div class="card-body">
+    <div class="thumbnails mb-3">
+      @for (item of Product.photos; track $index) {
+      <img
+        src="https://localhost:7293/{{ item.imageName }}"
+        alt=""
+        class="thumbnail-img small-img"
+      />
+      }
+    </div>
+    <h5 class="card-title">{{ Product.name }}</h5>
+    <p class="card-text">{{ Product.description }}</p>
+    <p class="price">
+      <span class="old-price">{{ Product.oldPrice | currency }}</span>
+      {{ Product.newPrice | currency }}
+    </p>
+    <!--    <div class="rating mb-3">
+      <i
+        class="fa fa-star"
+        style="color: rgb(243, 255, 82); font-size: 15px"
+      ></i>
+      <i
+        class="fa fa-star"
+        style="color: rgb(243, 255, 82); font-size: 15px"
+      ></i>
+      <i
+        class="fa fa-star"
+        style="color: rgb(243, 255, 82); font-size: 15px"
+      ></i>
+      <i
+        class="fa fa-star"
+        style="color: rgb(243, 255, 82); font-size: 15px"
+      ></i>
+    </div> -->
+    <div class="rating mb-3">
+      <i
+        class="fas fa-star mx-1"
+        style="color: rgb(218, 233, 12); font-size: 15px"
+      ></i>
+      <i
+        class="fas fa-star mx-1"
+        style="color: rgb(218, 233, 12); font-size: 15px"
+      ></i>
+      <i
+        class="fas fa-star mx-1"
+        style="color: rgb(218, 233, 12); font-size: 15px"
+      ></i>
+      <i
+        class="fas fa-star mx-1"
+        style="color: rgb(218, 233, 12); font-size: 15px"
+      ></i>
+      <i
+        class="fas fa-star mx-1"
+        style="color: rgb(218, 233, 12); font-size: 15px"
+      ></i>
+    </div>
+    <button class="btn btn-outline-primary favorite-icon">
+      <i class="fa fa-heart"></i>
+    </button>
+    <div class="d-flex justify-content-between align-items-start">
+      <button (click)="SetBasketValue()" class="btn btn-dark">
+        <i class="fa fa-shopping-cart"></i> Add to Cart
+      </button>
+      <button
+        routerLink="/shop/product-details/{{ Product.id }}"
+        class="btn btn-success"
+      >
+        <i class="fa fa-info-circle"></i> Details
+      </button>
+    </div>
+  </div>
+</div>

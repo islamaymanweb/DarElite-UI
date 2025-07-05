@@ -1,0 +1,139 @@
+<section class="register-section pt-4">
+  <div class="register-card">
+    <div class="card-header">
+      <h2>Create Your Account</h2>
+      <p>Join our community today</p>
+    </div>
+
+    <form [formGroup]="formGroup" (ngSubmit)="submit()" class="register-form">
+      <!-- Username Field -->
+      <div class="form-field">
+        <label for="username">Username</label>
+        <div class="input-container">
+          <i class="fas fa-user"></i>
+          <input
+            type="text"
+            id="username"
+            formControlName="UserName"
+            placeholder="Enter your username"
+            [class.valid]="_username?.valid && _username?.touched"
+            [class.invalid]="_username?.invalid && _username?.touched"
+          />
+        </div>
+        @if (_username?.invalid && _username?.touched) {
+        <div class="error-message">
+          @if (_username?.hasError('required')) {
+          <span
+            ><i class="fas fa-exclamation-circle"></i> Username is
+            required</span
+          >
+          } @if (_username?.hasError('minlength')) {
+          <span
+            ><i class="fas fa-exclamation-circle"></i> Must be at least 4
+            characters</span
+          >
+          }
+        </div>
+        }
+      </div>
+
+      <!-- Display Name Field -->
+      <div class="form-field">
+        <label for="displayName">Display Name</label>
+        <div class="input-container">
+          <i class="fas fa-id-card"></i>
+          <input
+            type="text"
+            id="displayName"
+            formControlName="DisplayName"
+            placeholder="How should we call you?"
+            [class.valid]="_DisplayName?.valid && _DisplayName?.touched"
+            [class.invalid]="_DisplayName?.invalid && _DisplayName?.touched"
+          />
+        </div>
+        @if (_DisplayName?.invalid && _DisplayName?.touched) {
+        <div class="error-message">
+          <span
+            ><i class="fas fa-exclamation-circle"></i> Display name is
+            required</span
+          >
+        </div>
+        }
+      </div>
+
+      <!-- Email Field -->
+      <div class="form-field">
+        <label for="email">Email Address</label>
+        <div class="input-container">
+          <i class="fas fa-envelope"></i>
+          <input
+            type="email"
+            id="email"
+            formControlName="email"
+            placeholder="your@email.com"
+            [class.valid]="_email?.valid && _email?.touched"
+            [class.invalid]="_email?.invalid && _email?.touched"
+          />
+        </div>
+        @if (_email?.invalid && _email?.touched) {
+        <div class="error-message">
+          @if (_email?.hasError('required')) {
+          <span
+            ><i class="fas fa-exclamation-circle"></i> Email is required</span
+          >
+          } @if (_email?.hasError('email')) {
+          <span
+            ><i class="fas fa-exclamation-circle"></i> Please enter a valid
+            email</span
+          >
+          }
+        </div>
+        }
+      </div>
+
+      <!-- Password Field -->
+      <div class="form-field">
+        <label for="password">Password</label>
+        <div class="input-container">
+          <i class="fas fa-lock"></i>
+          <input
+            type="password"
+            id="password"
+            formControlName="password"
+            placeholder="Create a password"
+            [class.valid]="_password?.valid && _password?.touched"
+            [class.invalid]="_password?.invalid && _password?.touched"
+          />
+          <i
+            class="fas fa-eye toggle-password"
+            (click)="togglePasswordVisibility()"
+          ></i>
+        </div>
+        @if (_password?.invalid && _password?.touched) {
+        <div class="error-message">
+          @if (_password?.hasError('required')) {
+          <span
+            ><i class="fas fa-exclamation-circle"></i> Password is
+            required</span
+          >
+          } @if (_password?.hasError('pattern')) {
+          <span
+            ><i class="fas fa-exclamation-circle"></i> Must contain: number,
+            special character (#$!.-), min 8 chars</span
+          >
+          }
+        </div>
+        }
+      </div>
+
+      <button type="submit" class="submit-btn" [disabled]="formGroup.invalid">
+        <span>Register Now</span>
+        <i class="fas fa-arrow-right"></i>
+      </button>
+    </form>
+
+    <div class="login-link">
+      Already have an account? <a routerLink="/Account/Login">Sign in</a>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,158 @@
+@if(product){
+<div class="container mt-5 pt-4">
+  <div class="row">
+    <h1 class="main-title">Shopping</h1>
+    <section class="col-md-3">
+      <!--   <div class="sidebar">
+        <h4 class="section-title">Sorting</h4>
+        <div class="custom-select-wrapper mb-4">
+          <select
+            #SortSelected
+            class="form-select"
+            (change)="SortingByPrice($event)"
+          >
+            @for (item of SortingOption; track $index) {
+            <option [value]="item.value">{{ item.name }}</option>
+
+            }
+          </select>
+        </div>
+
+        <div class="categories-selector">
+          <h4 class="selector-title">Browse Categories</h4>
+          <div class="categories-list">
+            <div
+              [class.active]="ProductParam.CategoryId == 0"
+              (click)="SelectedId(0)"
+              class="category-item"
+            >
+              <span>All Products</span>
+            </div>
+            @for (item of Cateogry; track $index) {
+            <div
+              [class.active]="item.id == ProductParam.CategoryId"
+              (click)="SelectedId(item.id)"
+              class="category-item"
+            >
+              <span>{{ item.name }}</span>
+            </div>
+            }
+          </div>
+        </div>
+      </div> -->
+      <div class="sidebar">
+        <!-- Sorting Section -->
+        <div class="mb-4">
+          <h4 class="title">Sort By</h4>
+          <select
+            #SortSelected
+            class="select-box"
+            (change)="SortingByPrice($event)"
+          >
+            @for (item of SortingOption; track $index) {
+            <option [value]="item.value">{{ item.name }}</option>
+            }
+          </select>
+        </div>
+
+        <div class="mobile-categories">
+          <h4 class="title">Categories</h4>
+          <div class="categories">
+            <div
+              [class.active]="ProductParam.CategoryId == 0"
+              (click)="SelectedId(0)"
+              class="category"
+            >
+              All Products
+            </div>
+            @for (item of Cateogry; track $index) {
+            <div
+              [class.active]="item.id == ProductParam.CategoryId"
+              (click)="SelectedId(item.id)"
+              class="category"
+            >
+              {{ item.name }}
+            </div>
+            }
+          </div>
+        </div>
+
+        <div class="categories-selector mobile-only">
+          <h4 class="selector-title">
+            <i class="fas fa-tags"></i>
+            Categories
+          </h4>
+
+          <div class="custom-select">
+            <select
+              #categorySelect
+              (change)="onCategoryChange($event)"
+              [value]="ProductParam.CategoryId"
+              class="select-input"
+            >
+              <option [value]="0">All Categories</option>
+              @for (item of Cateogry; track $index) {
+              <option [value]="item.id">{{ item.name }}</option>
+              }
+            </select>
+            <div class="select-icon">
+              <i class="fas fa-chevron-down"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section class="col-md-9">
+      <div class="d-flex justify-content-between align-items-center mb-4">
+        <div class="paging-container">
+          <span class="text-dark"
+            >showing {{ product.length }} of
+            {{ ProductParam.pageNumber * ProductParam.pageSize }}</span
+          >
+        </div>
+        <div class="search-container">
+          <div class="input-group search-bar">
+            <input
+              #search
+              (keyup)="OnSearch(search.value)"
+              (keyup.enter)="OnSearch(search.value)"
+              type="text"
+              class="form-control"
+              placeholder="Search..."
+            />
+            <input
+              (click)="OnSearch(search.value)"
+              type="button"
+              class="btn btn-danger"
+              value="Search"
+            />
+            <input
+              (click)="ResetValue()"
+              type="button"
+              class="btn btn-dark"
+              value="Reset"
+            />
+          </div>
+        </div>
+      </div>
+      <div class="row g-4">
+        @for (item of product; track $index) {
+        <ng-container>
+          <app-shop-item
+            class="product-item col-lg-4 col-md-6"
+            [Product]="item"
+          ></app-shop-item>
+        </ng-container>
+        }
+        <div class="d-flex justify-content-center align-items-center">
+          <pagination
+            (pageChanged)="OnChangePage($event.page)"
+            [itemsPerPage]="ProductParam.pageSize"
+            [totalItems]="TotatlCount"
+          ></pagination>
+        </div>
+      </div>
+    </section>
+  </div>
+</div>
+}

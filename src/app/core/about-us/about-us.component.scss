@@ -1,0 +1,153 @@
+/* Color Variables */
+$primary: #5c6bc0;
+$secondary: #5c6bc0;
+$accent: #ff4081;
+$white: #ffffff;
+$dark: #212121;
+
+/* Base Styles */
+.dar-elite-about {
+  font-family: 'Playfair Display', serif;
+  color: $dark;
+  line-height: 1.8;
+}
+
+.container {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+/* Hero Section */
+.hero {
+  background: $primary;
+  color: $white;
+  text-align: center;
+  padding: 100px 0;
+  position: relative;
+  
+  h1 {
+    font-size: 3.5rem;
+    font-weight: 300;
+    letter-spacing: 3px;
+    margin-bottom: 15px;
+  }
+  
+  .divider {
+    width: 100px;
+    height: 2px;
+    background: $accent;
+    margin: 0 auto 20px;
+  }
+  
+  .tagline {
+    font-size: 1.3rem;
+    font-weight: 300;
+    letter-spacing: 1px;
+  }
+}
+
+/* Sections */
+.section {
+  margin: 80px 0;
+  
+  h2 {
+    color: $primary;
+    text-align: center;
+    font-size: 1.8rem;
+    font-weight: 400;
+    letter-spacing: 2px;
+    margin-bottom: 40px;
+    position: relative;
+    
+    &::after {
+      content: '';
+      display: block;
+      width: 60px;
+      height: 2px;
+      background: $accent;
+      margin: 15px auto 0;
+    }
+  }
+}
+
+.content-box {
+  background: rgba($secondary, 0.05);
+  padding: 40px;
+  border-left: 4px solid $accent;
+  font-size: 1.1rem;
+  line-height: 1.8;
+}
+
+/* Values Grid */
+.values-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 30px;
+  margin-top: 40px;
+}
+
+.value-item {
+  text-align: center;
+  padding: 40px 25px;
+  background: $white;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+  transition: transform 0.3s;
+  
+  &:hover {
+    transform: translateY(-5px);
+  }
+  
+  .value-icon {
+    font-size: 2.5rem;
+    color: $accent;
+    margin-bottom: 20px;
+  }
+  
+  h3 {
+    color: $primary;
+    font-size: 1.3rem;
+    margin-bottom: 15px;
+  }
+}
+
+/* Testimonial */
+.testimonial {
+  max-width: 800px;
+  margin: 0 auto;
+  text-align: center;
+  
+  .quote {
+    font-size: 1.3rem;
+    font-style: italic;
+    color: $dark;
+    margin-bottom: 15px;
+    position: relative;
+    
+    &::before, &::after {
+      content: '"';
+      color: $accent;
+      font-size: 1.5rem;
+    }
+  }
+  
+  .client {
+    color: $secondary;
+    font-weight: 500;
+  }
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .hero {
+    padding: 80px 0;
+    
+    h1 {
+      font-size: 2.5rem;
+    }
+  }
+  
+  .content-box {
+    padding: 25px;
+  }
+}

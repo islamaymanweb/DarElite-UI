@@ -1,0 +1,403 @@
+<!-- <nav class="navbar navbar-expand-lg navbar-light">
+  <div class="container">
+    <a class="navbar-brand" routerLink="/">
+      <i class="text-white">Dar Elite</i>
+    </a>
+    <button
+      class="navbar-toggler"
+      type="button"
+      data-bs-toggle="collapse"
+      data-bs-target="#navbarNav"
+      aria-controls="navbarNav"
+      aria-expanded="false"
+      aria-label="Toggle navigation"
+    >
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item"><a routerLink="/" class="nav-link">Home</a></li>
+        <li class="nav-item">
+          <a routerLink="/shop" class="nav-link">Shopping</a>
+        </li>
+        <li class="nav-item"><a class="nav-link" href="#">About Us</a></li>
+        <li class="nav-item"><a class="nav-link" href="#">Best Seller</a></li>
+      </ul>
+
+      <ul class="navbar-nav ml-auto align-items-center">
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/basket">
+            <i matBadgeColor="warn" class="material-icons">shopping_cart</i>
+          </a>
+        </li>
+
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" id="navbarDropdown" role="button">
+            <i class="material-icons">account_circle</i>
+          </a>
+          <div
+            [ngClass]="{ show: visibale }"
+            class="dropdown-menu dropdown-menu-right"
+            aria-labelledby="navbarDropdown"
+          >
+            <a class="dropdown-item" routerLink="/Account/Register"
+              >Register <i class="fa fa-user-plus"></i
+            ></a>
+            <a class="dropdown-item" routerLink="/Account/Login"
+              >Login <i class="fa fa-sign-in"></i>
+            </a>
+            <a class="dropdown-item" matBadgeSize="small" routerLink="/orders">
+              My Order <i class="fa fa-list"></i>
+            </a>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+ -->
+<!-- 
+<nav class="elite-navbar">
+ 
+  <div class="mobile-nav">
+    <button class="menu-btn" (click)="toggleMenu()">
+      <i class="fas fa-bars"></i>
+    </button>
+
+    <a routerLink="/" class="logo">
+      <span>Dar Elite</span>
+    </a>
+
+    <div class="mobile-icons">
+      <a class="nav-link basket-icon" routerLink="/basket">
+        <i class="fas fa-shopping-cart"></i>
+        <span
+          class="badge"
+          *ngIf="(basket$ | async)?.basketItems?.length as itemCount"
+        >
+          {{ itemCount }}
+        </span>
+      </a>
+    </div>
+  </div>
+
+
+  <div
+    class="sidebar-overlay"
+    [class.active]="isMenuOpen"
+    (click)="toggleMenu()"
+  ></div>
+
+  <div class="nav-sidebar" [class.active]="isMenuOpen">
+    <div class="sidebar-header">
+      <h3><i class="fas fa-couch"></i> Dar Elite</h3>
+      <button class="close-btn" (click)="toggleMenu()">
+        <i class="fas fa-times"></i>
+      </button>
+    </div>
+
+    <ul class="sidebar-links">
+      <li>
+        <a routerLink="/" (click)="toggleMenu()">
+          <i class="fas fa-home"></i>
+          <span>Home</span>
+        </a>
+      </li>
+      <li>
+        <a routerLink="/shop" (click)="toggleMenu()">
+          <i class="fas fa-shopping-bag"></i>
+          <span>Shop</span>
+        </a>
+      </li>
+      <li>
+        <a href="#" (click)="toggleMenu()">
+          <i class="fas fa-info-circle"></i>
+          <span>About Us</span>
+        </a>
+      </li>
+      <li>
+        <a href="#" (click)="toggleMenu()">
+          <i class="fas fa-star"></i>
+          <span>Best Sellers</span>
+        </a>
+      </li>
+    </ul>
+
+    <div class="user-links">
+      <a routerLink="/Account/Login" class="user-link">
+        <i class="fas fa-sign-in-alt"></i>
+        <span>Login</span>
+      </a>
+      <a routerLink="/Account/Register" class="user-link">
+        <i class="fas fa-user-plus"></i>
+        <span>Register</span>
+      </a>
+    </div>
+  </div>
+
+  
+  <div class="desktop-nav">
+    <a routerLink="/" class="logo">
+      <span>Dar Elite</span>
+    </a>
+
+    <ul class="nav-links">
+      <li>
+        <a routerLink="/" class="nav-link">
+          <i class="fas fa-home"></i>
+          <span>Home</span>
+        </a>
+      </li>
+      <li>
+        <a routerLink="/shop" class="nav-link">
+          <i class="fas fa-shopping-bag"></i>
+          <span>Shop</span>
+        </a>
+      </li>
+      <li>
+        <a href="#" class="nav-link">
+          <i class="fas fa-info-circle"></i>
+          <span>About Us</span>
+        </a>
+      </li>
+      <li>
+        <a href="#" class="nav-link">
+          <i class="fas fa-star"></i>
+          <span>Best Sellers</span>
+        </a>
+      </li>
+    </ul>
+
+    <div class="nav-actions">
+      <a class="nav-link basket-icon" routerLink="/basket">
+        <i class="fas fa-shopping-cart"></i>
+        <span
+          class="badge"
+          *ngIf="(basket$ | async)?.basketItems?.length as itemCount"
+        >
+          {{ itemCount }}
+        </span>
+      </a>
+
+           <div class="user-dropdown">
+        <button class="user-btn">
+          <i class="fas fa-user-circle"></i>
+          <span class="user-text">Account</span>
+        </button>
+        <div class="dropdown-menu">
+          <a routerLink="/Account/Login" class="dropdown-item">
+            <i class="fas fa-sign-in-alt"></i> Login
+          </a>
+          <a routerLink="/Account/Register" class="dropdown-item">
+            <i class="fas fa-user-plus"></i> Register
+          </a>
+          <a routerLink="/orders" class="dropdown-item">
+            <i class="fas fa-list"></i> My Orders
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</nav>
+ -->
+<nav class="elite-navbar">
+  <!-- للشاشات الصغيرة -->
+  <div class="mobile-nav">
+    <button class="menu-btn" (click)="toggleMenu()">
+      <i class="fas fa-bars"></i>
+    </button>
+
+    <a routerLink="/" class="logo">
+      <span>Dar Elite</span>
+    </a>
+
+    <div class="mobile-icons">
+      <a class="nav-link basket-icon" routerLink="/basket">
+        <i class="fas fa-shopping-cart"></i>
+        <span
+          class="badge"
+          *ngIf="(basket$ | async)?.basketItems?.length as itemCount"
+        >
+          {{ itemCount }}
+        </span>
+      </a>
+    </div>
+  </div>
+
+  <!-- القائمة الجانبية -->
+  <div
+    class="sidebar-overlay"
+    [class.active]="isMenuOpen"
+    (click)="toggleMenu()"
+  ></div>
+
+  <div class="nav-sidebar" [class.active]="isMenuOpen">
+    <div class="sidebar-header">
+      <h3><i class="fas fa-couch"></i> Dar Elite</h3>
+      <button class="close-btn" (click)="toggleMenu()">
+        <i class="fas fa-times"></i>
+      </button>
+    </div>
+
+    <ul class="sidebar-links">
+      <li>
+        <a routerLink="/" (click)="toggleMenu()">
+          <i class="fas fa-home"></i>
+          <span>Home</span>
+        </a>
+      </li>
+      <li>
+        <a routerLink="/shop" (click)="toggleMenu()">
+          <i class="fas fa-shopping-bag"></i>
+          <span>Shop</span>
+        </a>
+      </li>
+      <li>
+        <a routerLink="/about" (click)="toggleMenu()">
+          <i class="fas fa-info-circle"></i>
+          <span>About Us</span>
+        </a>
+      </li>
+      <li>
+        <a routerLink="/contact" (click)="toggleMenu()">
+          <i class="fas fa-envelope"></i>
+          <span>Contact</span>
+        </a>
+      </li>
+    </ul>
+
+    <!--     <div class="user-links">
+      <a routerLink="/Account/Login" class="user-link">
+        <i class="fas fa-sign-in-alt"></i>
+        <span>Login</span>
+      </a>
+      <a routerLink="/Account/Register" class="user-link">
+        <i class="fas fa-user-plus"></i>
+        <span>Register</span>
+      </a>
+      <a routerLink="/orders" class="user-link">
+        <i class="fas fa-list"></i>
+        <span>My Orders</span>
+      </a>
+    </div> -->
+    <div class="user-links">
+      <ng-container *ngIf="isLoggedIn$; else mobileNotLoggedIn">
+        <a routerLink="/orders" class="user-link" (click)="toggleMenu()">
+          <i class="fas fa-list"></i>
+          <span>My Orders</span>
+        </a>
+        <a class="user-link" (click)="logout(); toggleMenu()">
+          <i class="fas fa-sign-out-alt"></i>
+          <span>Logout</span>
+        </a>
+      </ng-container>
+      <ng-template #mobileNotLoggedIn>
+        <a
+          routerLink="/Account/Login"
+          class="user-link"
+          (click)="login(); toggleMenu()"
+        >
+          <i class="fas fa-sign-in-alt"></i>
+          <span>Login</span>
+        </a>
+        <a
+          routerLink="/Account/Register"
+          class="user-link"
+          (click)="toggleMenu()"
+        >
+          <i class="fas fa-user-plus"></i>
+          <span>Register</span>
+        </a>
+      </ng-template>
+    </div>
+  </div>
+
+  <!-- للشاشات الكبيرة -->
+  <div class="desktop-nav">
+    <a routerLink="/" class="logo">
+      <span>Dar Elite</span>
+    </a>
+
+    <ul class="nav-links">
+      <li>
+        <a routerLink="/" class="nav-link">
+          <i class="fas fa-home"></i>
+          <span>Home</span>
+        </a>
+      </li>
+      <li>
+        <a routerLink="/shop" class="nav-link">
+          <i class="fas fa-shopping-bag"></i>
+          <span>Shop</span>
+        </a>
+      </li>
+      <li>
+        <a routerLink="/about" class="nav-link">
+          <i class="fas fa-info-circle"></i>
+          <span>About Us</span>
+        </a>
+      </li>
+      <li>
+        <a routerLink="/contact" class="nav-link">
+          <i class="fas fa-envelope"></i>
+          <span>Contact </span>
+        </a>
+      </li>
+    </ul>
+
+    <div class="nav-actions">
+      <a class="nav-link basket-icon" routerLink="/basket">
+        <i class="fas fa-shopping-cart"></i>
+        <span
+          class="badge"
+          *ngIf="(basket$ | async)?.basketItems?.length as itemCount"
+        >
+          {{ itemCount }}
+        </span>
+      </a>
+
+      <!--    <div class="user-dropdown" (click)="toggleUserDropdown()">
+        <button class="user-btn">
+          <i class="fas fa-user-circle"></i>
+          <span class="user-text">Account</span>
+          <i class="fas fa-chevron-down dropdown-arrow"></i>
+        </button>
+        <div class="dropdown-menu" [class.show]="isUserDropdownOpen">
+          <a routerLink="/Account/Login" class="dropdown-item">
+            <i class="fas fa-sign-in-alt"></i> Login
+          </a>
+          <a routerLink="/Account/Register" class="dropdown-item">
+            <i class="fas fa-user-plus"></i> Register
+          </a>
+          <a routerLink="/orders" class="dropdown-item">
+            <i class="fas fa-list"></i> My Orders
+          </a>
+        </div>
+      </div> -->
+      <div class="user-dropdown" (click)="toggleUserDropdown()">
+        <button class="user-btn">
+          <i class="fas fa-user-circle"></i>
+          <span class="user-text">{{ (username$ | async) || 'Account' }}</span>
+          <i class="fas fa-chevron-down dropdown-arrow"></i>
+        </button>
+        <div class="dropdown-menu" [class.show]="isUserDropdownOpen">
+          @if (!(isLoggedIn$ | async)) {
+            <a routerLink="/Account/Login" class="dropdown-item">
+              <i class="fas fa-sign-in-alt"></i> Login
+            </a>
+            <a routerLink="/Account/Register" class="dropdown-item">
+              <i class="fas fa-user-plus"></i> Register
+            </a>
+          } @else {
+            <a routerLink="/orders" class="dropdown-item">
+              <i class="fas fa-list"></i> My Orders
+            </a>
+            <a (click)="logout()" class="dropdown-item">
+              <i class="fas fa-sign-out-alt"></i> Logout
+            </a>
+          }
+        </div>
+      </div>
+    </div>
+  </div>
+</nav>

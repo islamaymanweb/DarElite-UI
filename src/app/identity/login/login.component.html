@@ -1,0 +1,219 @@
+<!-- 
+<section class="auth-section">
+  <div class="auth-card">
+    <div class="card-header">
+      <h2>Welcome Back</h2>
+      <p>Sign in to your account</p>
+    </div>
+
+    <form [formGroup]="formGroup" (ngSubmit)="Submit()" class="auth-form">
+ 
+      <div class="form-field">
+        <label for="email">Email Address</label>
+        <div class="input-container">
+          <i class="fas fa-envelope"></i>
+          <input
+            type="email"
+            id="email"
+            formControlName="email"
+            placeholder="your@email.com"
+            [class.valid]="_email?.valid && _email?.touched"
+            [class.invalid]="_email?.invalid && _email?.touched"
+          />
+        </div>
+        @if (_email?.invalid && _email?.touched) {
+        <div class="error-message">
+          @if (_email?.hasError('required')) {
+          <span
+            ><i class="fas fa-exclamation-circle"></i> Email is required</span
+          >
+          } @if (_email?.hasError('email')) {
+          <span
+            ><i class="fas fa-exclamation-circle"></i> Please enter a valid
+            email</span
+          >
+          }
+        </div>
+        }
+      </div>
+
+
+      <div class="form-field">
+        <label for="password">Password</label>
+        <div class="input-container">
+          <i class="fas fa-lock"></i>
+          <input
+            type="password"
+            id="password"
+            formControlName="password"
+            placeholder="Enter your password"
+            [class.valid]="_password?.valid && _password?.touched"
+            [class.invalid]="_password?.invalid && _password?.touched"
+          />
+          <i
+            class="fas fa-eye toggle-password"
+            (click)="togglePasswordVisibility()"
+          ></i>
+        </div>
+        @if (_password?.invalid && _password?.touched) {
+        <div class="error-message">
+          @if (_password?.hasError('required')) {
+          <span
+            ><i class="fas fa-exclamation-circle"></i> Password is
+            required</span
+          >
+          } @if (_password?.hasError('pattern')) {
+          <span
+            ><i class="fas fa-exclamation-circle"></i> Must contain: number,
+            special character (#$!.-), min 8 chars</span
+          >
+          }
+        </div>
+        }
+      </div>
+
+      <div class="form-options">
+        <button
+          type="button"
+          class="forgot-password"
+          (click)="openForgotPasswordModal()"
+        >
+          Forgot password?
+        </button>
+      </div>
+
+      <button type="submit" class="submit-btn" [disabled]="formGroup.invalid">
+        <span>Sign In</span>
+        <i class="fas fa-arrow-right"></i>
+      </button>
+
+      <div class="auth-footer">
+        Don't have an account?
+        <a routerLink="/Account/Register" class="auth-link">Create one</a>
+      </div>
+    </form>
+  </div>
+
+
+  <div class="modal-backdrop" *ngIf="showModal" (click)="closeModal()"></div>
+
+  <div class="custom-modal" [class.show]="showModal">
+    <div class="modal-header">
+      <h3>Reset Password</h3>
+      <button class="close-btn" (click)="closeModal()">
+        <i class="fas fa-times"></i>
+      </button>
+    </div>
+
+    <div class="modal-body">
+      <p>Enter your email to receive a password reset link</p>
+
+      <div class="form-field">
+        <div class="input-container">
+          <i class="fas fa-envelope"></i>
+          <input
+            type="email"
+            placeholder="your@email.com"
+            [(ngModel)]="emailModel"
+          />
+        </div>
+      </div>
+    </div>
+
+    <div class="modal-footer">
+      <button class="btn-secondary" (click)="closeModal()">Cancel</button>
+      <button class="btn-primary" (click)="SendEmailForgetpassword()">
+        Send Reset Link
+      </button>
+    </div>
+  </div>
+</section>
+ -->
+ <section class="auth-section">
+  <div class="auth-card">
+    <div class="card-header">
+      <h2>Welcome Back</h2>
+      <p>Sign in to your account</p>
+    </div>
+
+    @if (loginError) {
+    <div class="alert alert-danger">
+      <i class="fas fa-exclamation-circle"></i> {{ loginError }}
+    </div>
+    }
+
+    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="auth-form">
+      <!-- Email Field -->
+      <div class="form-field">
+        <label for="email">Email Address</label>
+        <div class="input-container">
+          <i class="fas fa-envelope"></i>
+          <input
+            type="email"
+            id="email"
+            formControlName="email"
+            placeholder="your@email.com"
+            [class.valid]="loginForm.get('email')?.valid && loginForm.get('email')?.touched"
+            [class.invalid]="loginForm.get('email')?.invalid && loginForm.get('email')?.touched"
+          />
+        </div>
+        @if (loginForm.get('email')?.invalid && loginForm.get('email')?.touched) {
+        <div class="error-message">
+          @if (loginForm.get('email')?.hasError('required')) {
+          <span><i class="fas fa-exclamation-circle"></i> Email is required</span>
+          } 
+          @if (loginForm.get('email')?.hasError('email')) {
+          <span><i class="fas fa-exclamation-circle"></i> Please enter a valid email</span>
+          }
+        </div>
+        }
+      </div>
+
+      <!-- Password Field -->
+      <div class="form-field">
+        <label for="password">Password</label>
+        <div class="input-container">
+          <i class="fas fa-lock"></i>
+          <input
+            type="password"
+            id="password"
+            formControlName="password"
+            placeholder="Enter your password"
+            [class.valid]="loginForm.get('password')?.valid && loginForm.get('password')?.touched"
+            [class.invalid]="loginForm.get('password')?.invalid && loginForm.get('password')?.touched"
+          />
+          <i
+            class="fas fa-eye toggle-password"
+            (click)="togglePasswordVisibility()"
+          ></i>
+        </div>
+        @if (loginForm.get('password')?.invalid && loginForm.get('password')?.touched) {
+        <div class="error-message">
+          @if (loginForm.get('password')?.hasError('required')) {
+          <span><i class="fas fa-exclamation-circle"></i> Password is required</span>
+          }
+        </div>
+        }
+      </div>
+
+      <button
+        type="submit"
+        class="submit-btn"
+        [disabled]="loginForm.invalid || isLoading"
+      >
+        @if (isLoading) {
+        <span>Signing In...</span>
+        <i class="fas fa-spinner fa-spin"></i>
+        } @else {
+        <span>Sign In</span>
+        <i class="fas fa-arrow-right"></i>
+        }
+      </button>
+
+      <div class="auth-footer">
+        Don't have an account?
+        <a routerLink="/Account/Register" class="auth-link">Create one</a>
+      </div>
+    </form>
+  </div>
+</section>

@@ -1,0 +1,135 @@
+<div class="container pt-4 flex-contaier" *ngIf="order.id">
+  <div class="basket-container">
+    <table class="table table-hover custom-table">
+      <thead>
+        <tr class="bg-info text-white">
+          <th>Product</th>
+          <th></th>
+          <th>Description</th>
+          <th>Price</th>
+          <th>Quantity</th>
+          <th>Total</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (item of order.orderItems; track $index) {
+        <tr>
+          <td>
+            <a
+              routerLink="/shop/product-details/{{ item.productItemId }}"
+              class="text-dark text-decoration-none"
+            >
+              {{ item.productName }}
+            </a>
+          </td>
+          <td>
+            <img
+              src="https://localhost:44344/{{ item.mainImage }}"
+              class="product-image img-fluid"
+              alt="{{ item.productName }}"
+            />
+          </td>
+          <td class="description">
+            <!-- {{item.}} -->
+          </td>
+          <td>{{ item.price | currency }}</td>
+          <!-- <td>{{ item.quantity }}</td>
+          <td>{{ item.quantity * item.price | currency }}</td> -->
+          <td>
+            <button
+              (click)="setProductId(item.productItemId)"
+              data-toggle="modal"
+              data-target="#exampleModalCenter"
+              class="btn btn-danger"
+            >
+              Rate Your Product
+            </button>
+          </td>
+        </tr>
+        }
+      </tbody>
+    </table>
+  </div>
+  <div class="order-summary-container">
+    <div
+      class="order-summary bg-light text-uppercase text-info p-3 text-center"
+    >
+      Order Summary
+    </div>
+    <div class="order-details p-3">
+      <p style="font-style: italic">Shipping will be added on total price</p>
+
+      <ng-container>
+        <ul class="list-unstyled mb-4">
+          <li class="d-flex justify-content-between border-bottom py-3">
+            <strong class="text-muted">Order SubTotal</strong>
+            <strong>{{ order.subTotal | currency }}</strong>
+          </li>
+          <li class="d-flex justify-content-between border-bottom py-3">
+            <strong class="text-muted">Order shipping</strong>
+            <strong>{{ order.total - order.subTotal | currency }}</strong>
+          </li>
+
+          <li class="d-flex justify-content-between border-bottom py-3">
+            <strong class="text-muted">Order Status</strong>
+            <strong
+              [ngClass]="{
+                'text-warning': order.status === 'Pending',
+                'text-danger': order.status === 'PaymentFaild',
+                'text-success': order.status === 'PaymentReceived'
+              }"
+              >{{ order.status }}</strong
+            >
+          </li>
+
+          <li class="d-flex justify-content-between border-bottom py-3">
+            <strong class="text-muted">Order total</strong>
+            <strong>{{ order.total | currency }}</strong>
+          </li>
+        </ul>
+      </ng-container>
+    </div>
+  </div>
+</div>
+
+<!-- Modal -->
+<div
+  class="modal fade"
+  id="ModalCenter"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="ModalCenterTitle"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">Product Rating</h5>
+      </div>
+      <div class="modal-body">
+        <div class="radio-input">
+          @for (item of [5,4,3,2,1]; track $index) {
+          <input
+            class="star s{{ item }}"
+            type="radio"
+            id="value-{{ item }}"
+            name="value-radio"
+            value="value-{{ item }}"
+          />
+          }
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button
+          type="button"
+          class="btn btn-secondary"
+          data-dismiss="modal"
+          (click)="close()"
+        >
+          Close
+        </button>
+        <button type="button" class="btn btn-primary">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>

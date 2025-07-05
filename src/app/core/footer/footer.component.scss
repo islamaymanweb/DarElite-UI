@@ -1,0 +1,352 @@
+
+ // styles.scss
+ $primary-color: #3f51b5;
+ $secondary-color: #5c6bc0;
+ $accent-color: #ff4081;
+ $light-color: #ffffff;
+ $dark-color: #212121;
+ $navbar-height: 60px;
+ $navbar-padding: 1rem;
+ $input-border-radius: 0.5rem;
+ $transition-duration: 0.3s;
+
+
+.dar-elite-footer {
+  background-color: $dark-color;
+  color: $light-color;
+  padding: 3rem 0 0;
+  font-family: 'Roboto', sans-serif;
+  position: relative;
+  overflow: hidden;
+
+  .footer-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 2rem;
+    padding: 0 2rem;
+    max-width: 1400px;
+    margin: 0 auto;
+  }
+
+  h3, h4 {
+    color: $light-color;
+    margin-bottom: 1.5rem;
+    position: relative;
+    padding-bottom: 0.5rem;
+
+    &::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 50px;
+      height: 2px;
+      background: $accent-color;
+    }
+  }
+
+  .footer-brand {
+    margin-bottom: 1.5rem;
+
+    h3 {
+      font-size: 1.75rem;
+      color: $light-color;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+    }
+
+    .tagline {
+      color: rgba($light-color, 0.7);
+      font-size: 0.9rem;
+    }
+  }
+
+  .social-links {
+    display: flex;
+    gap: 1rem;
+
+    a {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 36px;
+      height: 36px;
+      background-color: rgba($light-color, 0.1);
+      color: $light-color;
+      border-radius: 50%;
+      transition: all $transition-duration;
+
+      &:hover {
+        background-color: $accent-color;
+        transform: translateY(-3px);
+      }
+    }
+  }
+
+  .footer-nav {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    gap: 0.75rem;
+
+    a {
+      color: rgba($light-color, 0.7);
+      text-decoration: none;
+      transition: color $transition-duration;
+      font-size: 0.9rem;
+      padding: 0.25rem 0;
+      position: relative;
+
+      &::before {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 0;
+        height: 1px;
+        background: $accent-color;
+        transition: width $transition-duration;
+      }
+
+      &:hover {
+        color: $light-color;
+
+        &::before {
+          width: 20px;
+        }
+      }
+    }
+  }
+
+  .contact-info {
+    display: grid;
+    gap: 1rem;
+
+    .contact-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.75rem;
+      color: rgba($light-color, 0.7);
+      font-size: 0.9rem;
+
+      i {
+        color: $accent-color;
+        margin-top: 0.2rem;
+      }
+    }
+  }
+
+  .newsletter-form {
+    display: grid;
+    gap: 1rem;
+
+    input {
+      padding: 0.75rem;
+      border-radius: $input-border-radius;
+      border: none;
+      background: rgba($light-color, 0.1);
+      color: $light-color;
+      font-size: 0.9rem;
+
+      &::placeholder {
+        color: rgba($light-color, 0.5);
+      }
+
+      &:focus {
+        outline: 1px solid $accent-color;
+      }
+    }
+
+    button {
+      padding: 0.75rem;
+      border-radius: $input-border-radius;
+      background: $accent-color;
+      color: $light-color;
+      border: none;
+      cursor: pointer;
+      font-weight: 500;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      transition: all $transition-duration;
+
+      &:hover {
+        background: darken($accent-color, 10%);
+      }
+    }
+  }
+
+  .business-hours {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    color: rgba($light-color, 0.7);
+    font-size: 0.85rem;
+    margin-top: 1rem;
+
+    i {
+      color: $accent-color;
+    }
+  }
+
+  .footer-bottom {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.5rem 2rem;
+    margin-top: 3rem;
+    border-top: 1px solid rgba($light-color, 0.1);
+    gap: 1rem;
+    font-size: 0.85rem;
+
+    .copyright {
+      color: rgba($light-color, 0.5);
+    }
+
+    .legal-links {
+      display: flex;
+      gap: 1.5rem;
+
+      a {
+        color: rgba($light-color, 0.7);
+        text-decoration: none;
+        transition: color $transition-duration;
+
+        &:hover {
+          color: $accent-color;
+        }
+      }
+    }
+
+    .payment-methods {
+      display: flex;
+      gap: 1rem;
+      font-size: 1.5rem;
+      color: rgba($light-color, 0.7);
+
+      i {
+        transition: color $transition-duration;
+
+        &:hover {
+          color: $light-color;
+        }
+      }
+    }
+  }
+
+  @media (max-width: 768px) {
+    padding: 2rem 0 0;
+
+    .footer-grid {
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
+    }
+
+    .footer-brand-col {
+      grid-column: span 2;
+    }
+
+    .footer-bottom {
+      flex-direction: column;
+      text-align: center;
+      gap: 1rem;
+
+      .legal-links {
+        order: 2;
+        gap: 1rem;
+      }
+
+      .payment-methods {
+        order: 3;
+      }
+    }
+  }
+
+  @media (max-width: 480px) {
+    .footer-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .footer-brand-col {
+      grid-column: span 1;
+    }
+
+    .footer-nav {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+}
+.container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 1rem;
+  }
+
+  .footer-top {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 2rem;
+    padding: 3rem 0;
+  }
+
+  .footer-col {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .footer-brand-col {
+    .footer-brand {
+      h3 {
+        font-size: 1.75rem;
+      }
+    }
+  }
+
+  .footer-bottom {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.5rem 0;
+    border-top: 1px solid rgba($light-color, 0.1);
+
+    p, .legal-links, .payment-methods {
+      margin: 0.5rem 0;
+    }
+
+    .legal-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .payment-methods {
+      display: flex;
+      gap: 1rem;
+      font-size: 1.5rem;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .footer-top {
+      grid-template-columns: 1fr 1fr;
+    }
+
+    .footer-bottom {
+      flex-direction: column;
+      text-align: center;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .footer-top {
+      grid-template-columns: 1fr;
+    }
+
+    .footer-nav {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+
