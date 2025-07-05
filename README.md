@@ -1,4 +1,33 @@
-# Client
+Dar Elite — Home Furniture Store 🏡🛋️
+
+A modern, responsive e‑commerce web application for showcasing and selling premium home furniture. Built with Angular 17, TypeScript, HTML, and SCSS, Dar Elite delivers a smooth shopping experience across desktop and mobile devices.
+
+
+Features
+
+🛋️ Responsive UI: Optimized for mobile, tablet, and desktop using SCSS and Angular Flex Layout.
+
+🛒 Product Catalog: Dynamic listing of furniture items with sorting, filtering, and category browsing.
+
+🔍 Search Functionality: Instantly search products by name or category.
+
+🛍️ Shopping Cart: Add/remove products, quantity management, total calculation, persistent via localStorage.
+
+💳 Order & Payment System: Users can place orders and proceed to secure online payment (integration-ready for Stripe).
+
+📜 Order Summary: Displays a detailed breakdown of the placed order with pricing and item info.
+
+♻️ Reusable Components: Built using Angular standalone components and shared modules.
+
+🚀 Lazy Loading: Performance-optimized loading of feature modules.
+
+📱 Mobile-First Design: Crafted with SCSS and media queries for excellent mobile usability.
+
+🌐 SEO Friendly: Meta tags and image optimization to enhance discoverability
+
+
+
+# Dar Elite
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 17.0.1.
 
