@@ -1,0 +1,148 @@
+@use '../../../styles/variables' as *;
+.toast {
+  background: $white !important;
+  border-radius: $border-lg;
+  box-shadow: $shadow-xl !important;
+  border-left: 4px solid;
+  min-width: 320px;
+  max-width: 400px;
+  margin-bottom: $space-3;
+  overflow: hidden;
+  animation: toastSlideIn 0.3s $ease-out;
+  position: relative;
+  z-index: 100000;
+  display: block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+
+  &--success {
+    border-left-color: $success;
+  }
+
+  &--error {
+    border-left-color: $error;
+  }
+
+  &--warning {
+    border-left-color: $warning;
+  }
+
+  &--info {
+    border-left-color: $info;
+  }
+
+  &__header {
+    display: flex;
+    align-items: flex-start;
+    gap: $space-3;
+    padding: $space-4;
+  }
+
+  &__icon {
+    flex-shrink: 0;
+    width: 24px;
+    height: 24px;
+    margin-top: 2px;
+  }
+
+  &__content {
+    flex: 1;
+    min-width: 0;
+  }
+
+  &__title {
+    font-family: $font-primary;
+    font-size: $text-base;
+    font-weight: $font-semibold;
+    color: $gray-900;
+    margin: 0 0 $space-1;
+    line-height: $leading-tight;
+  }
+
+  &__message {
+    font-family: $font-primary;
+    font-size: $text-sm;
+    color: $gray-600;
+    margin: 0;
+    line-height: $leading-snug;
+  }
+
+  &__close {
+    flex-shrink: 0;
+    background: none;
+    border: none;
+    width: 20px;
+    height: 20px;
+    color: $gray-400;
+    cursor: pointer;
+    border-radius: $border-sm;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all $transition-fast $ease-in-out;
+
+    &:hover {
+      color: $gray-600;
+      background: $gray-100;
+    }
+
+    svg {
+      width: 16px;
+      height: 16px;
+    }
+  }
+
+  &__progress {
+    height: 3px;
+    background: $gray-200;
+    overflow: hidden;
+  }
+
+  &__progress-bar {
+    height: 100%;
+    background: currentColor;
+    transition: width 0.05s linear;
+
+    .toast--success & {
+      background: $success;
+    }
+
+    .toast--error & {
+      background: $error;
+    }
+
+    .toast--warning & {
+      background: $warning;
+    }
+
+    .toast--info & {
+      background: $info;
+    }
+  }
+}
+
+@keyframes toastSlideIn {
+  from {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes toastSlideOut {
+  from {
+    transform: translateX(0);
+    opacity: 1;
+  }
+  to {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+}
+
+.toast-leave {
+  animation: toastSlideOut 0.3s $ease-in forwards;
+}

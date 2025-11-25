@@ -1,0 +1,53 @@
+<section class="activation-section">
+  <div class="activation-container">
+    <div class="activation-card">
+      <!-- حالة التحميل -->
+      @if (isLoading()) {
+        <div class="loading-state">
+          <div class="spinner"></div>
+          <h3>جاري تفعيل الحساب...</h3>
+          <p>يرجى الانتظار بينما نقوم بتفعيل حسابك</p>
+        </div>
+      }
+      
+      <!-- حالة النجاح -->
+      @if (!isLoading() && activationSuccess()) {
+        <div class="success-state">
+          <div class="success-icon">
+            <i class="fas fa-check-circle"></i>
+          </div>
+          <h3>تم تفعيل الحساب بنجاح!</h3>
+          <p>
+            تم تفعيل حسابك بنجاح. يمكنك الآن تسجيل الدخول إلى حسابك.
+            سيتم توجيهك تلقائياً إلى صفحة تسجيل الدخول خلال لحظات...
+          </p>
+          <div class="auth-actions">
+            <a routerLink="/login" class="btn btn-primary w-100">
+              الانتقال إلى تسجيل الدخول
+            </a>
+          </div>
+        </div>
+      }
+      
+      <!-- حالة الفشل -->
+      @if (!isLoading() && !activationSuccess() && activationError()) {
+        <div class="error-state">
+          <div class="error-icon">
+            <i class="fas fa-times-circle"></i>
+          </div>
+          <h3>فشل تفعيل الحساب</h3>
+          <p>{{ activationError() }}</p>
+          <p class="text-muted">
+            يرجى التحقق من رابط التفعيل أو طلب رابط جديد.
+            سيتم توجيهك تلقائياً إلى صفحة التسجيل خلال لحظات...
+          </p>
+          <div class="auth-actions">
+            <a routerLink="/register" class="btn btn-primary w-100">
+              العودة إلى التسجيل
+            </a>
+          </div>
+        </div>
+      }
+    </div>
+  </div>
+</section>

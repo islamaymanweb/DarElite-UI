@@ -1,0 +1,138 @@
+<div class="order-details-container">
+  <div class="container">
+    <!-- Loading State -->
+    @if (isLoading()) {
+    <div class="loading-state">
+      <div class="spinner"></div>
+      <p>Loading order details...</p>
+    </div>
+    }
+
+    <!-- Order Details -->
+    @if (!isLoading() && order()) {
+    <div class="order-details-card">
+      <!-- Header -->
+      <div class="order-header">
+        <div class="back-navigation">
+          <a routerLink="/orders" class="back-link">
+            <i class="fas fa-arrow-left"></i>
+            Back to Orders
+          </a>
+        </div>
+        <div class="order-title">
+          <h1>Order #{{ order()!.id }}</h1>
+          <span class="order-date"
+            >{{ order()!.orderDate | date:'fullDate' }}</span
+          >
+        </div>
+        <div class="order-status">
+          <span [class]="'status-badge ' + getStatusClass(order()!.status)">
+            {{ order()!.status }}
+          </span>
+        </div>
+      </div>
+
+      <div class="order-content">
+        <!-- Order Items -->
+        <div class="order-items-section">
+          <h3 class="section-title">Order Items</h3>
+          <div class="items-list">
+            @for (item of order()!.orderItems; track item.productItemId) {
+            <div class="order-item">
+              <div class="item-image">
+                <img
+                  [src]="getImageUrl(item.mainImage)"
+                  [alt]="item.productName"
+                  class="product-image"
+                />
+              </div>
+              <div class="item-details">
+                <h4 class="product-name">
+                  <a
+                    [routerLink]="['/shop', 'product-details', item.productItemId]"
+                  >
+                    {{ item.productName }}
+                  </a>
+                </h4>
+                <div class="item-meta">
+                  <span class="price">{{ item.price | currency }}</span>
+                  <span class="quantity">Qty: {{ item.quntity }}</span>
+                  <span class="total"
+                    >Total: {{ (item.price * item.quntity) | currency }}</span
+                  >
+                </div>
+              </div>
+            </div>
+            }
+          </div>
+        </div>
+
+        <!-- Order Summary -->
+        <div class="order-summary-section">
+          <div class="summary-card">
+            <h3 class="section-title">Order Summary</h3>
+
+            <div class="summary-details">
+              <div class="summary-row">
+                <span class="label">Subtotal</span>
+                <span class="value">{{ order()!.subTotal | currency }}</span>
+              </div>
+
+              <div class="summary-row">
+                <span class="label">Shipping</span>
+                <span class="value"
+                  >{{ calculateShippingCost() | currency }}</span
+                >
+              </div>
+
+              <div class="summary-row">
+                <span class="label">Delivery Method</span>
+                <span class="value">{{ order()!.deliveryMethod }}</span>
+              </div>
+
+              <div class="summary-divider"></div>
+
+              <div class="summary-row total">
+                <span class="label">Total</span>
+                <span class="value">{{ order()!.total | currency }}</span>
+              </div>
+            </div>
+
+            <!-- Shipping Address -->
+            <div class="shipping-address">
+              <h4 class="address-title">Shipping Address</h4>
+              <div class="address-details">
+                <p>
+                  {{ order()!.shippingAddress.firstName }} {{
+                  order()!.shippingAddress.lastName }}
+                </p>
+                <p>{{ order()!.shippingAddress.street }}</p>
+                <p>
+                  {{ order()!.shippingAddress.city }}, {{
+                  order()!.shippingAddress.state }} {{
+                  order()!.shippingAddress.zipCode }}
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    }
+
+    <!-- Order Not Found -->
+    @if (!isLoading() && !order()) {
+    <div class="empty-state">
+      <div class="empty-icon">
+        <i class="fas fa-exclamation-circle"></i>
+      </div>
+      <h3>Order Not Found</h3>
+      <p>
+        The order you're looking for doesn't exist or you don't have permission
+        to view it.
+      </p>
+      <a routerLink="/orders" class="btn btn-primary"> Back to Orders </a>
+    </div>
+    }
+  </div>
+</div>

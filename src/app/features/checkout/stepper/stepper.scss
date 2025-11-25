@@ -1,0 +1,649 @@
+/* @use '../../../styles/variables' as *;
+
+.stepper-container {
+  background: $white;
+  border-radius: $border-2xl;
+  box-shadow: $shadow-lg;
+  overflow: hidden;
+}
+
+.stepper-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: $space-6;
+  background: linear-gradient(135deg, $primary-50, $gray-50);
+  border-bottom: 1px solid $gray-200;
+  position: relative;
+}
+
+.step-item {
+  display: flex;
+  align-items: center;
+  flex: 1;
+  position: relative;
+  
+  &.active {
+    .step-number {
+      background: $primary-500;
+      color: $white;
+      border-color: $primary-500;
+    }
+    
+    .step-title {
+      color: $primary-700;
+      font-weight: $font-semibold;
+    }
+  }
+  
+  &.completed {
+    .step-number {
+      background: $success;
+      color: $white;
+      border-color: $success;
+    }
+    
+    .step-title {
+      color: $gray-700;
+    }
+  }
+  
+  &.pending {
+    .step-number {
+      background: $white;
+      color: $gray-400;
+      border-color: $gray-300;
+    }
+    
+    .step-title {
+      color: $gray-500;
+    }
+  }
+}
+
+.step-number {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid;
+  font-size: $text-sm;
+  font-weight: $font-semibold;
+  transition: all $transition-base $ease-in-out;
+  z-index: 2;
+}
+
+.step-title {
+  margin-left: $space-3;
+  font-size: $text-sm;
+  font-weight: $font-medium;
+  transition: color $transition-base $ease-in-out;
+}
+
+.step-connector {
+  flex: 1;
+  height: 2px;
+  background: $gray-300;
+  margin: 0 $space-4;
+  position: relative;
+  
+  .step-item.completed & {
+    background: $success;
+  }
+  
+  .step-item.active &::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    background: $primary-500;
+    width: 50%;
+  }
+}
+
+.stepper-content {
+  padding: $space-8;
+}
+
+.step-panel {
+  animation: slideIn 0.3s $ease-out;
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateX(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+// Responsive Design
+@media (max-width: $breakpoint-md) {
+  .stepper-header {
+    padding: $space-4;
+  }
+  
+  .step-title {
+    display: none;
+  }
+  
+  .step-connector {
+    margin: 0 $space-2;
+  }
+  
+  .stepper-content {
+    padding: $space-6;
+  }
+} */
+ @use '../../../styles/variables' as *;
+
+.stepper-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem 1rem;
+  min-height: 80vh;
+  display: flex;
+  flex-direction: column;
+}
+
+// Stepper Header
+.stepper-header {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 3rem;
+  position: relative;
+  padding: 0 2rem;
+
+  @media (max-width: 768px) {
+    padding: 0 1rem;
+    margin-bottom: 2rem;
+  }
+
+  @media (max-width: 480px) {
+    flex-direction: column;
+    gap: 1rem;
+  }
+}
+
+.step-item {
+  display: flex;
+  align-items: center;
+  flex: 1;
+  position: relative;
+  z-index: 2;
+
+  @media (max-width: 480px) {
+    width: 100%;
+    justify-content: flex-start;
+  }
+
+  // Step Number
+  .step-number {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 1.1rem;
+    transition: all 0.4s $ease-in-out;
+    position: relative;
+    z-index: 3;
+    border: 3px solid rgba($primary-500, 0.2);
+    background: $white;
+    color: $gray-500;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+
+    i {
+      font-size: 1rem;
+      opacity: 0;
+      transform: scale(0);
+      transition: all 0.3s $ease-in-out;
+    }
+
+    span {
+      transition: all 0.3s $ease-in-out;
+    }
+  }
+
+  // Step Title
+  .step-title {
+    margin-left: 1rem;
+    font-weight: 600;
+    color: $gray-500;
+    transition: all 0.3s $ease-in-out;
+    white-space: nowrap;
+    font-size: 0.95rem;
+
+    @media (max-width: 768px) {
+      display: none;
+    }
+  }
+
+  // Step Connector
+  .step-connector {
+    flex: 1;
+    height: 3px;
+    background: linear-gradient(90deg, $primary-500, rgba($primary-500, 0.2));
+    margin: 0 1rem;
+    border-radius: 2px;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.4s $ease-in-out;
+
+    @media (max-width: 480px) {
+      display: none;
+    }
+
+    &::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, $primary-500, $accent-warm);
+      transition: left 0.6s $ease-in-out;
+    }
+  }
+
+  // Pending State
+  &.pending {
+    .step-number {
+      border-color: rgba($gray-400, 0.5);
+      background: $gray-100;
+      color: $gray-400;
+    }
+
+    .step-title {
+      color: $gray-400;
+    }
+
+    .step-connector {
+      background: linear-gradient(90deg, $gray-300, rgba($gray-300, 0.3));
+
+      &::after {
+        display: none;
+      }
+    }
+  }
+
+  // Active State
+  &.active {
+    .step-number {
+      border-color: $primary-500;
+      background: linear-gradient(135deg, $primary-500, $accent-warm);
+      color: $white;
+      box-shadow: 0 8px 25px rgba($primary-500, 0.4);
+      transform: scale(1.1);
+      animation: pulseActive 2s infinite;
+
+      span {
+        opacity: 1;
+        transform: scale(1);
+      }
+    }
+
+    .step-title {
+      color: $primary-700;
+      font-weight: 700;
+    }
+
+    .step-connector::after {
+      left: 0;
+    }
+  }
+
+  // Completed State
+  &.completed {
+    .step-number {
+      border-color: $success;
+      background: linear-gradient(135deg, $success, darken($success, 10%));
+      color: $white;
+      box-shadow: 0 8px 25px rgba($success, 0.3);
+
+      i {
+        opacity: 1;
+        transform: scale(1);
+      }
+
+      span {
+        opacity: 0;
+        transform: scale(0);
+      }
+    }
+
+    .step-title {
+      color: $success;
+    }
+
+    .step-connector {
+      background: linear-gradient(90deg, $success, rgba($success, 0.3));
+
+      &::after {
+        left: 0;
+        background: linear-gradient(90deg, $success, $primary-500);
+      }
+    }
+  }
+
+  // Clickable steps
+  &:not(.active):not(.pending) {
+    cursor: pointer;
+
+    &:hover {
+      .step-number {
+        transform: scale(1.05);
+        border-color: $primary-500;
+        box-shadow: 0 6px 20px rgba($primary-500, 0.2);
+      }
+
+      .step-title {
+        color: $primary-600;
+      }
+    }
+  }
+}
+
+// Stepper Content
+.stepper-content {
+  flex: 1;
+  background: $white;
+  border-radius: 20px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.1);
+  border: 1px solid rgba($primary-500, 0.1);
+  overflow: hidden;
+  animation: contentSlideIn 0.6s $ease-out;
+
+  .step-panel {
+    animation: panelFadeIn 0.5s $ease-out;
+  }
+}
+
+// Progress Bar (Alternative Mobile View)
+.stepper-progress {
+  height: 4px;
+  background: rgba($primary-500, 0.1);
+  border-radius: 2px;
+  margin: 1rem 0 2rem;
+  position: relative;
+  overflow: hidden;
+  display: none;
+
+  @media (max-width: 480px) {
+    display: block;
+  }
+
+  .progress-fill {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    background: linear-gradient(90deg, $primary-500, $accent-warm);
+    border-radius: 2px;
+    transition: width 0.6s $ease-in-out;
+    box-shadow: 0 0 10px rgba($primary-500, 0.3);
+  }
+}
+
+// Mobile Step Indicators
+.mobile-steps {
+  display: none;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+  padding: 0 1rem;
+
+  @media (max-width: 480px) {
+    display: flex;
+  }
+
+  .mobile-step {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    flex: 1;
+
+    .mobile-step-dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: $gray-300;
+      transition: all 0.3s $ease-in-out;
+      position: relative;
+
+      &::after {
+        content: '';
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 20px;
+        height: 20px;
+        border-radius: 50%;
+        background: rgba($primary-500, 0.1);
+        opacity: 0;
+        transition: opacity 0.3s $ease-in-out;
+      }
+    }
+
+    .mobile-step-title {
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: $gray-500;
+      text-align: center;
+      transition: all 0.3s $ease-in-out;
+      white-space: nowrap;
+    }
+
+    &.active {
+      .mobile-step-dot {
+        background: linear-gradient(135deg, $primary-500, $accent-warm);
+        transform: scale(1.2);
+
+        &::after {
+          opacity: 1;
+        }
+      }
+
+      .mobile-step-title {
+        color: $primary-700;
+        font-weight: 700;
+      }
+    }
+
+    &.completed {
+      .mobile-step-dot {
+        background: linear-gradient(135deg, $success, darken($success, 10%));
+      }
+
+      .mobile-step-title {
+        color: $success;
+      }
+    }
+  }
+}
+
+// Animations
+@keyframes pulseActive {
+  0%, 100% {
+    box-shadow: 0 8px 25px rgba($primary-500, 0.4);
+  }
+  50% {
+    box-shadow: 0 8px 30px rgba($primary-500, 0.6), 0 0 0 10px rgba($primary-500, 0.1);
+  }
+}
+
+@keyframes contentSlideIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes panelFadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes stepComplete {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.2);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+// Success celebration animation
+.step-item.completed .step-number {
+  animation: stepComplete 0.6s $ease-out;
+}
+
+// Responsive Design
+@media (max-width: 768px) {
+  .stepper-container {
+    padding: 1rem 0.5rem;
+  }
+
+  .stepper-header {
+    margin-bottom: 2rem;
+  }
+
+  .step-item {
+    .step-number {
+      width: 40px;
+      height: 40px;
+      font-size: 1rem;
+    }
+
+    .step-connector {
+      margin: 0 0.5rem;
+    }
+  }
+}
+
+@media (max-width: 480px) {
+  .stepper-header {
+    display: none;
+  }
+
+  .stepper-content {
+    border-radius: 16px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
+  }
+}
+
+// Loading States
+.stepper-loading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 4rem 2rem;
+  text-align: center;
+
+  .loading-spinner {
+    width: 60px;
+    height: 60px;
+    border: 4px solid rgba($primary-500, 0.2);
+    border-top: 4px solid $primary-600;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    margin-bottom: 1.5rem;
+  }
+
+  .loading-text {
+    color: $gray-600;
+    font-size: 1.1rem;
+    margin: 0;
+  }
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+// Error State
+.stepper-error {
+  text-align: center;
+  padding: 3rem 2rem;
+  color: $error;
+
+  .error-icon {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+    opacity: 0.7;
+  }
+
+  .error-text {
+    font-size: 1.1rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .retry-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1.5rem;
+    background: $error;
+    color: $white;
+    border: none;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+
+    &:hover {
+      background: darken($error, 10%);
+      transform: translateY(-2px);
+    }
+  }
+}
+
+// Dark Mode Support
+@media (prefers-color-scheme: dark) {
+  .stepper-content {
+    background: lighten($primary-900, 5%);
+    border-color: rgba($primary-500, 0.2);
+  }
+
+  .step-item .step-number {
+    background: rgba($white, 0.05);
+    border-color: rgba($white, 0.2);
+    color: rgba($white, 0.7);
+  }
+
+  .step-item.pending {
+    .step-number {
+      background: rgba($white, 0.05);
+      border-color: rgba($white, 0.1);
+      color: rgba($white, 0.4);
+    }
+
+    .step-title {
+      color: rgba($white, 0.4);
+    }
+  }
+}

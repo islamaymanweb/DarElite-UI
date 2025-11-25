@@ -1,0 +1,110 @@
+@use '../../../styles/variables' as *;
+
+.image-zoom {
+  position: relative;
+  display: inline-block;
+}
+
+.zoom-controls {
+  position: absolute;
+  top: $space-3;
+  right: $space-3;
+  display: flex;
+  gap: $space-2;
+  z-index: 10;
+  background: rgba($white, 0.9);
+  padding: $space-2;
+  border-radius: $border-lg;
+  box-shadow: $shadow-md;
+  backdrop-filter: blur(8px);
+}
+
+.zoom-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border: $border-width-1 solid $gray-300;
+  background: $white;
+  color: $gray-700;
+  border-radius: $border-md;
+  cursor: pointer;
+  font-family: $font-primary;
+  font-size: $text-sm;
+  font-weight: $font-medium;
+  transition: all $transition-fast $ease-in-out;
+
+  &:hover {
+    background: $primary-50;
+    border-color: $primary-300;
+    color: $primary-700;
+    transform: translateY(-1px);
+  }
+
+  svg {
+    width: 16px;
+    height: 16px;
+  }
+}
+
+.zoom-container {
+  position: relative;
+  overflow: hidden;
+  cursor: zoom-in;
+  border-radius: $border-lg;
+  
+  &.zoom-active {
+    cursor: zoom-out;
+  }
+}
+
+.zoom-image {
+  width: 100%;
+  height: auto;
+  display: block;
+  transition: transform $transition-slow $ease-out;
+}
+
+.zoom-lens {
+  position: absolute;
+  border: $border-width-2 solid $primary-500;
+  background: rgba($primary-500, 0.1);
+  cursor: none;
+  pointer-events: none;
+  width: v-bind(lensWidth + 'px');
+  height: v-bind(lensHeight + 'px');
+}
+
+.zoom-result {
+  position: absolute;
+  top: 0;
+  left: calc(100% + #{$space-4});
+  width: 500px;
+  height: 500px;
+  background-repeat: no-repeat;
+  border: $border-width-1 solid $gray-300;
+  border-radius: $border-lg;
+  box-shadow: $shadow-xl;
+  display: none;
+  z-index: $z-popover;
+  background-color: $white;
+}
+
+@media (max-width: $breakpoint-lg) {
+  .zoom-result {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 90vw;
+    height: 90vh;
+    z-index: $z-modal;
+  }
+  
+  .zoom-controls {
+    top: auto;
+    bottom: $space-3;
+    right: $space-3;
+  }
+}

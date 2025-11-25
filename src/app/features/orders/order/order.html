@@ -1,0 +1,294 @@
+<div class="orders-container">
+  <!-- Background Elements -->
+  <div class="background-elements">
+    <div class="floating-shape shape-1"></div>
+    <div class="floating-shape shape-2"></div>
+    <div class="floating-shape shape-3"></div>
+    <div class="background-pattern"></div>
+  </div>
+
+  <div class="container">
+    <!-- Header Section -->
+    <div class="orders-header">
+      <div class="header-content">
+        <div class="header-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"
+            />
+          </svg>
+        </div>
+        <div class="header-text">
+          <h1 class="page-title">Order History</h1>
+          <p class="page-subtitle">Track and manage your furniture purchases</p>
+        </div>
+        <div class="header-stats">
+          <div class="stat-item">
+            <div class="stat-number">{{ orders().length }}</div>
+            <div class="stat-label">Total Orders</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Loading State -->
+    @if (isLoading()) {
+    <div class="loading-state">
+      <div class="loading-content">
+        <div class="loading-spinner">
+          <div class="spinner-circle"></div>
+        </div>
+        <div class="loading-text">
+          <h3>Loading Your Orders</h3>
+          <p>We're preparing your order history...</p>
+        </div>
+      </div>
+    </div>
+    }
+
+    <!-- Orders List -->
+    @if (!isLoading() && orders().length > 0) {
+    <div class="orders-timeline">
+      @for (order of orders(); track order.id; let i = $index) {
+      <div class="order-timeline-item">
+        <!-- Timeline Connector -->
+        @if (i !== orders().length - 1) {
+        <div class="timeline-connector"></div>
+        }
+
+        <div class="order-card">
+          <!-- Order Header -->
+          <div class="order-header">
+            <div class="order-meta">
+              <div class="order-badge">
+                <span class="badge-icon">📦</span>
+                <span class="badge-text">Order #{{ order.id }}</span>
+              </div>
+              <span class="order-date"
+                >{{ order.orderDate | date:'MMM d, y, h:mm a' }}</span
+              >
+            </div>
+            <div class="order-status">
+              <span [class]="getStatusBadgeClass(order.status)">
+                <span class="status-dot"></span>
+                {{ order.status }}
+              </span>
+            </div>
+          </div>
+
+          <!-- Order Content -->
+          <div class="order-content">
+            <!-- Products Gallery -->
+            <div class="products-gallery">
+              <div class="gallery-main">
+                <div
+                  class="main-image-container"
+                  (click)="openModal(order.orderItems)"
+                >
+                  <img
+                    [src]="getImageUrl(getFirstImageOrderItem(order.orderItems))"
+                    [alt]="'Order ' + order.id"
+                    class="main-product-image"
+                  />
+                  <div class="image-overlay">
+                    <span class="view-images-text">View All Images</span>
+                  </div>
+                </div>
+                @if (order.orderItems.length > 1) {
+                <div class="additional-images">
+                  <span class="images-count"
+                    >+{{ order.orderItems.length - 1 }}</span
+                  >
+                </div>
+                }
+              </div>
+            </div>
+
+            <!-- Order Details -->
+            <div class="order-details">
+              <div class="details-grid">
+                <div class="detail-item">
+                  <div class="detail-icon">📊</div>
+                  <div class="detail-content">
+                    <span class="detail-label">Items Count</span>
+                    <span class="detail-value"
+                      >{{ order.orderItems.length }} products</span
+                    >
+                  </div>
+                </div>
+                <div class="detail-item">
+                  <div class="detail-icon">💰</div>
+                  <div class="detail-content">
+                    <span class="detail-label">Total Amount</span>
+                    <span class="detail-value price"
+                      >{{ order.total | currency }}</span
+                    >
+                  </div>
+                </div>
+                <div class="detail-item">
+                  <div class="detail-icon">🚚</div>
+                  <div class="detail-content">
+                    <span class="detail-label">Delivery Method</span>
+                    <span class="detail-value">{{ order.deliveryMethod }}</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Order Actions -->
+            <div class="order-actions">
+              <a
+                [routerLink]="['/order-item']"
+                [queryParams]="{ id: order.id }"
+                class="action-btn primary-btn"
+              >
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
+                  />
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"
+                  />
+                </svg>
+                View Full Details
+              </a>
+              <button
+                class="action-btn secondary-btn"
+                (click)="openModal(order.orderItems)"
+              >
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"
+                  />
+                </svg>
+                View Images
+              </button>
+            </div>
+          </div>
+
+          <!-- Order Footer -->
+          <div class="order-footer">
+            <div class="footer-ornament"></div>
+          </div>
+        </div>
+      </div>
+      }
+    </div>
+    }
+
+    <!-- Empty State -->
+    @if (!isLoading() && orders().length === 0) {
+    <div class="empty-state">
+      <div class="empty-content">
+        <div class="empty-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"
+            />
+          </svg>
+        </div>
+        <div class="empty-text">
+          <h3>No Orders Yet</h3>
+          <p>
+            Discover our exclusive furniture collection and create your first
+            order
+          </p>
+        </div>
+        <a routerLink="/shop" class="empty-action-btn">
+          <span>Explore Collections</span>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M17 8l4 4m0 0l-4 4m4-4H3"
+            />
+          </svg>
+        </a>
+      </div>
+    </div>
+    }
+  </div>
+</div>
+
+<!-- Image Modal -->
+<div
+  class="modal fade"
+  id="ImageModal"
+  tabindex="-1"
+  aria-labelledby="imageModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-dialog-centered modal-xl">
+    <div class="modal-content">
+      <div class="modal-header">
+        <div class="modal-header-content">
+          <div class="modal-icon">🖼️</div>
+          <div class="modal-title-content">
+            <h5 class="modal-title" id="imageModalLabel">Order Gallery</h5>
+            <p class="modal-subtitle">
+              {{ urlImageModal().length }} product images
+            </p>
+          </div>
+        </div>
+        <button
+          type="button"
+          class="modal-close-btn"
+          (click)="closeModal()"
+          aria-label="Close"
+        >
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M6 18L18 6M6 6l12 12"
+            />
+          </svg>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="modal-images-grid">
+          @for (image of urlImageModal(); track $index) {
+          <div class="modal-image-item">
+            <div class="image-container">
+              <img
+                [src]="getImageUrl(image)"
+                alt="Product image"
+                class="modal-image"
+              />
+              <div class="image-overlay-info">
+                <span class="image-number">#{{ $index + 1 }}</span>
+              </div>
+            </div>
+          </div>
+          }
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button
+          type="button"
+          class="modal-action-btn secondary"
+          (click)="closeModal()"
+        >
+          Close Gallery
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

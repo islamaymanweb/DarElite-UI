@@ -1,0 +1,51 @@
+@use '../../../styles/variables' as *;
+
+.checkout-container {
+  min-height: 100vh;
+  background: linear-gradient(135deg, $primary-50 0%, $gray-50 100%);
+  padding: $space-8 0;
+}
+
+.checkout-header {
+  text-align: center;
+  margin-bottom: $space-8;
+  
+  .page-title {
+    font-family: $font-secondary;
+    font-size: $text-4xl;
+    font-weight: $font-bold;
+    color: $primary-700;
+    margin-bottom: $space-4;
+  }
+  
+  .page-subtitle {
+    color: $gray-600;
+    font-size: $text-lg;
+  }
+}
+
+.checkout-content {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: $space-8;
+  
+  @media (max-width: $breakpoint-lg) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.checkout-main {
+  .stepper-container {
+    margin-bottom: 0;
+  }
+}
+
+.checkout-sidebar {
+  position: sticky;
+  top: $space-8;
+  height: fit-content;
+  
+  @media (max-width: $breakpoint-lg) {
+    position: static;
+  }
+}

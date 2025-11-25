@@ -1,0 +1,142 @@
+<div class="payment-container">
+  <div class="payment-header">
+    <h2 class="section-title">Payment Details</h2>
+    <p class="section-subtitle">Complete your order with secure payment</p>
+  </div>
+
+  <div class="payment-content">
+    <!-- Payment Form -->
+    <form [formGroup]="paymentForm" class="payment-form">
+      <!-- Cardholder Name -->
+      <div class="form-group">
+        <label for="nameOnCard" class="form-label">Cardholder Name</label>
+        <input
+          id="nameOnCard"
+          type="text"
+          formControlName="nameOnCard"
+          placeholder="Enter name as shown on card"
+          class="form-control"
+          [class.is-invalid]="paymentForm.get('nameOnCard')?.invalid && paymentForm.get('nameOnCard')?.touched"
+        />
+        @if (paymentForm.get('nameOnCard')?.invalid &&
+        paymentForm.get('nameOnCard')?.touched) {
+        <div class="error-message">Cardholder name is required</div>
+        }
+      </div>
+
+      <!-- Stripe Card Elements -->
+      <div class="card-elements">
+        <div class="form-group">
+          <label class="form-label">Card Number</label>
+          <div #cardNumber class="stripe-element"></div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label">Expiry Date</label>
+            <div #cardExpiry class="stripe-element"></div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">CVC</label>
+            <div #cardCvc class="stripe-element"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card Errors -->
+      @if (cardErrors()) {
+      <div class="card-errors">
+        <i class="fas fa-exclamation-circle"></i>
+        <span>{{ cardErrors() }}</span>
+      </div>
+      }
+
+      <!-- Security Notice -->
+      <div class="security-notice">
+        <i class="fas fa-lock"></i>
+        <span>Your payment information is secure and encrypted</span>
+      </div>
+
+      <!-- Action Buttons -->
+      <div class="form-actions">
+        <button type="button" class="btn btn-outline" (click)="onPrevious()">
+          <i class="fas fa-arrow-left"></i>
+          Back to Delivery
+        </button>
+
+        <button
+          type="button"
+          class="btn btn-primary submit-btn"
+          (click)="submitOrder()"
+          [disabled]="paymentForm.invalid || cardErrors() || isLoading()"
+        >
+          @if (isLoading()) {
+          <i class="fas fa-spinner fa-spin"></i>
+          Processing Payment... } @else {
+          <i class="fas fa-credit-card"></i>
+          Complete Order }
+        </button>
+      </div>
+    </form>
+
+    <!-- Order Summary -->
+    <div class="order-summary">
+      <div class="summary-header">
+        <i class="fas fa-receipt"></i>
+        <h3>Order Summary</h3>
+      </div>
+
+      <div class="summary-items">
+        <!-- Example Items - You'll need to bind actual data -->
+        <div class="summary-item">
+          <img
+            src="assets/images/chair.jpg"
+            alt="Modern Chair"
+            class="item-image"
+          />
+          <div class="item-details">
+            <div class="item-name">Modern Luxury Chair</div>
+            <div class="item-meta">
+              <span class="quantity">Qty: 1</span>
+              <span class="price">$450.00</span>
+            </div>
+          </div>
+        </div>
+        <div class="summary-item">
+          <img
+            src="assets/images/table.jpg"
+            alt="Coffee Table"
+            class="item-image"
+          />
+          <div class="item-details">
+            <div class="item-name">Coffee Table</div>
+            <div class="item-meta">
+              <span class="quantity">Qty: 1</span>
+              <span class="price">$320.00</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="summary-totals">
+        <div class="total-row">
+          <span class="label">Subtotal</span>
+          <span class="value">$770.00</span>
+        </div>
+        <div class="total-row">
+          <span class="label">Shipping</span>
+          <span class="value">$49.99</span>
+        </div>
+        <div class="total-row">
+          <span class="label">Tax</span>
+          <span class="value">$61.60</span>
+        </div>
+        <div class="total-row grand-total">
+          <span class="label">Total</span>
+          <span class="value">$881.59</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,401 @@
+<nav
+  class="navbar"
+  [class.scrolled]="isScrolled()"
+  [class.visible]="isVisible()"
+>
+  <!-- Animated Background -->
+  <div class="navbar__background">
+    <div class="navbar__shine"></div>
+  </div>
+
+  <div class="navbar__container">
+    <!-- Enhanced Logo -->
+    <a routerLink="/" class="navbar__logo" [class.animate]="isVisible()">
+      <div class="logo__wrapper">
+        <span class="logo__icon">🏛️</span>
+        <span class="logo__text">Dar Elite</span>
+        <div class="logo__glow"></div>
+      </div>
+    </a>
+
+    <!-- Desktop Navigation Links -->
+    <ul class="navbar__links">
+      @for (link of navigationLinks; track link.path; let i = $index) {
+      <li [style.animation-delay]="i * 0.1 + 's'">
+        <a
+          [routerLink]="link.path"
+          routerLinkActive="active"
+          [routerLinkActiveOptions]="{exact: link.path === '/'}"
+          class="navbar__link"
+          (mouseenter)="onLinkHover($event, link)"
+        >
+          <span class="link__icon">{{ link.icon }}</span>
+          <span class="link__text">{{ link.label }}</span>
+          <span class="link__hover-effect"></span>
+          <span class="link__active-indicator"></span>
+        </a>
+      </li>
+      }
+    </ul>
+
+    <!-- User Actions -->
+    <div class="navbar__actions">
+      <!-- User Account Dropdown -->
+      <!--   <div class="user-dropdown">
+        <button
+          class="action-btn user-btn"
+          aria-label="User account"
+          (click)="toggleUserDropdown()"
+          [class.active]="isUserDropdownOpen()"
+        >
+          <div class="user-avatar">
+            @if (isLoggedIn()) {
+            <div class="avatar-initials">{{ getUserInitials() }}</div>
+            <div class="avatar-status"></div>
+            } @else {
+            <svg
+              class="user-icon"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
+              />
+            </svg>
+            }
+          </div>
+          <div class="user-glow"></div>
+        </button>
+
+        @if (isUserDropdownOpen()) {
+        <div class="dropdown-menu" (click)="$event.stopPropagation()">
+          @if (isLoggedIn()) {
+          <div class="dropdown-header">
+            <div class="user-info">
+              <div class="user-name">Welcome, {{ getUserName() }}</div>
+              <div class="user-email">{{ getUserEmail() }}</div>
+            </div>
+          </div>
+
+          <div class="dropdown-divider"></div>
+
+          @for (item of userMenuItems; track item.path) {
+          <a
+            [routerLink]="item.path"
+            class="dropdown-item"
+            (click)="closeUserDropdown()"
+          >
+            <span class="item-icon">{{ item.icon }}</span>
+            <span class="item-text">{{ item.label }}</span>
+            <span class="item-arrow">→</span>
+          </a>
+          }
+
+          <div class="dropdown-divider"></div>
+          <button class="dropdown-item logout-btn" (click)="handleLogout()">
+            <span class="item-icon">🚪</span>
+            <span class="item-text">Logout</span>
+          </button>
+          } @else {
+          <div class="dropdown-header">
+            <div class="user-info">
+              <div class="user-name">Welcome Guest</div>
+              <div class="user-email">Sign in to your account</div>
+            </div>
+          </div>
+
+          <div class="dropdown-divider"></div>
+
+          <a
+            routerLink="/login"
+            class="dropdown-item"
+            (click)="closeUserDropdown()"
+          >
+            <span class="item-icon">🔑</span>
+            <span class="item-text">Login</span>
+          </a>
+          <a
+            routerLink="/register"
+            class="dropdown-item"
+            (click)="closeUserDropdown()"
+          >
+            <span class="item-icon">📝</span>
+            <span class="item-text">Register</span>
+          </a>
+          }
+        </div>
+        }
+      </div> -->
+
+      <!-- Shopping Cart Dropdown -->
+      <div class="cart-dropdown">
+        <button
+          routerLink="/basket"
+          class="action-btn cart-btn"
+          aria-label="Shopping cart"
+          [class.pulse]="cartItemCount() > 0"
+          [class.active]="isCartDropdownOpen()"
+        >
+          <div class="cart-icon-wrapper">
+            <svg
+              class="action-icon"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"
+              />
+            </svg>
+            <div class="cart-glow"></div>
+          </div>
+
+          @if (cartItemCount() > 0) {
+          <span class="cart-badge">
+            <span class="badge-count">{{ cartItemCount() }}</span>
+            <div class="badge-pulse"></div>
+          </span>
+          }
+        </button>
+      </div>
+
+      <!-- Mobile Menu Toggle -->
+
+      <!-- User Account Dropdown -->
+      <div class="user-dropdown">
+        <button
+          class="action-btn user-btn"
+          aria-label="User account"
+          (click)="toggleUserDropdown()"
+          [class.active]="isUserDropdownOpen()"
+        >
+          <div class="user-avatar">
+            @if (isLoggedIn()) {
+            <div class="avatar-initials">{{ getUserInitials() }}</div>
+            <div class="avatar-status"></div>
+            } @else {
+            <svg
+              class="user-icon"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
+              />
+            </svg>
+            }
+          </div>
+          <div class="user-glow"></div>
+        </button>
+
+        @if (isUserDropdownOpen()) {
+        <div class="dropdown-menu" (click)="$event.stopPropagation()">
+          @if (isLoggedIn()) {
+          <!-- User is logged in -->
+          <div class="dropdown-header">
+            <div class="user-info">
+              <div class="user-name">Welcome, {{ getUserName() }}</div>
+              <div class="user-email">{{ getUserEmail() }}</div>
+            </div>
+          </div>
+
+          <div class="dropdown-divider"></div>
+
+          @for (item of userMenuItems; track item.path) {
+          <a
+            [routerLink]="item.path"
+            class="dropdown-item"
+            (click)="closeUserDropdown()"
+          >
+            <span class="item-icon">{{ item.icon }}</span>
+            <span class="item-text">{{ item.label }}</span>
+            <span class="item-arrow">→</span>
+          </a>
+          }
+
+          <div class="dropdown-divider"></div>
+          <button class="dropdown-item logout-btn" (click)="handleLogout()">
+            <span class="item-icon">🚪</span>
+            <span class="item-text">Logout</span>
+          </button>
+          } @else {
+          <!-- User is not logged in -->
+          <div class="dropdown-header">
+            <div class="user-info">
+              <div class="user-name">Welcome Guest</div>
+              <div class="user-email">Sign in to your account</div>
+            </div>
+          </div>
+
+          <div class="dropdown-divider"></div>
+
+          <a
+            routerLink="/login"
+            class="dropdown-item"
+            (click)="closeUserDropdown()"
+          >
+            <span class="item-icon">🔑</span>
+            <span class="item-text">Login</span>
+          </a>
+          <a
+            routerLink="/register"
+            class="dropdown-item"
+            (click)="closeUserDropdown()"
+          >
+            <span class="item-icon">📝</span>
+            <span class="item-text">Register</span>
+          </a>
+          }
+        </div>
+        }
+      </div>
+      <button
+        class="mobile-menu-btn"
+        aria-label="Toggle menu"
+        (click)="toggleMobileMenu()"
+        [class.active]="isMobileMenuOpen()"
+      >
+        <span class="hamburger-line line-1"></span>
+        <span class="hamburger-line line-2"></span>
+        <span class="hamburger-line line-3"></span>
+        <div class="hamburger-glow"></div>
+      </button>
+    </div>
+  </div>
+
+  <!-- Navigation Indicator -->
+  <div class="navbar__indicator" [style.transform]="indicatorTransform()"></div>
+</nav>
+
+<!-- Mobile Overlay -->
+@if (isMobileMenuOpen()) {
+<div class="mobile-overlay" (click)="closeMobileMenu()">
+  <div class="overlay-background"></div>
+</div>
+}
+
+<!-- Mobile Sidebar -->
+<aside class="mobile-sidebar" [class.open]="isMobileMenuOpen()" #mobileSidebar>
+  <!-- Background -->
+  <div class="sidebar-background">
+    <div class="sidebar-particles"></div>
+  </div>
+
+  <!-- Close Button -->
+  <button
+    class="sidebar-close"
+    (click)="closeMobileMenu()"
+    aria-label="Close menu"
+  >
+    <div class="close-icon">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          d="M6 18L18 6M6 6l12 12"
+        />
+      </svg>
+    </div>
+    <div class="close-glow"></div>
+  </button>
+
+  <!-- Logo -->
+  <div class="sidebar-header">
+    <div class="sidebar-logo">
+      <span class="logo-icon">🏛️</span>
+      <span class="logo-text">Dar Elite</span>
+      <div class="logo-shine"></div>
+    </div>
+  </div>
+
+  <!-- Navigation Links -->
+  <nav class="sidebar-nav">
+    <h3 class="sidebar-section-title">
+      <span class="title-text">Categories</span>
+      <div class="title-underline"></div>
+    </h3>
+
+    @for (link of navigationLinks; track link.path; let i = $index) {
+    <a
+      [routerLink]="link.path"
+      class="sidebar-link"
+      (click)="handleNavigation()"
+      [style.animation-delay]="i * 0.05 + 's'"
+    >
+      <span class="link-icon">{{ link.icon }}</span>
+      <span class="link-text">{{ link.label }}</span>
+      <span class="link-arrow">→</span>
+      <div class="link-hover-effect"></div>
+    </a>
+    }
+
+    <div class="sidebar-divider"></div>
+
+    <h3 class="sidebar-section-title">
+      <span class="title-text">Account</span>
+      <div class="title-underline"></div>
+    </h3>
+
+    @if (isLoggedIn()) { @for (item of userMenuItems; track item.path; let i =
+    $index) {
+    <a
+      [routerLink]="item.path"
+      class="sidebar-link"
+      (click)="handleNavigation()"
+      [style.animation-delay]="i * 0.05 + 0.3 + 's'"
+    >
+      <span class="link-icon">{{ item.icon }}</span>
+      <span class="link-text">{{ item.label }}</span>
+      <span class="link-arrow">→</span>
+      <div class="link-hover-effect"></div>
+    </a>
+    }
+
+    <button
+      class="sidebar-link logout-btn"
+      (click)="handleLogout(); closeMobileMenu()"
+      [style.animation-delay]="0.5 + 's'"
+    >
+      <span class="link-icon">🚪</span>
+      <span class="link-text">Logout</span>
+    </button>
+    } @else {
+    <a
+      routerLink="/login"
+      class="sidebar-link"
+      (click)="handleNavigation()"
+      [style.animation-delay]="0.3 + 's'"
+    >
+      <span class="link-icon">🔑</span>
+      <span class="link-text">Login</span>
+      <span class="link-arrow">→</span>
+      <div class="link-hover-effect"></div>
+    </a>
+    <a
+      routerLink="/register"
+      class="sidebar-link"
+      (click)="handleNavigation()"
+      [style.animation-delay]="0.35 + 's'"
+    >
+      <span class="link-icon">📝</span>
+      <span class="link-text">Register</span>
+      <span class="link-arrow">→</span>
+      <div class="link-hover-effect"></div>
+    </a>
+    }
+
+    <div class="sidebar-divider"></div>
+  </nav>
+</aside>

@@ -1,0 +1,27 @@
+<div
+  class="toast toast--{{ toast.type }}"
+  (mouseenter)="onMouseEnter()"
+  (mouseleave)="onMouseLeave()"
+>
+  <div class="toast__header">
+    <div class="toast__icon">
+      <svg [attr.fill]="iconColor" viewBox="0 0 24 24" width="24" height="24">
+        <path [attr.d]="iconPath" />
+      </svg>
+    </div>
+    <div class="toast__content">
+      <h4 class="toast__title">{{ toast.title }}</h4>
+      <p class="toast__message">{{ toast.message }}</p>
+    </div>
+    <button class="toast__close" (click)="close()" aria-label="Close toast">
+      <svg viewBox="0 0 24 24" fill="none" width="16" height="16">
+        <path d="M6 18L18 6M6 6l12 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+      </svg>
+    </button>
+  </div>
+  @if (toast.autoClose && toast.duration) {
+    <div class="toast__progress">
+      <div class="toast__progress-bar" [style.width]="progress() + '%'"></div>
+    </div>
+  }
+</div>

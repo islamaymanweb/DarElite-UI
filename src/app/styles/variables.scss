@@ -1,0 +1,601 @@
+// ===== COLOR PALETTE =====
+// Primary Colors - ألوان الطبيعة الترابية
+$primary-50: #faf6f0;
+$primary-100: #f1e8d5;
+$primary-200: #e8d9bb;
+$primary-300: #d4c09c;
+$primary-400: #bfa57d;
+$primary-500: #a88c5e; // Primary Main
+$primary-600: #8f7347;
+$primary-700: #755a35;
+$primary-800: #5c4528;
+$primary-900: #42301c;
+
+// Secondary Colors - ألوان عصرية
+$secondary-50: #f8fafc;
+$secondary-100: #f1f5f9;
+$secondary-200: #e2e8f0;
+$secondary-300: #cbd5e1;
+$secondary-400: #94a3b8;
+$secondary-500: #64748b; // Secondary Main
+$secondary-600: #475569;
+$secondary-700: #334155;
+$secondary-800: #1e293b;
+$secondary-900: #0f172a;
+
+// Accent Colors - لمسات دافئة
+$accent-warm: #d4a574;
+$accent-cool: #7dd3fc;
+$accent-nature: #86efac;
+
+// Semantic Colors
+$success: #10b981;
+$warning: #f59e0b;
+$error: #ef4444;
+$info: #3b82f6;
+
+// Neutral Colors
+$white: #ffffff;
+$black: #000000;
+$gray-50: #f9fafb;
+$gray-100: #f3f4f6;
+$gray-200: #e5e7eb;
+$gray-300: #d1d5db;
+$gray-400: #9ca3af;
+$gray-500: #6b7280;
+$gray-600: #4b5563;
+$gray-700: #374151;
+$gray-800: #1f2937;
+$gray-900: #111827;
+
+// ===== TYPOGRAPHY =====
+// Font Families
+$font-primary: 'Inter', 'Segoe UI', Tahoma, sans-serif;
+$font-secondary: 'Playfair Display', 'Georgia', serif;
+$font-mono: 'SF Mono', 'Monaco', monospace;
+
+// Font Sizes - نظام متدرج
+$text-xs: 0.75rem;   // 12px
+$text-sm: 0.875rem;  // 14px
+$text-base: 1rem;    // 16px
+$text-lg: 1.125rem;  // 18px
+$text-xl: 1.25rem;   // 20px
+$text-2xl: 1.5rem;   // 24px
+$text-3xl: 1.875rem; // 30px
+$text-4xl: 2.25rem;  // 36px
+$text-5xl: 3rem;     // 48px
+$text-6xl: 3.75rem;  // 60px
+
+// Font Weights
+$font-light: 300;
+$font-normal: 400;
+$font-medium: 500;
+$font-semibold: 600;
+$font-bold: 700;
+$font-extrabold: 800;
+
+// Line Heights
+$leading-tight: 1.25;
+$leading-snug: 1.375;
+$leading-normal: 1.5;
+$leading-relaxed: 1.625;
+
+// ===== SPACING & SIZES =====
+// Spacing Scale
+$space-1: 0.25rem;  // 4px
+$space-2: 0.5rem;   // 8px
+$space-3: 0.75rem;  // 12px
+$space-4: 1rem;     // 16px
+$space-5: 1.25rem;  // 20px
+$space-6: 1.5rem;   // 24px
+$space-8: 2rem;     // 32px
+$space-10: 2.5rem;  // 40px
+$space-12: 3rem;    // 48px
+$space-16: 4rem;    // 64px
+$space-20: 5rem;    // 80px
+$space-24: 6rem;    // 96px
+
+// Container Sizes
+$container-sm: 640px;
+$container-md: 768px;
+$container-lg: 1024px;
+$container-xl: 1280px;
+$container-2xl: 1536px;
+
+// ===== COMPONENT SIZES =====
+// Buttons
+$btn-height-sm: 2rem;
+$btn-height-md: 2.5rem;
+$btn-height-lg: 3rem;
+$btn-height-xl: 3.5rem;
+
+$btn-padding-x-sm: $space-3;
+$btn-padding-x-md: $space-4;
+$btn-padding-x-lg: $space-6;
+$btn-padding-x-xl: $space-8;
+
+// Inputs
+$input-height-sm: 2rem;
+$input-height-md: 2.5rem;
+$input-height-lg: 3rem;
+
+$input-padding-x-sm: $space-3;
+$input-padding-x-md: $space-4;
+$input-padding-x-lg: $space-5;
+
+// ===== BORDER & SHADOWS =====
+// Border Radius
+$border-none: 0;
+$border-sm: 0.125rem;
+$border-base: 0.25rem;
+$border-md: 0.375rem;
+$border-lg: 0.5rem;
+$border-xl: 0.75rem;
+$border-2xl: 1rem;
+$border-full: 9999px;
+
+// Border Widths
+$border-width-1: 1px;
+$border-width-2: 2px;
+$border-width-4: 4px;
+
+// Shadows
+$shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+$shadow-base: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
+$shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+$shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+$shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+$shadow-2xl: 0 25px 50px -12px rgb(0 0 0 / 0.25);
+
+// ===== ANIMATIONS & TRANSITIONS =====
+// Transition Timings
+$transition-fast: 150ms;
+$transition-base: 300ms;
+$transition-slow: 500ms;
+$transition-slower: 700ms;
+
+// Transition Functions
+$ease-in: cubic-bezier(0.4, 0, 1, 1);
+$ease-out: cubic-bezier(0, 0, 0.2, 1);
+$ease-in-out: cubic-bezier(0.4, 0, 0.2, 1);
+
+// Animation Durations
+$duration-fast: 0.15s;
+$duration-base: 0.3s;
+$duration-slow: 0.5s;
+$duration-slower: 0.7s;
+
+// ===== HOVER EFFECTS =====
+// Button Hover
+@mixin btn-hover-primary {
+  transition: all $transition-base $ease-in-out;
+  
+  &:hover {
+    background-color: $primary-600;
+    transform: translateY(-2px);
+    box-shadow: $shadow-lg;
+  }
+  
+  &:active {
+    transform: translateY(0);
+  }
+}
+
+// Card Hover
+@mixin card-hover {
+  transition: all $transition-base $ease-in-out;
+  
+  &:hover {
+    transform: translateY(-4px);
+    box-shadow: $shadow-xl;
+  }
+}
+
+// Image Hover
+@mixin image-hover {
+  transition: transform $transition-slow $ease-out;
+  
+  &:hover {
+    transform: scale(1.05);
+  }
+}
+
+// ===== Z-INDEX =====
+$z-dropdown: 1000;
+$z-sticky: 1020;
+$z-fixed: 1030;
+$z-modal: 1040;
+$z-popover: 1050;
+$z-tooltip: 1060;
+$z-toast: 1070;
+
+// ===== BREAKPOINTS =====
+$breakpoint-sm: 640px;
+$breakpoint-md: 768px;
+$breakpoint-lg: 1024px;
+$breakpoint-xl: 1280px;
+$breakpoint-2xl: 1536px;
+
+// ===== LAYOUT =====
+// Header
+$header-height: 4rem;
+$header-height-lg: 5rem;
+
+// Sidebar
+$sidebar-width: 16rem;
+$sidebar-width-collapsed: 4rem;
+
+// Product Card
+$product-card-width: 280px;
+$product-card-height: 380px;
+
+// ===== EXPORT FOR JAVASCRIPT =====
+:export {
+  primaryColor: $primary-500;
+  secondaryColor: $secondary-500;
+  accentColor: $accent-warm;
+}
+
+
+// styles.scss
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap');
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+ 
+body {
+  font-family: 'Inter', 'Segoe UI', Tahoma, sans-serif;
+  background: linear-gradient(135deg, var(--primary-50) 0%, var(--white) 100%);
+  min-height: 100vh;
+  color: var(--gray-800);
+}
+
+// Custom Scrollbar
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--primary-100);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--primary-400);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--primary-500);
+}
+
+// Global Components
+.card {
+  border: none;
+  border-radius: 16px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  transition: all 0.3s ease;
+  background: var(--white);
+  
+  &:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
+  }
+}
+
+.btn {
+  border-radius: 12px;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  border: none;
+  
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+  }
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, var(--primary-500), var(--primary-600));
+  
+  &:hover {
+    background: linear-gradient(135deg, var(--primary-600), var(--primary-700));
+  }
+}
+
+.btn-success {
+  background: linear-gradient(135deg, #10b981, #059669);
+  
+  &:hover {
+    background: linear-gradient(135deg, #059669, #047857);
+  }
+}
+
+.form-control {
+  border-radius: 12px;
+  border: 2px solid var(--gray-200);
+  transition: all 0.3s ease;
+  
+  &:focus {
+    border-color: var(--primary-500);
+    box-shadow: 0 0 0 3px rgba(168, 140, 94, 0.1);
+  }
+}
+
+// Navigation Styles
+.navbar-brand {
+  font-family: 'Playfair Display', serif;
+  font-weight: 700;
+  color: var(--primary-700) !important;
+  font-size: 1.5rem;
+}
+
+// Product Card Styles
+.product-card {
+  .card-img-top {
+    border-radius: 16px 16px 0 0;
+    height: 250px;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+  }
+
+  &:hover .card-img-top {
+    transform: scale(1.05);
+  }
+
+  .price {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--primary-600);
+  }
+
+  .old-price {
+    color: var(--secondary-500);
+    text-decoration: line-through;
+    font-size: 0.9rem;
+  }
+}
+
+// Rating Stars
+.rating {
+  color: #fbbf24;
+}
+
+// Main Title
+.main-title {
+  font-family: 'Playfair Display', serif;
+  font-weight: 700;
+  color: var(--primary-700);
+  text-align: center;
+  margin: 2rem 0;
+  position: relative;
+  
+  &::after {
+    content: '';
+    position: absolute;
+    bottom: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100px;
+    height: 3px;
+    background: linear-gradient(90deg, var(--primary-500), var(--primary-300));
+    border-radius: 2px;
+  }
+}
+// ===== ENTERPRISE COLORS =====
+// Premium Gradients
+$gradient-premium: linear-gradient(135deg, $primary-500 0%, $primary-700 100%);
+$gradient-luxury: linear-gradient(135deg, $primary-400 0%, $accent-warm 100%);
+$gradient-subtle: linear-gradient(135deg, $white 0%, $primary-50 100%);
+
+// Status Colors
+$premium-gold: #d4af37;
+$platinum: #e5e4e2;
+$exclusive: #8b4513;
+
+// Interactive States
+$hover-overlay: rgba(168, 140, 94, 0.1);
+$active-state: rgba(143, 115, 71, 0.15);
+$focus-ring: rgba(168, 140, 94, 0.3);
+
+// ===== ENTERPRISE SIZES =====
+// Enhanced Spacing
+$space-28: 7rem;    // 112px
+$space-32: 8rem;    // 128px
+$space-40: 10rem;   // 160px
+$space-48: 12rem;   // 192px
+
+// Component Sizes
+$header-height-premium: 6rem;
+$sidebar-width-expanded: 20rem;
+$product-card-width-xl: 320px;
+$modal-width-xl: 800px;
+
+// ===== ANIMATION ENHANCEMENTS =====
+$bounce-soft: cubic-bezier(0.68, -0.55, 0.265, 1.55);
+$elastic-out: cubic-bezier(0.175, 0.885, 0.32, 1.275);
+
+// ===== ENTERPRISE MIXINS =====
+@mixin glass-morphism {
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+@mixin luxury-shadow {
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1), 0 8px 24px rgba(0, 0, 0, 0.08);
+}
+
+@mixin premium-border {
+  border: 1px solid $primary-200;
+  border-radius: $border-2xl;
+}
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// _variables.scss
+// ===== COLOR PALETTE =====
+// Primary Colors - ألوان الطبيعة الترابية
+$primary-50: #faf6f0 !default;
+$primary-100: #f1e8d5 !default;
+$primary-200: #e8d9bb !default;
+$primary-300: #d4c09c !default;
+$primary-400: #bfa57d !default;
+$primary-500: #a88c5e !default; // Primary Main
+$primary-600: #8f7347 !default;
+$primary-700: #755a35 !default;
+$primary-800: #5c4528 !default;
+$primary-900: #42301c !default;
+
+// Secondary Colors - ألوان عصرية
+$secondary-50: #f8fafc !default;
+$secondary-100: #f1f5f9 !default;
+$secondary-200: #e2e8f0 !default;
+$secondary-300: #cbd5e1 !default;
+$secondary-400: #94a3b8 !default;
+$secondary-500: #64748b !default; // Secondary Main
+$secondary-600: #475569 !default;
+$secondary-700: #334155 !default;
+$secondary-800: #1e293b !default;
+$secondary-900: #0f172a !default;
+
+// Accent Colors - لمسات دافئة
+$accent-warm: #d4a574 !default;
+$accent-cool: #7dd3fc !default;
+$accent-nature: #86efac !default;
+$accent-gold: #fbbf24 !default;
+
+// Semantic Colors
+$success: #10b981 !default;
+$warning: #f59e0b !default;
+$error: #ef4444 !default;
+$info: #3b82f6 !default;
+
+// Neutral Colors
+$white: #ffffff !default;
+$black: #000000 !default;
+$gray-50: #f9fafb !default;
+$gray-100: #f3f4f6 !default;
+$gray-200: #e5e7eb !default;
+$gray-300: #d1d5db !default;
+$gray-400: #9ca3af !default;
+$gray-500: #6b7280 !default;
+$gray-600: #4b5563 !default;
+$gray-700: #374151 !default;
+$gray-800: #1f2937 !default;
+$gray-900: #111827 !default;
+
+// ===== GRADIENTS =====
+$gradient-primary: linear-gradient(135deg, $primary-500, $primary-700) !default;
+$gradient-gold: linear-gradient(135deg, $accent-warm, $accent-gold) !default;
+$gradient-overlay: linear-gradient(135deg, rgba(168, 140, 94, 0.9), rgba(212, 165, 116, 0.7)) !default;
+$gradient-premium-dark: linear-gradient(135deg, #1e293b 0%, #334155 50%, #475569 100%) !default;
+
+// ===== SHADOWS =====
+$shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.1) !default;
+$shadow-md: 0 8px 25px rgba(0, 0, 0, 0.15) !default;
+$shadow-lg: 0 20px 40px rgba(0, 0, 0, 0.2) !default;
+$shadow-xl: 0 30px 60px rgba(0, 0, 0, 0.3) !default;
+
+// ===== TRANSITIONS =====
+$transition-fast: 0.2s ease !default;
+$transition-base: 0.3s ease !default;
+$transition-slow: 0.5s ease !default;
+$transition-bounce: 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55) !default;
+
+// ===== ANIMATION DURATIONS =====
+$duration-fast: 0.15s !default;
+$duration-base: 0.3s !default;
+$duration-slow: 0.5s !default;
+$duration-slower: 0.7s !default;
+
+// ===== SPACING =====
+$space-1: 0.25rem !default;  // 4px
+$space-2: 0.5rem !default;   // 8px
+$space-3: 0.75rem !default;  // 12px
+$space-4: 1rem !default;     // 16px
+$space-5: 1.25rem !default;  // 20px
+$space-6: 1.5rem !default;   // 24px
+$space-8: 2rem !default;     // 32px
+$space-10: 2.5rem !default;  // 40px
+$space-12: 3rem !default;    // 48px
+$space-16: 4rem !default;    // 64px
+$space-20: 5rem !default;    // 80px
+$space-24: 6rem !default;    // 96px
+
+// ===== BORDER RADIUS =====
+$border-none: 0 !default;
+$border-sm: 0.125rem !default;
+$border-base: 0.25rem !default;
+$border-md: 0.375rem !default;
+$border-lg: 0.5rem !default;
+$border-xl: 0.75rem !default;
+$border-2xl: 1rem !default;
+$border-full: 9999px !default;
+
+// ===== BREAKPOINTS =====
+$breakpoint-sm: 640px !default;
+$breakpoint-md: 768px !default;
+$breakpoint-lg: 1024px !default;
+$breakpoint-xl: 1280px !default;
+$breakpoint-2xl: 1536px !default;
+
+// ===== Z-INDEX =====
+$z-dropdown: 1000 !default;
+$z-sticky: 1020 !default;
+$z-fixed: 1030 !default;
+$z-modal: 1040 !default;
+$z-popover: 1050 !default;
+$z-tooltip: 1060 !default;
+$z-toast: 1070 !default;
+
+// ===== CSS CUSTOM PROPERTIES =====
+:root {
+  // Colors
+  --primary-50: #{$primary-50};
+  --primary-100: #{$primary-100};
+  --primary-200: #{$primary-200};
+  --primary-300: #{$primary-300};
+  --primary-400: #{$primary-400};
+  --primary-500: #{$primary-500};
+  --primary-600: #{$primary-600};
+  --primary-700: #{$primary-700};
+  --primary-800: #{$primary-800};
+  --primary-900: #{$primary-900};
+  
+  --secondary-50: #{$secondary-50};
+  --secondary-100: #{$secondary-100};
+  --secondary-200: #{$secondary-200};
+  --secondary-300: #{$secondary-300};
+  --secondary-400: #{$secondary-400};
+  --secondary-500: #{$secondary-500};
+  --secondary-600: #{$secondary-600};
+  --secondary-700: #{$secondary-700};
+  --secondary-800: #{$secondary-800};
+  --secondary-900: #{$secondary-900};
+  
+  --accent-warm: #{$accent-warm};
+  --accent-gold: #{$accent-gold};
+  
+  --white: #{$white};
+  --black: #{$black};
+  
+  // Gradients
+  --gradient-primary: #{$gradient-primary};
+  --gradient-gold: #{$gradient-gold};
+  --gradient-overlay: #{$gradient-overlay};
+  
+  // Shadows
+  --shadow-sm: #{$shadow-sm};
+  --shadow-md: #{$shadow-md};
+  --shadow-lg: #{$shadow-lg};
+  --shadow-xl: #{$shadow-xl};
+  
+  // Transitions
+  --transition-fast: #{$transition-fast};
+  --transition-base: #{$transition-base};
+  --transition-slow: #{$transition-slow};
+  --transition-bounce: #{$transition-bounce};
+}
+ 

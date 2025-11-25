@@ -1,0 +1,129 @@
+<!-- <div class="stepper-container">
+ 
+  <div class="stepper-header">
+    @for (step of steps(); track step.number) {
+    <div class="step-item" [class]="getStepClass(step)">
+      <div class="step-number">
+        @if (step.completed) {
+        <i class="fas fa-check"></i>
+        } @else {
+        <span>{{ step.number }}</span>
+        }
+      </div>
+      <span class="step-title">{{ step.title }}</span>
+      @if (step.number < 3) {
+      <div class="step-connector"></div>
+      }
+    </div>
+    }
+  </div>
+ 
+  <div class="stepper-content">
+    
+    @if (currentStep() === 1) {
+    <div class="step-panel">
+      <app-address [addressForm]="addressForm" (next)="nextStep()">
+      </app-address>
+    </div>
+    }
+ 
+    @if (currentStep() === 2) {
+    <div class="step-panel">
+      <app-delivery
+        [deliveryForm]="deliveryForm"
+        (previous)="previousStep()"
+        (next)="nextStep()"
+      >
+      </app-delivery>
+    </div>
+    }
+ 
+    @if (currentStep() === 3) {
+    <div class="step-panel">
+      <app-payment
+        [paymentForm]="paymentForm"
+        [addressForm]="addressForm"
+        [deliveryForm]="deliveryForm"
+        (previous)="previousStep()"
+      >
+      </app-payment>
+    </div>
+    }
+  </div>
+</div>
+ -->
+<div class="stepper-container">
+  <!-- Mobile Progress Bar -->
+  <div class="stepper-progress">
+    <div class="progress-fill" [style.width.%]="(currentStep() - 1) * 50"></div>
+  </div>
+
+  <!-- Mobile Step Indicators -->
+  <div class="mobile-steps">
+    @for (step of steps(); track step.number) {
+    <div class="mobile-step" [class]="getStepClass(step)">
+      <div class="mobile-step-dot"></div>
+      <span class="mobile-step-title">{{ step.title }}</span>
+    </div>
+    }
+  </div>
+
+  <!-- Desktop Stepper Header -->
+  <div class="stepper-header">
+    @for (step of steps(); track step.number) {
+    <div
+      class="step-item"
+      [class]="getStepClass(step)"
+      (click)="goToStep(step.number)"
+    >
+      <div class="step-number">
+        @if (step.completed) {
+        <i class="fas fa-check"></i>
+        } @else {
+        <span>{{ step.number }}</span>
+        }
+      </div>
+      <span class="step-title">{{ step.title }}</span>
+      @if (step.number < 3) {
+      <div class="step-connector"></div>
+      }
+    </div>
+    }
+  </div>
+
+  <!-- Stepper Content -->
+  <div class="stepper-content">
+    <!-- Step 1: Address -->
+    @if (currentStep() === 1) {
+    <div class="step-panel">
+      <app-address [addressForm]="addressForm" (next)="nextStep()">
+      </app-address>
+    </div>
+    }
+
+    <!-- Step 2: Delivery -->
+    @if (currentStep() === 2) {
+    <div class="step-panel">
+      <app-delivery
+        [deliveryForm]="deliveryForm"
+        (previous)="previousStep()"
+        (next)="nextStep()"
+      >
+      </app-delivery>
+    </div>
+    }
+
+    <!-- Step 3: Payment -->
+    @if (currentStep() === 3) {
+    <div class="step-panel">
+      <app-payment
+        [paymentForm]="paymentForm"
+        [addressForm]="addressForm"
+        [deliveryForm]="deliveryForm"
+        (previous)="previousStep()"
+      >
+      </app-payment>
+    </div>
+    }
+  </div>
+</div>

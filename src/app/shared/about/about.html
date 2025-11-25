@@ -1,0 +1,296 @@
+<!-- Hero Section -->
+<section class="about-hero" id="hero" [class.visible]="isVisible()">
+  <div class="hero-background">
+    <div class="hero-image">
+      <img
+        src="https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=1920&q=80"
+        alt="Dar Elite Showroom"
+        loading="lazy"
+        [style.transform]="getParallaxTransform()"
+      />
+      <div class="hero-overlay"></div>
+    </div>
+  </div>
+
+  <div class="hero-content">
+    <div class="container">
+      <div class="hero-text">
+        <div class="hero-badge">
+          <span class="badge-icon">✨</span>
+          <span class="badge-text">Our Story Since 2010</span>
+        </div>
+
+        <h1 class="hero-title">
+          <span class="title-line title-line--1">Crafting Spaces,</span>
+          <span class="title-line title-line--2">Creating Stories</span>
+        </h1>
+
+        <p class="hero-subtitle">
+          For over a decade, Dar Elite has been transforming houses into homes
+          with furniture that blends timeless elegance with modern comfort.
+        </p>
+
+        <div class="hero-actions">
+          <button class="btn btn--primary" (click)="scrollToSection('story')">
+            <span>Discover Our Journey</span>
+            <svg
+              class="btn-icon"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M19 14l-7 7m0 0l-7-7m7 7V3"
+              />
+            </svg>
+          </button>
+
+          <button class="btn btn--secondary" routerLink="/contact">
+            <span>Get In Touch</span>
+            <svg
+              class="btn-icon"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"
+              />
+            </svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scroll Indicator -->
+  <div class="hero-scroll">
+    <div class="scroll-indicator">
+      <span class="scroll-text">Scroll to explore</span>
+      <svg
+        class="scroll-icon"
+        fill="none"
+        stroke="currentColor"
+        viewBox="0 0 24 24"
+      >
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          d="M19 14l-7 7m0 0l-7-7m7 7V3"
+        />
+      </svg>
+    </div>
+  </div>
+</section>
+
+<!-- Quick Stats -->
+<section class="quick-stats" [class.visible]="isVisible()">
+  <div class="container">
+    <div class="stats-grid">
+      @for (stat of stats; track $index) {
+      <div class="stat-card" [style.animation-delay]="getStaggerDelay($index)">
+        <div class="stat-icon">{{ stat.icon }}</div>
+        <div class="stat-number">{{ stat.number }}</div>
+        <div class="stat-label">{{ stat.label }}</div>
+      </div>
+      }
+    </div>
+  </div>
+</section>
+
+<!-- Our Story Section -->
+<section class="our-story" id="story" [class.visible]="isVisible()">
+  <div class="container">
+    <div class="story-content">
+      <div class="story-text">
+        <div class="section-header">
+          <span class="section-badge">Our Journey</span>
+          <h2 class="section-title">The Dar Elite Story</h2>
+          <p class="section-subtitle">
+            From a small workshop to a trusted name in luxury furniture
+          </p>
+        </div>
+
+        <div class="story-paragraphs">
+          <p>
+            Founded in 2010 by Sarah Johnson, Dar Elite began as a passion
+            project in a small garage workshop. Sarah's vision was simple yet
+            profound: create furniture that doesn't just fill spaces, but
+            transforms them into sanctuaries of comfort and style.
+          </p>
+
+          <p>
+            What started with custom pieces for friends and family quickly grew
+            into a beloved local brand. Our commitment to quality craftsmanship,
+            sustainable materials, and timeless design resonated with homeowners
+            who valued both beauty and longevity.
+          </p>
+
+          <p>
+            Today, Dar Elite stands as a testament to what happens when passion
+            meets purpose. Every piece in our collection carries the same
+            attention to detail and love for design that started it all those
+            years ago.
+          </p>
+        </div>
+
+        <div class="story-features">
+          <div class="feature">
+            <div class="feature-icon">🎯</div>
+            <div class="feature-content">
+              <h3>Our Mission</h3>
+              <p>
+                To create furniture that inspires, comforts, and stands the test
+                of time
+              </p>
+            </div>
+          </div>
+
+          <div class="feature">
+            <div class="feature-icon">👁️</div>
+            <div class="feature-content">
+              <h3>Our Vision</h3>
+              <p>To be the most trusted name in luxury furniture worldwide</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="story-visual">
+        <div class="visual-grid">
+          <div class="visual-item visual-item--main">
+            <img
+              src="https://images.unsplash.com/photo-1617806118233-18e1de247200?w=600&q=80"
+              alt="Our Workshop"
+              loading="lazy"
+            />
+          </div>
+          <div class="visual-item visual-item--secondary">
+            <img
+              src="https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=400&q=80"
+              alt="Craftsmanship"
+              loading="lazy"
+            />
+          </div>
+          <div class="visual-item visual-item--secondary">
+            <img
+              src="https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=400&q=80"
+              alt="Showroom"
+              loading="lazy"
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Our Values Section -->
+<section class="our-values" id="values" [class.visible]="isVisible()">
+  <div class="container">
+    <div class="section-header">
+      <span class="section-badge">What Drives Us</span>
+      <h2 class="section-title">Our Core Values</h2>
+      <p class="section-subtitle">
+        The principles that guide every decision we make
+      </p>
+    </div>
+
+    <div class="values-grid">
+      @for (value of values; track value.title; let i = $index) {
+      <div class="value-card" [style.animation-delay]="getStaggerDelay(i)">
+        <div
+          class="value-icon"
+          [style.background]="value.color + '20'"
+          [style.border-color]="value.color"
+        >
+          <span [style.color]="value.color">{{ value.icon }}</span>
+        </div>
+        <h3 class="value-title">{{ value.title }}</h3>
+        <p class="value-description">{{ value.description }}</p>
+      </div>
+      }
+    </div>
+  </div>
+</section>
+
+<!-- Milestones Section -->
+<section class="milestones" id="milestones" [class.visible]="isVisible()">
+  <div class="container">
+    <div class="section-header">
+      <span class="section-badge">Our Journey</span>
+      <h2 class="section-title">Milestones & Achievements</h2>
+      <p class="section-subtitle">Key moments that shaped Dar Elite's story</p>
+    </div>
+
+    <div class="timeline">
+      @for (milestone of milestones; track milestone.year; let i = $index) {
+      <div class="timeline-item" [style.animation-delay]="getStaggerDelay(i)">
+        <div class="timeline-marker">
+          <div class="marker-icon">{{ milestone.icon }}</div>
+          <div class="marker-line"></div>
+        </div>
+        <div class="timeline-content">
+          <div class="timeline-year">{{ milestone.year }}</div>
+          <h3 class="timeline-title">{{ milestone.title }}</h3>
+          <p class="timeline-description">{{ milestone.description }}</p>
+        </div>
+      </div>
+      }
+    </div>
+  </div>
+</section>
+
+<!-- CTA Section -->
+<section class="about-cta" [class.visible]="isVisible()">
+  <div class="container">
+    <div class="cta-content">
+      <h2 class="cta-title">Ready to Transform Your Space?</h2>
+      <p class="cta-subtitle">
+        Join thousands of satisfied customers who have made Dar Elite part of
+        their home
+      </p>
+      <div class="cta-actions">
+        <button class="btn btn--primary" routerLink="/shop">
+          <span>Explore Collections</span>
+          <svg
+            class="btn-icon"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M17 8l4 4m0 0l-4 4m4-4H3"
+            />
+          </svg>
+        </button>
+        <button class="btn btn--secondary" routerLink="/contact">
+          <span>Contact Us</span>
+          <svg
+            class="btn-icon"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"
+            />
+          </svg>
+        </button>
+      </div>
+    </div>
+  </div>
+</section>

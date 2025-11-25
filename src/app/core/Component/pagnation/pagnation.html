@@ -1,0 +1,86 @@
+@if (totalPages > 1) {
+<nav class="pagination" aria-label="Pagination">
+  <div class="pagination__info">
+    Showing {{ startIndex }} to {{ endIndex }} of {{ totalCount }} entries
+  </div>
+
+  <ul class="pagination__list">
+    @if (boundaryLinks) {
+    <li class="pagination__item">
+      <button
+        class="pagination__link pagination__link--first"
+        (click)="firstPage()"
+        [disabled]="currentPage === 1"
+        aria-label="First page"
+      >
+        <svg viewBox="0 0 24 24" fill="none">
+          <path
+            d="M11 19l-7-7 7-7m8 14l-7-7 7-7"
+            stroke="currentColor"
+            stroke-width="2"
+          />
+        </svg>
+      </button>
+    </li>
+    }
+
+    <li class="pagination__item">
+      <button
+        class="pagination__link pagination__link--prev"
+        (click)="previousPage()"
+        [disabled]="currentPage === 1"
+        aria-label="Previous page"
+      >
+        <svg viewBox="0 0 24 24" fill="none">
+          <path d="M15 19l-7-7 7-7" stroke="currentColor" stroke-width="2" />
+        </svg>
+      </button>
+    </li>
+
+    @for (page of pages; track page) {
+    <li class="pagination__item">
+      <button
+        class="pagination__link"
+        [class.pagination__link--active]="page === currentPage"
+        (click)="goToPage(page)"
+        [attr.aria-current]="page === currentPage ? 'page' : null"
+      >
+        {{ page }}
+      </button>
+    </li>
+    }
+
+    <li class="pagination__item">
+      <button
+        class="pagination__link pagination__link--next"
+        (click)="nextPage()"
+        [disabled]="currentPage === totalPages"
+        aria-label="Next page"
+      >
+        <svg viewBox="0 0 24 24" fill="none">
+          <path d="M9 5l7 7-7 7" stroke="currentColor" stroke-width="2" />
+        </svg>
+      </button>
+    </li>
+
+    @if (boundaryLinks) {
+    <li class="pagination__item">
+      <button
+        class="pagination__link pagination__link--last"
+        (click)="lastPage()"
+        [disabled]="currentPage === totalPages"
+        aria-label="Last page"
+      >
+        <svg viewBox="0 0 24 24" fill="none">
+          <path
+            d="M13 5l7 7-7 7M5 5l7 7-7 7"
+            stroke="currentColor"
+            stroke-width="2"
+          />
+        </svg>
+      </button>
+    </li>
+    }
+  </ul>
+</nav>
+}

@@ -1,0 +1,110 @@
+<div class="success-container">
+  <div class="container">
+    <div class="success-card">
+      <!-- Success Icon -->
+      <div class="success-icon">
+        <div class="icon-circle">
+          <i class="fas fa-check"></i>
+        </div>
+      </div>
+
+      <!-- Success Message -->
+      <div class="success-content">
+        <h1 class="success-title">Order Confirmed!</h1>
+        <p class="success-subtitle">Thank you for your purchase</p>
+
+        <!-- Order Details -->
+        <div class="order-details">
+          <div class="detail-item">
+            <span class="detail-label">Order Number:</span>
+            <span class="detail-value">#{{ orderId() }}</span>
+          </div>
+          <div class="detail-item">
+            <span class="detail-label">Status:</span>
+            <span class="status-badge status-confirmed">Confirmed</span>
+          </div>
+        </div>
+
+        <!-- Confirmation Message -->
+        <div class="confirmation-message">
+          <p>
+            Your order has been successfully processed and is being prepared for
+            shipment.
+          </p>
+          <p>
+            You will receive a confirmation email with tracking information
+            shortly.
+          </p>
+        </div>
+
+        <!-- Next Steps -->
+        <div class="next-steps">
+          <h3 class="steps-title">What's Next?</h3>
+          <div class="steps-list">
+            <div class="step-item">
+              <div class="step-number">1</div>
+              <div class="step-content">
+                <strong>Order Processing</strong>
+                <p>We're preparing your items for shipment</p>
+              </div>
+            </div>
+            <div class="step-item">
+              <div class="step-number">2</div>
+              <div class="step-content">
+                <strong>Shipping</strong>
+                <p>Your order will be shipped within 24 hours</p>
+              </div>
+            </div>
+            <div class="step-item">
+              <div class="step-number">3</div>
+              <div class="step-content">
+                <strong>Delivery</strong>
+                <p>Expected delivery in 3-5 business days</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Action Buttons -->
+        <div class="action-buttons">
+          <button
+            class="btn btn-primary view-order-btn"
+            [routerLink]="getOrderDetailsLink()"
+            [queryParams]="getOrderQueryParams()"
+          >
+            <i class="fas fa-eye"></i>
+            View Order Details
+          </button>
+
+          <button
+            class="btn btn-outline continue-shopping-btn"
+            routerLink="/shop"
+          >
+            <i class="fas fa-shopping-bag"></i>
+            Continue Shopping
+          </button>
+        </div>
+
+        <!-- Support Info -->
+        <div class="support-info">
+          <p class="support-text">
+            Need help?
+            <a routerLink="/contact" class="support-link"
+              >Contact our support team</a
+            >
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Loading State -->
+    @if (isLoading()) {
+    <div class="loading-overlay">
+      <div class="loading-content">
+        <div class="spinner"></div>
+        <p>Loading order confirmation...</p>
+      </div>
+    </div>
+    }
+  </div>
+</div>

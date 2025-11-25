@@ -1,0 +1,153 @@
+<!-- <div class="order-summary-card">
+  <div class="summary-header">
+    <h3>Order Summary</h3>
+  </div>
+
+  <div class="summary-body">
+    <p class="shipping-note">
+      <i class="fas fa-info-circle"></i>
+      Shipping will be calculated at checkout
+    </p>
+
+    @if (basketTotals()) {
+    <div class="summary-details">
+      <div class="summary-row">
+        <span class="label">Subtotal</span>
+        <span class="value">{{ basketTotals()!.subtotal | currency }}</span>
+      </div>
+
+      <div class="summary-row">
+        <span class="label">Shipping</span>
+        <span class="value">{{ basketTotals()!.shipping | currency }}</span>
+      </div>
+
+      <div class="summary-divider"></div>
+
+      <div class="summary-row total">
+        <span class="label">Total</span>
+        <span class="value">{{ basketTotals()!.total | currency }}</span>
+      </div>
+    </div>
+    }
+  </div>
+</div>
+ -->
+<div class="order-total-container">
+  <div class="order-summary-card">
+    <!-- Header Section -->
+    <div class="summary-header">
+      <div class="header-icon">
+        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"
+          />
+        </svg>
+      </div>
+      <div class="header-content">
+        <h3 class="summary-title">Order Summary</h3>
+        <p class="summary-subtitle">Review your order details</p>
+      </div>
+    </div>
+
+    <!-- Shipping Notice -->
+    <div class="shipping-notice">
+      <div class="notice-icon">🚚</div>
+      <div class="notice-content">
+        <span class="notice-text">Shipping calculated at checkout</span>
+        <span class="notice-desc">Free shipping on orders over $500</span>
+      </div>
+    </div>
+
+    <!-- Summary Details -->
+    @if (basketTotals()) {
+    <div class="summary-details">
+      <div class="details-list">
+        <!-- Subtotal -->
+        <div class="detail-item">
+          <div class="detail-info">
+            <span class="detail-label">Subtotal</span>
+            <span class="detail-desc">Total items cost</span>
+          </div>
+          <span class="detail-value"
+            >{{ basketTotals()!.subtotal | currency }}</span
+          >
+        </div>
+
+        <!-- Shipping -->
+        <div class="detail-item">
+          <div class="detail-info">
+            <span class="detail-label">Shipping</span>
+            <span class="detail-desc">Delivery charges</span>
+          </div>
+          <span class="detail-value shipping-value"
+            >{{ basketTotals()!.shipping | currency }}</span
+          >
+        </div>
+
+        <!-- Progress Bar for Free Shipping -->
+        <div class="shipping-progress">
+          <div class="progress-info">
+            <span class="progress-text"
+              >Add ${{ 500 - basketTotals()!.subtotal }} for free shipping</span
+            >
+            <span class="progress-percentage"
+              >{{ (basketTotals()!.subtotal / 500 * 100) | number:'1.0-0'
+              }}%</span
+            >
+          </div>
+          <div class="progress-bar">
+            <div
+              class="progress-fill"
+              [style.width.%]="basketTotals()!.subtotal / 500 * 100"
+            ></div>
+          </div>
+        </div>
+
+        <!-- Divider -->
+        <div class="summary-divider">
+          <div class="divider-line"></div>
+        </div>
+
+        <!-- Total -->
+        <div class="detail-item total-item">
+          <div class="detail-info">
+            <span class="detail-label">Total Amount</span>
+            <span class="detail-desc">Including all charges</span>
+          </div>
+          <div class="total-value-container">
+            <span class="detail-value total-value"
+              >{{ basketTotals()!.total | currency }}</span
+            >
+            <div class="tax-note">Incl. VAT</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    }
+
+    <!-- Empty State -->
+    @if (!basketTotals()) {
+    <div class="empty-state">
+      <div class="empty-icon">🛒</div>
+      <h4 class="empty-title">Your cart is empty</h4>
+      <p class="empty-description">
+        Add some products to see your order summary
+      </p>
+      <button class="empty-action-btn">
+        <span>Start Shopping</span>
+        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"
+          />
+        </svg>
+      </button>
+    </div>
+    }
+  </div>
+</div>

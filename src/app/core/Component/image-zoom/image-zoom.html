@@ -1,0 +1,42 @@
+<div class="image-zoom">
+  <div class="zoom-controls" *ngIf="enableScrollZoom">
+    <button class="zoom-btn" (click)="zoomOut()" title="Zoom Out">
+      <svg viewBox="0 0 24 24" fill="none">
+        <path d="M5 12h14" stroke="currentColor" stroke-width="2" />
+      </svg>
+    </button>
+    <button class="zoom-btn" (click)="resetZoom()" title="Reset Zoom">
+      {{ (scrollZoomLevel * 100).toFixed(0) }}%
+    </button>
+    <button class="zoom-btn" (click)="zoomIn()" title="Zoom In">
+      <svg viewBox="0 0 24 24" fill="none">
+        <path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="2" />
+      </svg>
+    </button>
+  </div>
+
+  <div
+    #imageContainer
+    class="zoom-container"
+    [class.zoom-active]="isZoomActive"
+  >
+    <img
+      [src]="thumbImage"
+      alt="Product image"
+      class="zoom-image"
+      (click)="toggleZoom()"
+    />
+
+    @if (enableLens && lensVisible) {
+    <div #zoomLens class="zoom-lens"></div>
+    }
+  </div>
+
+  @if (enableLens) {
+  <div
+    #zoomResult
+    class="zoom-result"
+    [style.backgroundImage]="'url(' + fullImage + ')'"
+  ></div>
+  }
+</div>

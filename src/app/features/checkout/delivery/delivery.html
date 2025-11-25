@@ -1,0 +1,85 @@
+<div class="delivery-container">
+  <div class="delivery-header">
+    <h2 class="section-title">Delivery Method</h2>
+    <p class="section-subtitle">Choose how you want to receive your order</p>
+  </div>
+
+  <!-- Loading State -->
+  @if (isLoading()) {
+  <div class="loading-state">
+    <div class="spinner"></div>
+    <p>Loading delivery options...</p>
+  </div>
+  }
+
+  <!-- Delivery Options -->
+  @if (!isLoading()) {
+  <form [formGroup]="deliveryForm" class="delivery-form">
+    <div class="delivery-options">
+      @for (delivery of deliveries(); track delivery.id) {
+      <div class="delivery-option">
+        <label class="option-label">
+          <input
+            type="radio"
+            formControlName="delivery"
+            [value]="delivery.id"
+            (change)="onDeliveryChange()"
+            class="option-input"
+          />
+
+          <div class="option-content">
+            <div class="option-header">
+              <h4 class="option-title">{{ delivery.name }}</h4>
+              <span class="option-price">{{ delivery.price | currency }}</span>
+            </div>
+
+            <p class="option-description">{{ delivery.description }}</p>
+
+            <div class="option-meta">
+              <span class="delivery-time">
+                <i class="fas fa-clock"></i>
+                {{ delivery.deliveryTime }} days delivery
+              </span>
+            </div>
+          </div>
+        </label>
+      </div>
+      }
+    </div>
+
+    <!-- Selected Delivery Summary -->
+    @if (selectedDelivery()) {
+    <div class="selected-delivery-summary">
+      <div class="summary-header">
+        <i class="fas fa-shipping-fast"></i>
+        <h4>Selected Delivery</h4>
+      </div>
+      <div class="summary-details">
+        <p><strong>{{ selectedDelivery()!.name }}</strong></p>
+        <p>{{ selectedDelivery()!.description }}</p>
+        <p>Delivery in {{ selectedDelivery()!.deliveryTime }} days</p>
+        <p class="price">{{ selectedDelivery()!.price | currency }}</p>
+      </div>
+    </div>
+    }
+
+    <!-- Action Buttons -->
+    <div class="form-actions">
+      <button type="button" class="btn btn-outline" (click)="onPrevious()">
+        <i class="fas fa-arrow-left"></i>
+        Back to Address
+      </button>
+
+      <button
+        type="button"
+        class="btn btn-success next-btn"
+        (click)="onNext()"
+        [disabled]="!deliveryForm.valid"
+      >
+        Continue to Payment
+        <i class="fas fa-arrow-right"></i>
+      </button>
+    </div>
+  </form>
+  }
+</div>

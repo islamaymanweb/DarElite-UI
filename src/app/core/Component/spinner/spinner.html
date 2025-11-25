@@ -1,0 +1,15 @@
+@if (shouldShow()) {
+<div class="spinner-wrapper" [class.overlay]="overlay">
+  <div class="spinner" [class]="'spinner--' + size + ' spinner--' + color">
+    <div class="spinner__circle">
+      <div class="spinner__segment"></div>
+      <div class="spinner__segment"></div>
+      <div class="spinner__segment"></div>
+      <div class="spinner__segment"></div>
+    </div>
+  </div>
+  @if (text) {
+  <p class="spinner__text">{{ text }}</p>
+  }
+</div>
+}

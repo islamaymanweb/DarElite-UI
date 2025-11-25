@@ -1,0 +1,169 @@
+<div class="address-container">
+  <div class="address-header">
+    <h2 class="section-title">Shipping Address</h2>
+    <p class="section-subtitle">Where should we deliver your order?</p>
+  </div>
+
+  <!-- Loading State -->
+  @if (isLoading()) {
+  <div class="loading-state">
+    <div class="spinner"></div>
+    <p>Loading your address...</p>
+  </div>
+  }
+
+  <!-- Address Form -->
+  @if (!isLoading()) {
+  <div class="address-form-container">
+    <!-- Edit Toggle -->
+    <div class="edit-toggle">
+      <button
+        type="button"
+        class="edit-btn"
+        (click)="toggleEdit()"
+        [class]="canEdit() ? 'btn-success' : 'btn-outline'"
+      >
+        <i
+          class="fas"
+          [class.fa-edit]="!canEdit()"
+          [class.fa-lock]="canEdit()"
+        ></i>
+        {{ canEdit() ? 'Editing Enabled' : 'Edit Address' }}
+      </button>
+    </div>
+
+    <form [formGroup]="addressForm" class="address-form">
+      <div class="form-row">
+        <div class="form-group">
+          <label for="firstName" class="form-label">First Name</label>
+          <input
+            id="firstName"
+            type="text"
+            formControlName="firstName"
+            placeholder="Enter your first name"
+            [readonly]="!canEdit()"
+            class="form-control"
+            [class.readonly]="!canEdit()"
+          />
+          @if (addressForm.get('firstName')?.invalid &&
+          addressForm.get('firstName')?.touched) {
+          <div class="error-message">First name is required</div>
+          }
+        </div>
+
+        <div class="form-group">
+          <label for="lastName" class="form-label">Last Name</label>
+          <input
+            id="lastName"
+            type="text"
+            formControlName="lastName"
+            placeholder="Enter your last name"
+            [readonly]="!canEdit()"
+            class="form-control"
+            [class.readonly]="!canEdit()"
+          />
+          @if (addressForm.get('lastName')?.invalid &&
+          addressForm.get('lastName')?.touched) {
+          <div class="error-message">Last name is required</div>
+          }
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="street" class="form-label">Street Address</label>
+        <input
+          id="street"
+          type="text"
+          formControlName="street"
+          placeholder="Enter your street address"
+          [readonly]="!canEdit()"
+          class="form-control"
+          [class.readonly]="!canEdit()"
+        />
+        @if (addressForm.get('street')?.invalid &&
+        addressForm.get('street')?.touched) {
+        <div class="error-message">Street address is required</div>
+        }
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label for="city" class="form-label">City</label>
+          <input
+            id="city"
+            type="text"
+            formControlName="city"
+            placeholder="Enter your city"
+            [readonly]="!canEdit()"
+            class="form-control"
+            [class.readonly]="!canEdit()"
+          />
+          @if (addressForm.get('city')?.invalid &&
+          addressForm.get('city')?.touched) {
+          <div class="error-message">City is required</div>
+          }
+        </div>
+
+        <div class="form-group">
+          <label for="state" class="form-label">State</label>
+          <input
+            id="state"
+            type="text"
+            formControlName="state"
+            placeholder="Enter your state"
+            [readonly]="!canEdit()"
+            class="form-control"
+            [class.readonly]="!canEdit()"
+          />
+          @if (addressForm.get('state')?.invalid &&
+          addressForm.get('state')?.touched) {
+          <div class="error-message">State is required</div>
+          }
+        </div>
+
+        <div class="form-group">
+          <label for="zipCode" class="form-label">ZIP Code</label>
+          <input
+            id="zipCode"
+            type="text"
+            formControlName="zipCode"
+            placeholder="Enter your ZIP code"
+            [readonly]="!canEdit()"
+            class="form-control"
+            [class.readonly]="!canEdit()"
+          />
+          @if (addressForm.get('zipCode')?.invalid &&
+          addressForm.get('zipCode')?.touched) {
+          <div class="error-message">ZIP code is required</div>
+          }
+        </div>
+      </div>
+
+      <!-- Action Buttons -->
+      <div class="form-actions">
+        @if (canEdit()) {
+        <button
+          type="button"
+          class="btn btn-primary"
+          (click)="updateAddress()"
+          [disabled]="addressForm.invalid"
+        >
+          <i class="fas fa-save"></i>
+          Save Changes
+        </button>
+        }
+
+        <button
+          type="button"
+          class="btn btn-success next-btn"
+          (click)="onNext()"
+          [disabled]="addressForm.invalid"
+        >
+          Continue to Delivery
+          <i class="fas fa-arrow-right"></i>
+        </button>
+      </div>
+    </form>
+  </div>
+  }
+</div>

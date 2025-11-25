@@ -1,0 +1,743 @@
+/* @use '../../../styles/variables' as *;
+
+.delivery-container {
+  .delivery-header {
+    margin-bottom: $space-6;
+    
+    .section-title {
+      font-size: $text-2xl;
+      font-weight: $font-semibold;
+      color: $gray-900;
+      margin-bottom: $space-2;
+    }
+    
+    .section-subtitle {
+      color: $gray-600;
+    }
+  }
+}
+
+.delivery-options {
+  display: flex;
+  flex-direction: column;
+  gap: $space-4;
+  margin-bottom: $space-6;
+}
+
+.delivery-option {
+  .option-label {
+    display: block;
+    cursor: pointer;
+    
+    .option-input {
+      display: none;
+      
+      &:checked + .option-content {
+        border-color: $primary-500;
+        background: rgba($primary-500, 0.05);
+        
+        .option-title {
+          color: $primary-700;
+        }
+      }
+    }
+    
+    .option-content {
+      padding: $space-4;
+      border: 2px solid $gray-200;
+      border-radius: $border-lg;
+      transition: all $transition-base $ease-in-out;
+      
+      &:hover {
+        border-color: $primary-300;
+      }
+    }
+  }
+  
+  .option-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: $space-2;
+    
+    .option-title {
+      font-size: $text-lg;
+      font-weight: $font-semibold;
+      color: $gray-900;
+      margin: 0;
+    }
+    
+    .option-price {
+      font-size: $text-lg;
+      font-weight: $font-bold;
+      color: $primary-600;
+    }
+  }
+  
+  .option-description {
+    color: $gray-600;
+    margin-bottom: $space-3;
+    line-height: $leading-relaxed;
+  }
+  
+  .option-meta {
+    .delivery-time {
+      display: flex;
+      align-items: center;
+      gap: $space-2;
+      color: $gray-500;
+      font-size: $text-sm;
+    }
+  }
+}
+
+.selected-delivery-summary {
+  background: $primary-50;
+  border: 1px solid $primary-200;
+  border-radius: $border-lg;
+  padding: $space-4;
+  margin-bottom: $space-6;
+  
+  .summary-header {
+    display: flex;
+    align-items: center;
+    gap: $space-2;
+    margin-bottom: $space-3;
+    
+    i {
+      color: $primary-500;
+    }
+    
+    h4 {
+      margin: 0;
+      color: $primary-700;
+    }
+  }
+  
+  .summary-details {
+    p {
+      margin: $space-1 0;
+      color: $gray-700;
+      
+      &.price {
+        font-weight: $font-bold;
+        color: $primary-600;
+        font-size: $text-lg;
+      }
+    }
+  }
+}
+
+.form-actions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: $space-8;
+  padding-top: $space-6;
+  border-top: 1px solid $gray-200;
+  
+  .next-btn {
+    display: flex;
+    align-items: center;
+    gap: $space-2;
+  }
+}
+
+.loading-state {
+  text-align: center;
+  padding: $space-8;
+  
+  .spinner {
+    width: 40px;
+    height: 40px;
+    border: 4px solid $primary-200;
+    border-left: 4px solid $primary-500;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    margin: 0 auto $space-4;
+  }
+  
+  p {
+    color: $gray-600;
+  }
+}  */
+  @use '../../../styles/variables' as *;
+
+.delivery-container {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 2rem 1rem;
+}
+
+// Header Section
+.delivery-header {
+  text-align: center;
+  margin-bottom: 3rem;
+  position: relative;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: -20px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80px;
+    height: 4px;
+    background: linear-gradient(90deg, $primary-500, $accent-warm);
+    border-radius: 2px;
+  }
+
+  .section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: $primary-800;
+    margin-bottom: 0.5rem;
+    background: linear-gradient(135deg, $primary-700 0%, $accent-warm 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .section-subtitle {
+    font-size: 1.1rem;
+    color: $gray-600;
+    margin: 0;
+    line-height: 1.6;
+  }
+}
+
+// Loading State
+.loading-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 4rem 2rem;
+  text-align: center;
+  background: $white;
+  border-radius: 20px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
+
+  .spinner {
+    width: 60px;
+    height: 60px;
+    border: 4px solid rgba($primary-500, 0.2);
+    border-top: 4px solid $primary-600;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    margin-bottom: 1.5rem;
+  }
+
+  p {
+    color: $gray-600;
+    font-size: 1.1rem;
+    margin: 0;
+    font-weight: 500;
+  }
+}
+
+// Delivery Form
+.delivery-form {
+  background: $white;
+  border-radius: 20px;
+  box-shadow: 0 15px 50px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  border: 1px solid rgba($primary-500, 0.1);
+}
+
+// Delivery Options
+.delivery-options {
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+
+  @media (max-width: 768px) {
+    padding: 1.5rem;
+  }
+}
+
+.delivery-option {
+  position: relative;
+  transition: all 0.3s ease;
+
+  &:hover {
+    transform: translateY(-2px);
+  }
+
+  .option-label {
+    display: block;
+    cursor: pointer;
+    border: 2px solid rgba($primary-500, 0.1);
+    border-radius: 16px;
+    padding: 1.5rem;
+    background: $white;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+
+    &::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba($primary-500, 0.05), transparent);
+      transition: left 0.6s ease;
+    }
+
+    &:hover::before {
+      left: 100%;
+    }
+
+    // Selected state
+    &:has(.option-input:checked) {
+      border-color: $primary-500;
+      background: linear-gradient(135deg, rgba($primary-500, 0.03) 0%, rgba($accent-warm, 0.03) 100%);
+      box-shadow: 0 8px 30px rgba($primary-500, 0.15);
+
+      &::after {
+        content: '✓';
+        position: absolute;
+        top: 1rem;
+        right: 1rem;
+        width: 24px;
+        height: 24px;
+        background: linear-gradient(135deg, $primary-500, $accent-warm);
+        color: $white;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 0.8rem;
+        font-weight: bold;
+        animation: checkmark 0.3s ease;
+      }
+    }
+  }
+
+  .option-input {
+    display: none;
+  }
+
+  .option-content {
+    pointer-events: none;
+  }
+
+  .option-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 0.75rem;
+
+    @media (max-width: 480px) {
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+  }
+
+  .option-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.3rem;
+    font-weight: 600;
+    color: $primary-700;
+    margin: 0;
+    flex: 1;
+  }
+
+  .option-price {
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: $primary-600;
+    background: linear-gradient(135deg, $primary-600, $accent-warm);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .option-description {
+    color: $gray-600;
+    margin: 0 0 1rem 0;
+    line-height: 1.5;
+    font-size: 0.95rem;
+  }
+
+  .option-meta {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+
+  .delivery-time {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.4rem 0.8rem;
+    background: rgba($primary-500, 0.1);
+    color: $primary-600;
+    border-radius: 6px;
+    font-size: 0.85rem;
+    font-weight: 500;
+
+    i {
+      font-size: 0.8rem;
+    }
+  }
+}
+
+// Selected Delivery Summary
+.selected-delivery-summary {
+  margin: 2rem;
+  padding: 2rem;
+  background: linear-gradient(135deg, rgba($success, 0.05) 0%, rgba($primary-500, 0.05) 100%);
+  border: 2px solid rgba($success, 0.2);
+  border-radius: 16px;
+  animation: slideUp 0.5s ease;
+
+  @media (max-width: 768px) {
+    margin: 1.5rem;
+    padding: 1.5rem;
+  }
+
+  .summary-header {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 1rem;
+
+    i {
+      font-size: 1.5rem;
+      color: $success;
+      background: rgba($success, 0.1);
+      padding: 0.5rem;
+      border-radius: 50%;
+    }
+
+    h4 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.3rem;
+      color: $primary-700;
+      margin: 0;
+    }
+  }
+
+  .summary-details {
+    p {
+      margin: 0.5rem 0;
+      color: $gray-700;
+      line-height: 1.5;
+
+      &:first-child {
+        font-weight: 600;
+        color: $primary-600;
+        font-size: 1.1rem;
+      }
+
+      &.price {
+        font-size: 1.3rem;
+        font-weight: 700;
+        color: $primary-600;
+        margin-top: 1rem;
+        padding-top: 1rem;
+        border-top: 1px solid rgba($primary-500, 0.2);
+      }
+    }
+  }
+}
+
+// Form Actions
+.form-actions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 2rem;
+  background: rgba($primary-500, 0.02);
+  border-top: 1px solid rgba($primary-500, 0.1);
+  gap: 1rem;
+
+  @media (max-width: 768px) {
+    flex-direction: column-reverse;
+    padding: 1.5rem;
+  }
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 1rem 2rem;
+  border: none;
+  border-radius: 12px;
+  font-weight: 600;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-decoration: none;
+  position: relative;
+  overflow: hidden;
+
+  &:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    transform: none !important;
+    box-shadow: none !important;
+  }
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba($white, 0.2), transparent);
+    transition: left 0.5s ease;
+  }
+
+  &:hover:not(:disabled)::before {
+    left: 100%;
+  }
+
+  i {
+    font-size: 0.9rem;
+    transition: transform 0.3s ease;
+  }
+
+  &:hover:not(:disabled) i {
+    transform: translateX(-2px);
+  }
+}
+
+.btn-outline {
+  background: transparent;
+  border: 2px solid $primary-500;
+  color: $primary-600;
+
+  &:hover:not(:disabled) {
+    background: $primary-500;
+    color: $white;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba($primary-500, 0.3);
+  }
+
+  &:hover:not(:disabled) i {
+    transform: translateX(-3px);
+  }
+}
+
+.btn-success {
+  background: linear-gradient(135deg, $success, darken($success, 10%));
+  color: $white;
+  box-shadow: 0 4px 15px rgba($success, 0.3);
+  min-width: 200px;
+  justify-content: center;
+
+  &:hover:not(:disabled) {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba($success, 0.4);
+  }
+
+  &:hover:not(:disabled) i {
+    transform: translateX(2px);
+  }
+
+  @media (max-width: 768px) {
+    min-width: 100%;
+    order: -1;
+  }
+}
+
+.next-btn:not(:disabled) {
+  animation: pulseSuccess 2s infinite;
+}
+
+// Animations
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+@keyframes checkmark {
+  0% {
+    transform: scale(0);
+    opacity: 0;
+  }
+  70% {
+    transform: scale(1.2);
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes pulseSuccess {
+  0%, 100% {
+    box-shadow: 0 4px 15px rgba($success, 0.3);
+  }
+  50% {
+    box-shadow: 0 4px 25px rgba($success, 0.5);
+  }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+// Apply animations
+.delivery-form {
+  animation: fadeInUp 0.6s ease;
+}
+
+.delivery-option {
+  animation: fadeInUp 0.6s ease both;
+}
+
+// Stagger animations for delivery options
+.delivery-option:nth-child(1) { animation-delay: 0.1s; }
+.delivery-option:nth-child(2) { animation-delay: 0.2s; }
+.delivery-option:nth-child(3) { animation-delay: 0.3s; }
+.delivery-option:nth-child(4) { animation-delay: 0.4s; }
+.delivery-option:nth-child(5) { animation-delay: 0.5s; }
+
+// Delivery Method Icons based on type
+.delivery-option {
+  &[class*="standard"] .option-title::before {
+    content: '🚚 ';
+  }
+  
+  &[class*="express"] .option-title::before {
+    content: '⚡ ';
+  }
+  
+  &[class*="premium"] .option-title::before {
+    content: '⭐ ';
+  }
+  
+  &[class*="white-glove"] .option-title::before {
+    content: '👔 ';
+  }
+}
+
+// Responsive Design
+@media (max-width: 768px) {
+  .delivery-container {
+    padding: 1rem 0.5rem;
+  }
+
+  .delivery-header {
+    margin-bottom: 2rem;
+
+    .section-title {
+      font-size: 2rem;
+    }
+  }
+
+  .delivery-options {
+    gap: 0.75rem;
+  }
+
+  .delivery-option .option-label {
+    padding: 1.25rem;
+  }
+
+  .option-header {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .option-title {
+    font-size: 1.1rem;
+  }
+
+  .option-price {
+    font-size: 1.2rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .delivery-header .section-title {
+    font-size: 1.75rem;
+  }
+
+  .delivery-option .option-label {
+    padding: 1rem;
+  }
+
+  .option-meta {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+
+  .form-actions {
+    gap: 0.75rem;
+  }
+
+  .btn {
+    padding: 0.875rem 1.5rem;
+    font-size: 0.95rem;
+  }
+}
+
+// Empty state (if no delivery methods)
+.delivery-options:empty::after {
+  content: 'No delivery methods available at the moment.';
+  text-align: center;
+  color: $gray-500;
+  padding: 3rem 2rem;
+  font-style: italic;
+}
+
+// Dark mode support
+@media (prefers-color-scheme: dark) {
+  .delivery-form {
+    background: lighten($primary-900, 5%);
+    border-color: rgba($primary-500, 0.2);
+  }
+
+  .delivery-option .option-label {
+    background: rgba($white, 0.05);
+    border-color: rgba($white, 0.1);
+    color: $white;
+
+    &:has(.option-input:checked) {
+      background: rgba($primary-500, 0.1);
+      border-color: $primary-500;
+    }
+  }
+
+  .option-title {
+    color: rgba($white, 0.9);
+  }
+
+  .option-description {
+    color: rgba($white, 0.7);
+  }
+
+  .selected-delivery-summary {
+    background: rgba($success, 0.1);
+    border-color: rgba($success, 0.3);
+  }
+}
