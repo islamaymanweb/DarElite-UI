@@ -1,7 +1,7 @@
-<section class="activation-section">
+<!-- <section class="activation-section">
   <div class="activation-container">
     <div class="activation-card">
-      <!-- حالة التحميل -->
+      
       @if (isLoading()) {
         <div class="loading-state">
           <div class="spinner"></div>
@@ -10,7 +10,7 @@
         </div>
       }
       
-      <!-- حالة النجاح -->
+    
       @if (!isLoading() && activationSuccess()) {
         <div class="success-state">
           <div class="success-icon">
@@ -28,8 +28,7 @@
           </div>
         </div>
       }
-      
-      <!-- حالة الفشل -->
+       
       @if (!isLoading() && !activationSuccess() && activationError()) {
         <div class="error-state">
           <div class="error-icon">
@@ -47,6 +46,75 @@
             </a>
           </div>
         </div>
+      }
+    </div>
+  </div>
+</section>
+ -->
+<section class="activation-section">
+  <div class="activation-container">
+    <div class="activation-card">
+      <!-- Loading State -->
+      @if (isLoading()) {
+      <div class="loading-state">
+        <div class="spinner"></div>
+        <h3>Activating Account...</h3>
+        <p>Please wait while we activate your account</p>
+      </div>
+      }
+
+      <!-- Success State -->
+      @if (!isLoading() && activationSuccess()) {
+      <div class="success-state">
+        <div class="success-icon">
+          <svg width="64" height="64" viewBox="0 0 24 24" fill="none">
+            <path
+              d="M9 12L11 14L15 10M21 12C21 16.9706 16.9706 21 12 21C7.02944 21 3 16.9706 3 12C3 7.02944 7.02944 3 12 3C16.9706 3 21 7.02944 21 12Z"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
+          </svg>
+        </div>
+        <h3>Account Activated Successfully!</h3>
+        <p>
+          Your account has been successfully activated. You can now sign in to
+          your account. You will be automatically redirected to the login page
+          in a few moments...
+        </p>
+        <div class="auth-actions">
+          <a routerLink="/login" class="btn btn-primary"> Go to Login </a>
+        </div>
+      </div>
+      }
+
+      <!-- Error State -->
+      @if (!isLoading() && !activationSuccess() && activationError()) {
+      <div class="error-state">
+        <div class="error-icon">
+          <svg width="64" height="64" viewBox="0 0 24 24" fill="none">
+            <path
+              d="M12 8V12M12 16H12.01M21 12C21 16.9706 16.9706 21 12 21C7.02944 21 3 16.9706 3 12C3 7.02944 7.02944 3 12 3C16.9706 3 21 7.02944 21 12Z"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
+          </svg>
+        </div>
+        <h3>Account Activation Failed</h3>
+        <p>{{ activationError() }}</p>
+        <p class="text-muted">
+          Please check your activation link or request a new one. You will be
+          automatically redirected to the registration page in a few moments...
+        </p>
+        <div class="auth-actions">
+          <a routerLink="/register" class="btn btn-primary">
+            Back to Registration
+          </a>
+        </div>
+      </div>
       }
     </div>
   </div>

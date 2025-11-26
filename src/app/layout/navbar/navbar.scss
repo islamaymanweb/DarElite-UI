@@ -269,22 +269,18 @@ $breakpoint-lg: 1024px;
 
   &.active {
     color: $primary-600;
-    background: rgba($primary-500, 0.1);
-
-    .link__active-indicator {
-      transform: translateX(-50%) scaleX(1);
-    }
+ 
+   background: rgb(184 117 6 / 10%);
+ 
   }
 }
-
-// ===== Actions Container =====
+ 
 .navbar__actions {
   display: flex;
   align-items: center;
   gap: $space-3;
 }
-
-// ===== Action Buttons =====
+ 
 .action-btn {
   position: relative;
   display: flex;
@@ -317,8 +313,7 @@ $breakpoint-lg: 1024px;
     transform: scale(1.1);
   }
 }
-
-// ===== User Dropdown =====
+ 
 .user-dropdown {
   position: relative;
 

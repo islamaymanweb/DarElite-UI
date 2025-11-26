@@ -1,0 +1,111 @@
+<div class="dashboard-container">
+  <!-- Welcome Section -->
+  <div class="welcome-section">
+    <div class="welcome-content">
+      <h1 class="welcome-title">Welcome to Dar Elite Admin</h1>
+      <p class="welcome-subtitle">
+        Manage your store efficiently with our powerful dashboard
+      </p>
+      <div class="date-display">{{ today | date:'fullDate' }}</div>
+    </div>
+  </div>
+
+  <!-- Statistics Grid -->
+  <div class="stats-grid">
+    <div class="stat-card orders-card">
+      <div class="stat-icon">🛒</div>
+      <div class="stat-value">{{ stats.totalOrders.toLocaleString() }}</div>
+      <div class="stat-label">Total Orders</div>
+      <div class="stat-growth" [class]="getGrowthClass(stats.ordersGrowth)">
+        <span class="growth-arrow"
+          >{{ getGrowthArrow(stats.ordersGrowth) }}</span
+        >
+        {{ getAbsoluteValue(stats.ordersGrowth) }}% from last month
+      </div>
+    </div>
+
+    <div class="stat-card products-card">
+      <div class="stat-icon">📦</div>
+      <div class="stat-value">{{ stats.totalProducts }}</div>
+      <div class="stat-label">Total Products</div>
+      <div class="stat-growth" [class]="getGrowthClass(stats.productsGrowth)">
+        <span class="growth-arrow"
+          >{{ getGrowthArrow(stats.productsGrowth) }}</span
+        >
+        {{ getAbsoluteValue(stats.productsGrowth) }}% from last month
+      </div>
+    </div>
+
+    <div class="stat-card categories-card">
+      <div class="stat-icon">📁</div>
+      <div class="stat-value">{{ stats.totalCategories }}</div>
+      <div class="stat-label">Categories</div>
+      <div class="stat-growth positive">
+        <span class="growth-arrow">↗</span>
+        Well organized
+      </div>
+    </div>
+
+    <div class="stat-card revenue-card">
+      <div class="stat-icon">💰</div>
+      <div class="stat-value">{{ formatCurrency(stats.totalRevenue) }}</div>
+      <div class="stat-label">Total Revenue</div>
+      <div class="stat-growth" [class]="getGrowthClass(stats.revenueGrowth)">
+        <span class="growth-arrow"
+          >{{ getGrowthArrow(stats.revenueGrowth) }}</span
+        >
+        {{ getAbsoluteValue(stats.revenueGrowth) }}% from last month
+      </div>
+    </div>
+  </div>
+
+  <!-- Main Content Grid -->
+  <div class="content-grid">
+    <!-- Left Column -->
+    <div class="left-column">
+      <!-- Quick Actions -->
+      <div class="quick-actions-section">
+        <h2 class="section-title">Quick Actions</h2>
+        <div class="actions-grid">
+          <a
+            *ngFor="let action of quickActions"
+            [routerLink]="action.link"
+            class="action-card"
+            [class]="action.color"
+          >
+            <span class="action-icon">{{ action.icon }}</span>
+            <h3 class="action-title">{{ action.title }}</h3>
+            <p class="action-description">{{ action.description }}</p>
+          </a>
+        </div>
+      </div>
+
+      <!-- Charts Section -->
+      <div class="charts-section">
+        <h2 class="section-title">Sales Overview</h2>
+        <div class="chart-placeholder">📊 Sales Chart - Integration Ready</div>
+      </div>
+    </div>
+
+    <!-- Right Column -->
+    <div class="right-column">
+      <!-- Recent Activities -->
+      <div class="recent-activities">
+        <h2 class="section-title">Recent Activities</h2>
+        <div class="activities-list">
+          <div
+            *ngFor="let activity of recentActivities"
+            class="activity-item"
+            [class]="activity.color"
+          >
+            <div class="activity-icon">{{ activity.icon }}</div>
+            <div class="activity-content">
+              <div class="activity-message">{{ activity.message }}</div>
+              <div class="activity-time">{{ activity.time }}</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

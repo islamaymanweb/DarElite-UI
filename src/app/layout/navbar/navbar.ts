@@ -262,12 +262,21 @@ export class Navbar  implements OnInit, OnDestroy {
   private activeLinkIndex = 0;
 
   // Data
-  navigationLinks: NavigationLink[] = [
+ /*  navigationLinks: NavigationLink[] = [
     { label: 'Home', path: '/', icon: '🏠' },
     { label: 'Shop', path: '/shop', icon: '🛍️' },
     { label: 'About', path: '/about', icon: 'ℹ️' },
     { label: 'Contact', path: '/contact', icon: '📞' },
   ];
+ */
+navigationLinks = [
+  { label: 'Home', path: '/', icon: '🏘' },
+  { label: 'Shop', path: '/shop', icon: '👜' },
+  { label: 'About', path: '/about', icon: '❕' },
+  { label: 'Contact', path: '/contact', icon: '✉' },
+];
+
+
 
   userMenuItems: UserMenuItem[] = [
     { label: 'My Profile', path: '/account/profile', icon: '👤' },

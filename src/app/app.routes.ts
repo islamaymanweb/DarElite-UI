@@ -1,7 +1,8 @@
 import { Routes } from '@angular/router';
 import { Home } from './features/home/home';
 import { authGuard } from './core/guard/auth-guard';
-import { CategoryList } from './dashboard/categories/category-list/category-list';
+ 
+import { Dashboard } from './dashboard/dashboard/dashboard';
  
 export const routes: Routes = 
 [
@@ -70,6 +71,7 @@ export const routes: Routes =
     loadComponent: () => import('./features/checkout/success/success').then(m => m.Success ),
     canActivate: [authGuard]
   },
+    { path: 'dashboard', component: Dashboard  },
     { path: 'categories', 
        loadComponent: () => import('./dashboard/categories/category-list/category-list').then(m => m.CategoryList )
      },
