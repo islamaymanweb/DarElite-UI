@@ -1,89 +1,111 @@
+// toast.component.scss
 @use '../../../styles/variables' as *;
+/* 
 .toast {
-  background: $white !important;
+  background: $white;
   border-radius: $border-lg;
-  box-shadow: $shadow-xl !important;
+  box-shadow: $shadow-xl;
   border-left: 4px solid;
-  min-width: 320px;
-  max-width: 400px;
+  min-width: 380px;
+  max-width: 420px;
   margin-bottom: $space-3;
   overflow: hidden;
-  animation: toastSlideIn 0.3s $ease-out;
+  animation: toastSlideIn 0.4s $ease-out;
+  font-family: $font-primary;
   position: relative;
-  z-index: 100000;
-  display: block !important;
-  visibility: visible !important;
-  opacity: 1 !important;
+  z-index: $z-toast;
 
+  // أنواع الـ Toasts
   &--success {
     border-left-color: $success;
+    .toast__icon { color: $success; }
   }
 
   &--error {
     border-left-color: $error;
+    .toast__icon { color: $error; }
   }
 
   &--warning {
     border-left-color: $warning;
+    .toast__icon { color: $warning; }
   }
 
   &--info {
     border-left-color: $info;
+    .toast__icon { color: $info; }
   }
 
+  // الهيدر
   &__header {
     display: flex;
     align-items: flex-start;
     gap: $space-3;
     padding: $space-4;
+    background: linear-gradient(135deg, $white 0%, $primary-50 100%);
   }
 
+  // الأيقونة
   &__icon {
     flex-shrink: 0;
     width: 24px;
     height: 24px;
     margin-top: 2px;
+    
+    svg {
+      width: 100%;
+      height: 100%;
+    }
   }
 
+  // المحتوى
   &__content {
     flex: 1;
     min-width: 0;
   }
 
   &__title {
-    font-family: $font-primary;
     font-size: $text-base;
     font-weight: $font-semibold;
-    color: $gray-900;
+    color: $primary-800;
     margin: 0 0 $space-1;
     line-height: $leading-tight;
+    font-family: $font-primary;
   }
 
   &__message {
-    font-family: $font-primary;
     font-size: $text-sm;
-    color: $gray-600;
+    color: $secondary-600;
     margin: 0;
     line-height: $leading-snug;
+    font-family: $font-primary;
   }
 
+  // زر الإغلاق
   &__close {
     flex-shrink: 0;
     background: none;
     border: none;
-    width: 20px;
-    height: 20px;
-    color: $gray-400;
+    width: 32px;
+    height: 32px;
+    color: $secondary-400;
     cursor: pointer;
-    border-radius: $border-sm;
+    border-radius: $border-full;
     display: flex;
     align-items: center;
     justify-content: center;
     transition: all $transition-fast $ease-in-out;
+    margin-top: -4px;
+    margin-right: -4px;
 
     &:hover {
-      color: $gray-600;
-      background: $gray-100;
+      color: $secondary-600;
+      background: $secondary-100;
+      transform: scale(1.1);
+    }
+
+    &:active {
+      transform: scale(0.95);
     }
 
     svg {
@@ -92,57 +114,560 @@
     }
   }
 
+  // شريط التقدم
   &__progress {
     height: 3px;
-    background: $gray-200;
+    background: $secondary-200;
     overflow: hidden;
+    position: relative;
   }
 
   &__progress-bar {
     height: 100%;
-    background: currentColor;
     transition: width 0.05s linear;
+    border-radius: 0 $border-full $border-full 0;
 
     .toast--success & {
-      background: $success;
+      background: linear-gradient(90deg, $success, lighten($success, 15%));
     }
 
     .toast--error & {
-      background: $error;
+      background: linear-gradient(90deg, $error, lighten($error, 15%));
     }
 
     .toast--warning & {
-      background: $warning;
+      background: linear-gradient(90deg, $warning, lighten($warning, 15%));
     }
 
     .toast--info & {
-      background: $info;
+      background: linear-gradient(90deg, $info, lighten($info, 15%));
     }
   }
 }
 
+// Animations
 @keyframes toastSlideIn {
   from {
-    transform: translateX(100%);
+    transform: translateX(100%) scale(0.9);
     opacity: 0;
   }
   to {
-    transform: translateX(0);
+    transform: translateX(0) scale(1);
     opacity: 1;
   }
 }
 
 @keyframes toastSlideOut {
   from {
-    transform: translateX(0);
+    transform: translateX(0) scale(1);
     opacity: 1;
   }
   to {
-    transform: translateX(100%);
+    transform: translateX(100%) scale(0.9);
     opacity: 0;
   }
 }
 
-.toast-leave {
+.toast-exit {
   animation: toastSlideOut 0.3s $ease-in forwards;
+}
+
+// تأثيرات Hover
+.toast {
+  transition: all $transition-base $ease-out;
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: $shadow-2xl;
+    
+    .toast__header {
+      background: linear-gradient(135deg, $primary-50 0%, $primary-100 100%);
+    }
+  }
+} */
+ /* 
+.toast {
+  background: $white;
+  border-radius: $border-xl;
+  box-shadow: $shadow-xl;
+  border-left: 4px solid $primary-500;
+  padding: $space-4;
+  position: relative;
+  overflow: hidden;
+  animation: toastSlideIn 0.3s $ease-out;
+  transition: all $transition-base $ease-in-out;
+  
+  // Hover effects
+  &:hover {
+    transform: translateX(-4px);
+    box-shadow: $shadow-2xl;
+  }
+  
+  // Different toast types
+  &.toast-success {
+    border-left-color: $success;
+    
+    .toast-icon {
+      background: rgba($success, 0.1);
+      color: $success;
+    }
+  }
+  
+  &.toast-error {
+    border-left-color: $error;
+    
+    .toast-icon {
+      background: rgba($error, 0.1);
+      color: $error;
+    }
+  }
+  
+  &.toast-warning {
+    border-left-color: $warning;
+    
+    .toast-icon {
+      background: rgba($warning, 0.1);
+      color: $warning;
+    }
+  }
+  
+  &.toast-info {
+    border-left-color: $info;
+    
+    .toast-icon {
+      background: rgba($info, 0.1);
+      color: $info;
+    }
+  }
+  
+  // Exiting animation
+  &.toast-exit {
+    animation: toastSlideOut 0.3s $ease-in forwards;
+  }
+}
+
+.toast-header {
+  display: flex;
+  align-items: flex-start;
+  gap: $space-3;
+  margin-bottom: $space-2;
+}
+
+.toast-icon {
+  width: 32px;
+  height: 32px;
+  border-radius: $border-full;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  background: rgba($primary-500, 0.1);
+  color: $primary-500;
+  
+  svg {
+    width: 16px;
+    height: 16px;
+  }
+}
+
+.toast-content {
+  flex: 1;
+  min-width: 0;
+}
+
+.toast-title {
+  font-size: $text-base;
+  font-weight: $font-semibold;
+  color: $primary-900;
+  margin-bottom: $space-1;
+  line-height: $leading-tight;
+}
+
+.toast-message {
+  font-size: $text-sm;
+  color: $gray-600;
+  line-height: $leading-snug;
+  word-wrap: break-word;
+}
+
+.toast-close {
+  background: none;
+  border: none;
+  color: $gray-400;
+  cursor: pointer;
+  padding: $space-1;
+  border-radius: $border-sm;
+  transition: all $transition-fast $ease-in-out;
+  flex-shrink: 0;
+  
+  &:hover {
+    background: $gray-100;
+    color: $gray-600;
+  }
+  
+  svg {
+    width: 16px;
+    height: 16px;
+  }
+}
+
+.toast-progress {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  height: 3px;
+  background: linear-gradient(90deg, $primary-500, rgba($primary-500, 0.7));
+  border-radius: 0 0 0 $border-sm;
+  width: 100%;
+  transform-origin: left;
+  
+  // Animation based on remaining time
+  animation: progressBar linear forwards;
+  
+  &.paused {
+    animation-play-state: paused;
+  }
+}
+
+// Animations
+@keyframes toastSlideIn {
+  from {
+    opacity: 0;
+    transform: translateX(100%);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes toastSlideOut {
+  from {
+    opacity: 1;
+    transform: translateX(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateX(100%);
+  }
+}
+
+@keyframes progressBar {
+  from {
+    transform: scaleX(1);
+  }
+  to {
+    transform: scaleX(0);
+  }
+}
+
+// Responsive adjustments
+@media (max-width: $breakpoint-sm) {
+  .toast {
+    padding: $space-3;
+  }
+  
+  .toast-header {
+    gap: $space-2;
+  }
+  
+  .toast-icon {
+    width: 28px;
+    height: 28px;
+    
+    svg {
+      width: 14px;
+      height: 14px;
+    }
+  }
+  
+  .toast-title {
+    font-size: $text-sm;
+  }
+  
+  .toast-message {
+    font-size: $text-xs;
+  }
+} */
+ .toast {
+  background: $white;
+  border-radius: $border-xl;
+  box-shadow: $shadow-xl;
+  border-left: 4px solid $primary-500;
+  padding: $space-4;
+  position: relative;
+  overflow: hidden;
+  animation: toastSlideIn 0.3s $ease-out;
+  transition: all $transition-base $ease-in-out;
+  margin-bottom: $space-3;
+  
+  // Hover effects
+  &:hover {
+    transform: translateX(-4px);
+    box-shadow: $shadow-2xl;
+  }
+  
+  // Different toast types
+  &.toast-success {
+    border-left-color: $success;
+    
+    .toast-icon {
+      background: rgba($success, 0.1);
+      color: $success;
+    }
+    
+    .toast-progress {
+      background: linear-gradient(90deg, $success, rgba($success, 0.7));
+    }
+  }
+  
+  &.toast-error {
+    border-left-color: $error;
+    
+    .toast-icon {
+      background: rgba($error, 0.1);
+      color: $error;
+    }
+    
+    .toast-progress {
+      background: linear-gradient(90deg, $error, rgba($error, 0.7));
+    }
+  }
+  
+  &.toast-warning {
+    border-left-color: $warning;
+    
+    .toast-icon {
+      background: rgba($warning, 0.1);
+      color: $warning;
+    }
+    
+    .toast-progress {
+      background: linear-gradient(90deg, $warning, rgba($warning, 0.7));
+    }
+  }
+  
+  &.toast-info {
+    border-left-color: $info;
+    
+    .toast-icon {
+      background: rgba($info, 0.1);
+      color: $info;
+    }
+    
+    .toast-progress {
+      background: linear-gradient(90deg, $info, rgba($info, 0.7));
+    }
+  }
+  
+  // Exiting animation - هذا هو الجزء الأهم!
+  &.toast-exit {
+    animation: toastSlideOut 0.3s $ease-in forwards !important;
+    pointer-events: none;
+    
+    // إيقاف شريط التقدم أثناء الخروج
+    .toast-progress {
+      animation-play-state: paused !important;
+    }
+  }
+}
+
+.toast-header {
+  display: flex;
+  align-items: flex-start;
+  gap: $space-3;
+  margin-bottom: $space-2;
+  position: relative;
+  z-index: 2; // فوق شريط التقدم
+}
+
+.toast-icon {
+  width: 32px;
+  height: 32px;
+  border-radius: $border-full;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  background: rgba($primary-500, 0.1);
+  color: $primary-500;
+  
+  svg {
+    width: 16px;
+    height: 16px;
+  }
+}
+
+.toast-content {
+  flex: 1;
+  min-width: 0;
+  position: relative;
+  z-index: 2; // فوق شريط التقدم
+}
+
+.toast-title {
+  font-size: $text-base;
+  font-weight: $font-semibold;
+  color: $primary-900;
+  margin-bottom: $space-1;
+  line-height: $leading-tight;
+}
+
+.toast-message {
+  font-size: $text-sm;
+  color: $gray-600;
+  line-height: $leading-snug;
+  word-wrap: break-word;
+}
+
+.toast-close {
+  background: none;
+  border: none;
+  color: $gray-400;
+  cursor: pointer;
+  padding: $space-1;
+  border-radius: $border-sm;
+  transition: all $transition-fast $ease-in-out;
+  flex-shrink: 0;
+  position: relative;
+  z-index: 2; // فوق شريط التقدم
+  
+  &:hover {
+    background: $gray-100;
+    color: $gray-600;
+  }
+  
+  svg {
+    width: 16px;
+    height: 16px;
+  }
+}
+
+// شريط التقدم - التصحيح الكامل
+.toast-progress {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  height: 3px;
+  background: linear-gradient(90deg, $primary-500, rgba($primary-500, 0.7));
+  border-radius: 0 0 0 $border-sm;
+  width: 100%;
+  transform-origin: left center;
+  animation: progressBar 5s linear forwards; // الوقت الافتراضي
+  
+  // إيقاف الحركة عند التمرير
+  &.paused {
+    animation-play-state: paused !important;
+  }
+  
+  // الأنواع المختلفة
+  .toast-success & {
+    background: linear-gradient(90deg, $success, rgba($success, 0.7));
+  }
+  
+  .toast-error & {
+    background: linear-gradient(90deg, $error, rgba($error, 0.7));
+  }
+  
+  .toast-warning & {
+    background: linear-gradient(90deg, $warning, rgba($warning, 0.7));
+  }
+  
+  .toast-info & {
+    background: linear-gradient(90deg, $info, rgba($info, 0.7));
+  }
+}
+
+// الحركات - التصحيح الكامل
+@keyframes toastSlideIn {
+  from {
+    opacity: 0;
+    transform: translateX(100%);
+    max-height: 0;
+    margin-bottom: 0;
+    padding-top: 0;
+    padding-bottom: 0;
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+    max-height: 200px;
+    margin-bottom: $space-3;
+    padding-top: $space-4;
+    padding-bottom: $space-4;
+  }
+}
+
+@keyframes toastSlideOut {
+  from {
+    opacity: 1;
+    transform: translateX(0);
+    max-height: 200px;
+    margin-bottom: $space-3;
+  }
+  to {
+    opacity: 0;
+    transform: translateX(100%);
+    max-height: 0;
+    margin-bottom: 0;
+    padding-top: 0;
+    padding-bottom: 0;
+    // إخفاء العنصر تماماً بعد الانتهاء
+    visibility: hidden;
+  }
+}
+
+@keyframes progressBar {
+  0% {
+    transform: scaleX(1);
+  }
+  100% {
+    transform: scaleX(0);
+  }
+}
+
+// دعم تقليل الحركة
+@media (prefers-reduced-motion: reduce) {
+  .toast {
+    animation: none !important;
+    transition: opacity 0.3s ease !important;
+    
+    &.toast-exit {
+      opacity: 0;
+    }
+  }
+  
+  .toast-progress {
+    animation: none !important;
+    display: none; // إخفاء شريط التقدم لتقليل الحركة
+  }
+}
+
+// Responsive adjustments
+@media (max-width: $breakpoint-sm) {
+  .toast {
+    padding: $space-3;
+  }
+  
+  .toast-header {
+    gap: $space-2;
+  }
+  
+  .toast-icon {
+    width: 28px;
+    height: 28px;
+    
+    svg {
+      width: 14px;
+      height: 14px;
+    }
+  }
+  
+  .toast-title {
+    font-size: $text-sm;
+  }
+  
+  .toast-message {
+    font-size: $text-xs;
+  }
 }

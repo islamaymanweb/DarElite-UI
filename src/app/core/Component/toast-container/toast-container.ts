@@ -1,8 +1,9 @@
-import { Component, inject, OnInit, effect } from '@angular/core';
+// toast-container.component.ts
+import { Component, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ToastComponent } from '../toast/toast.component';
 import { ToastService } from '../../services/toast-service';
- 
+
 @Component({
   selector: 'app-toast-container',
   standalone: true,
@@ -24,39 +25,38 @@ import { ToastService } from '../../services/toast-service';
 export class ToastContainer implements OnInit {
   private toastService = inject(ToastService);
   
-  // Use signal directly from service - this should work in template
   toasts = this.toastService.toasts$;
   
-  constructor() {
-    console.log('🍞 ToastContainer constructor - initialized');
-    
-    // Track toasts changes
-    effect(() => {
-      const currentToasts = this.toasts();
-      console.log('🍞 Toasts changed in container (effect):', currentToasts.length, currentToasts);
-    });
-  }
-  
+  private pausedToasts = new Set<string>();
+
   ngOnInit(): void {
-    console.log('🍞 ToastContainer ngOnInit, current toasts:', this.toasts().length);
+    console.log('🍞 ToastContainer initialized');
     
-    // Test toast to verify system works
-    setTimeout(() => {
-      console.log('🍞 Testing toast system...');
-      this.toastService.success('Toast System Test', 'If you see this, toast notifications are working!');
-    }, 1000);
+    // Debug: log toast changes
+    this.toasts().forEach(toast => {
+      console.log('🍞 Initial toast:', toast);
+    });
   }
 
   removeToast(id: string): void {
-    console.log('🍞 Removing toast:', id);
+    console.log('🍞 Container: Removing toast', id);
     this.toastService.remove(id);
+    this.pausedToasts.delete(id);
   }
 
   pauseToast(id: string): void {
-    console.log('🍞 Pausing toast:', id);
+    console.log('🍞 Container: Pausing toast', id);
+    this.pausedToasts.add(id);
   }
 
   resumeToast(id: string): void {
-    console.log('🍞 Resuming toast');
+    console.log('🍞 Container: Resuming toast', id);
+    this.pausedToasts.delete(id);
+  }
+
+  // Debug method
+  debugToasts(): void {
+    console.log('🍞 Current toasts:', this.toasts());
+    console.log('🍞 Paused toasts:', Array.from(this.pausedToasts));
   }
 }

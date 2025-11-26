@@ -1,7 +1,7 @@
-import { Component, Input, OnInit, OnDestroy, output, signal } from '@angular/core';
+/* // toast.component.ts
+import { Component, Input, OnInit, OnDestroy, output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Toast } from '../../services/toast-service';
- 
 
 @Component({
   selector: 'app-toast',
@@ -14,41 +14,26 @@ export class ToastComponent implements OnInit, OnDestroy {
   @Input({ required: true }) toast!: Toast;
   
   closed = output<void>();
-  mouseEnter = output<void>();
-  mouseLeave = output<void>();
 
+  private autoCloseTimeout: any;
   private progressInterval: any;
-  progress = signal<number>(100);
-  private elapsed = 0;
-
-  get progressWidth(): string {
-    return `${this.progress()}%`;
-  }
-
-  get iconPath(): string {
-    const icons = {
-      success: 'M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z',
-      error: 'M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z',
-      warning: 'M12 9v2m0 4h.01m-6.938 4h13.856c.54 0 .98-.436.937-.976l-.75-8.974a.937.937 0 00-.937-.898H4.687a.937.937 0 00-.937.898l-.75 8.974c-.042.54.398.976.937.976z',
-      info: 'M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z'
-    };
-    return icons[this.toast.type];
-  }
-
-  get iconColor(): string {
-    const colors = {
-      success: '#10b981',
-      error: '#ef4444',
-      warning: '#f59e0b',
-      info: '#3b82f6'
-    };
-    return colors[this.toast.type];
-  }
+  progressValue = 100;
+  private isPaused = false;
+  private startTime = Date.now();
+  private remainingTime = 0;
 
   ngOnInit(): void {
     if (this.toast.autoClose && this.toast.duration) {
+      this.startAutoClose();
       this.startProgressBar();
     }
+  }
+
+  private startAutoClose(): void {
+    this.remainingTime = this.toast.duration!;
+    this.autoCloseTimeout = setTimeout(() => {
+      this.close();
+    }, this.remainingTime);
   }
 
   private startProgressBar(): void {
@@ -57,40 +42,151 @@ export class ToastComponent implements OnInit, OnDestroy {
     const step = 100 / totalSteps;
 
     this.progressInterval = setInterval(() => {
-      this.elapsed += interval;
-      const newProgress = 100 - (this.elapsed / this.toast.duration!) * 100;
-      this.progress.set(Math.max(0, newProgress));
-
-      if (this.elapsed >= this.toast.duration!) {
-        this.close();
+      if (!this.isPaused) {
+        this.progressValue -= step;
+        
+        if (this.progressValue <= 0) {
+          this.clearTimers();
+        }
       }
     }, interval);
   }
-  
-  ngOnDestroy(): void {
+
+  private clearTimers(): void {
+    if (this.autoCloseTimeout) {
+      clearTimeout(this.autoCloseTimeout);
+      this.autoCloseTimeout = null;
+    }
     if (this.progressInterval) {
       clearInterval(this.progressInterval);
+      this.progressInterval = null;
     }
+  }
+
+  ngOnDestroy(): void {
+    this.clearTimers();
   }
 
   onMouseEnter(): void {
-    this.mouseEnter.emit();
-    if (this.progressInterval) {
-      clearInterval(this.progressInterval);
-    }
+    this.isPaused = true;
+    this.clearTimers();
+    
+    // حساب الوقت المتبقي
+    const elapsed = Date.now() - this.startTime;
+    this.remainingTime = this.toast.duration! - elapsed;
   }
 
   onMouseLeave(): void {
-    this.mouseLeave.emit();
-    if (this.toast.autoClose) {
-      this.startProgressBar();
+    this.isPaused = false;
+    this.startTime = Date.now();
+    
+    if (this.remainingTime > 0) {
+      // إعادة تشغيل الـ auto close
+      this.autoCloseTimeout = setTimeout(() => {
+        this.close();
+      }, this.remainingTime);
+
+      // إعادة تشغيل progress bar
+      this.startProgressBarFromCurrent();
     }
   }
 
+  private startProgressBarFromCurrent(): void {
+    const interval = 50;
+    const remainingSteps = this.remainingTime / interval;
+    const step = this.progressValue / remainingSteps;
+
+    this.progressInterval = setInterval(() => {
+      if (!this.isPaused) {
+        this.progressValue -= step;
+        
+        if (this.progressValue <= 0) {
+          this.clearTimers();
+        }
+      }
+    }, interval);
+  }
+
   close(): void {
-    if (this.progressInterval) {
-      clearInterval(this.progressInterval);
-    }
+    this.clearTimers();
     this.closed.emit();
+  }
+} */
+// toast.component.ts
+ // toast.component.ts
+import { Component, input, output, OnInit, OnDestroy, signal } from '@angular/core';
+import { CommonModule } from '@angular/common';
+
+export interface Toast {
+  id: string;
+  type: 'success' | 'error' | 'warning' | 'info';
+  title: string;
+  message?: string;
+  duration?: number;
+}
+
+@Component({
+  selector: 'app-toast',
+  standalone: true,
+  imports: [CommonModule],
+  templateUrl: './toast.component.html',
+  styleUrls: ['./toast.component.scss']
+})
+export class ToastComponent implements OnInit, OnDestroy {
+  toast = input.required<Toast>();
+  closed = output<string>();
+  mouseEnter = output<string>();
+  mouseLeave = output<string>();
+
+  isExiting = signal(false);
+  isPaused = signal(false);
+  private timerId: any;
+
+  ngOnInit() {
+    this.startTimer();
+  }
+
+  ngOnDestroy() {
+    this.clearTimer();
+  }
+
+  private startTimer() {
+    const duration = this.toast().duration || 5000;
+    
+    if (duration > 0) {
+      this.timerId = setTimeout(() => {
+        this.close();
+      }, duration);
+    }
+  }
+
+  private clearTimer() {
+    if (this.timerId) {
+      clearTimeout(this.timerId);
+      this.timerId = null;
+    }
+  }
+
+  close() {
+    if (!this.isExiting()) {
+      this.isExiting.set(true);
+      
+      // Wait for exit animation to complete
+      setTimeout(() => {
+        this.closed.emit(this.toast().id);
+      }, 300); // Match this with CSS animation duration
+    }
+  }
+
+  onMouseEnter() {
+    this.isPaused.set(true);
+    this.clearTimer();
+    this.mouseEnter.emit(this.toast().id);
+  }
+
+  onMouseLeave() {
+    this.isPaused.set(false);
+    this.startTimer();
+    this.mouseLeave.emit(this.toast().id);
   }
 }
