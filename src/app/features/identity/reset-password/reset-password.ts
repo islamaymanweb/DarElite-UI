@@ -1,41 +1,43 @@
+// reset-password.component.ts
 import { Component, OnInit, inject, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ReactiveFormsModule, FormBuilder, FormGroup, Validators, AbstractControl } from '@angular/forms';
+import { ReactiveFormsModule, FormBuilder, FormGroup, Validators, FormsModule } from '@angular/forms';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { IdentityService } from '../../../core/services/identity-service';
-import { ResetPassword } from '../../../core/models/ResetPassword';
 import { ToastService } from '../../../core/services/toast-service';
+import { ResetPasswordDTO, ResponseAPI } from '../../../core/models/login';
 
 @Component({
   selector: 'app-reset-password',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, RouterModule],
+  imports: [CommonModule, ReactiveFormsModule, RouterModule, FormsModule],
   templateUrl: './reset-password.html',
   styleUrls: ['./reset-password.scss']
 })
 export class ResetPasswordComponent implements OnInit {
-  private route = inject(ActivatedRoute);
   private fb = inject(FormBuilder);
+  private route = inject(ActivatedRoute);
   private identityService = inject(IdentityService);
+  private toast = inject(ToastService);
   private router = inject(Router);
-  private toastService = inject(ToastService);
 
   formGroup!: FormGroup;
-  ResetValue = new ResetPassword();
-  
-  // Add signals
+  email = signal<string>('');
+  token = signal<string>('');
   isLoading = signal<boolean>(false);
-  showSuccess = signal<boolean>(false);
+  showPassword = signal<boolean>(false);
+  showConfirmPassword = signal<boolean>(false);
+  resetSuccess = signal<boolean>(false);
 
   ngOnInit(): void {
     this.route.queryParams.subscribe((param) => {
-      this.ResetValue.email = param['email'];
-      this.ResetValue.token = param['code'];
+      this.email.set(param['email'] || '');
+      this.token.set(param['code'] || '');
     });
-    this.FormValidation();
+    this.formValidation();
   }
 
-  FormValidation() {
+  formValidation() {
     this.formGroup = this.fb.group({
       password: [
         '',
@@ -55,16 +57,19 @@ export class ResetPasswordComponent implements OnInit {
           ),
         ],
       ],
-    },
-    { validators: this.PasswordMatchValidation }
-    );
+    }, { validators: this.passwordMatchValidator });
   }
 
-  PasswordMatchValidation(form: AbstractControl) {
-    const password = form.get('password')?.value;
-    const confirmPassword = form.get('confirmPassword')?.value;
+  passwordMatchValidator(form: FormGroup) {
+    const password = form.get('password');
+    const confirmPassword = form.get('confirmPassword');
     
-    return password === confirmPassword ? null : { passwordMismatch: true };
+    if (password && confirmPassword && password.value !== confirmPassword.value) {
+      confirmPassword.setErrors({ passwordMismatch: true });
+    } else {
+      confirmPassword?.setErrors(null);
+    }
+    return null;
   }
 
   get _password() {
@@ -75,95 +80,76 @@ export class ResetPasswordComponent implements OnInit {
     return this.formGroup.get('confirmPassword');
   }
 
-  // Helper methods for template
-  hasMinLength(): boolean {
-    const password = this._password?.value;
-    return password && password.length >= 8;
+  Submit() {
+    if (this.formGroup.valid && !this.isLoading()) {
+      this.isLoading.set(true);
+
+      const payload: ResetPasswordDTO = {
+        email: this.email(),
+        token: this.token(),
+        password: this.formGroup.value.password
+      };
+
+      this.identityService.ResetPassword(payload).subscribe({
+        next: (res: ResponseAPI) => {
+          console.log('Reset password response', res);
+
+          if (res.statusCode === 200) {
+            this.resetSuccess.set(true);
+            this.toast.success('Password Reset Successful', 'You can now sign in with your new password');
+            
+            setTimeout(() => {
+              this.router.navigate(['/Account/Login'], {
+                queryParams: { email: this.email() }
+              });
+            }, 3000);
+          } else {
+            this.toast.error(res.message, 'Error');
+          }
+
+          this.isLoading.set(false);
+        },
+        error: (err: any) => {
+          console.log('Reset password error', err);
+          const msg = err?.error?.message || err?.error?.Message || err?.message || 'Password reset failed';
+          this.toast.error(msg, 'Error');
+          this.isLoading.set(false);
+        },
+      });
+    } else {
+      this.formGroup.markAllAsTouched();
+    }
   }
 
-  hasNumber(): boolean {
-    const password = this._password?.value;
-    return password && /[0-9]/.test(password);
+  togglePasswordVisibility() {
+    this.showPassword.set(!this.showPassword());
   }
 
-  hasSpecialChar(): boolean {
-    const password = this._password?.value;
-    return password && /[#$@!.\-]/.test(password);
+  toggleConfirmPasswordVisibility() {
+    this.showConfirmPassword.set(!this.showConfirmPassword());
   }
 
-  passwordsMatch(): boolean {
-    return this._password?.value === this._confirmPassword?.value && !!this._confirmPassword?.value;
-  }
-
-  // Password strength methods
   getPasswordStrength(): number {
     const password = this._password?.value;
     if (!password) return 0;
     
     let strength = 0;
-    if (password.length >= 8) strength += 25;
-    if (/[0-9]/.test(password)) strength += 25;
-    if (/[A-Z]/.test(password)) strength += 25;
-    if (/[#$@!.\-]/.test(password)) strength += 25;
+    if (password.length >= 8) strength++;
+    if (/[0-9]/.test(password)) strength++;
+    if (/[#$@!.\-]/.test(password)) strength++;
+    if (password.length >= 12) strength++;
     
-    return Math.min(strength, 100);
-  }
-
-  getPasswordStrengthClass(level: number): string {
-    const strength = this.getPasswordStrength();
-    const strengthLevel = Math.floor(strength / 25);
-    
-    if (level <= strengthLevel) {
-      switch (strengthLevel) {
-        case 1: return 'weak';
-        case 2: return 'medium';
-        case 3: return 'strong';
-        case 4: return 'very-strong';
-        default: return '';
-      }
-    }
-    return '';
+    return strength;
   }
 
   getPasswordStrengthText(): string {
     const strength = this.getPasswordStrength();
-    if (strength <= 25) return 'Very Weak';
-    if (strength <= 50) return 'Weak';
-    if (strength <= 75) return 'Good';
-    return 'Strong';
-  }
-
-  Submit() {
-    if (this.formGroup.valid) {
-      this.isLoading.set(true);
-      this.ResetValue.password = this.formGroup.value.password;
-      this.identityService.ResetPassword(this.ResetValue).subscribe({
-        next: () => {
-          this.isLoading.set(false);
-          this.showSuccess.set(true);
-          this.toastService.success(
-            'Password Reset Successful', 
-            'Your password has been reset successfully. You can now login with your new password.'
-          );
-          // Redirect automatically after 3 seconds
-          setTimeout(() => {
-            this.router.navigateByUrl('/login');
-          }, 3000);
-        },
-        error: (err) => {
-          console.error('Reset password error:', err);
-          this.isLoading.set(false);
-          
-          let errorMessage = 'Failed to reset password. Please try again.';
-          if (err.error && err.error.message) {
-            errorMessage = err.error.message;
-          } else if (err.status === 400) {
-            errorMessage = 'Invalid or expired reset link. Please request a new one.';
-          }
-          
-          this.toastService.error('Reset Failed', errorMessage);
-        },
-      });
+    switch (strength) {
+      case 1: return 'Weak';
+      case 2: return 'Medium';
+      case 3: return 'Strong';
+      case 4: return 'Very Strong';
+      default: return 'Very Weak';
     }
   }
 }

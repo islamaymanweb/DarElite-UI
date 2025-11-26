@@ -45,6 +45,22 @@ export const routes: Routes =
     path: 'reset-password', 
     loadComponent: () => import('./features/identity/reset-password/reset-password').then(m => m.ResetPasswordComponent)
   },
+   { 
+    path: 'Account/Reset-Password', 
+    loadComponent: () => import('./features/identity/reset-password/reset-password').then(m => m.ResetPasswordComponent)
+  },
+  { 
+    path: 'account/reset-password', 
+    loadComponent: () => import('./features/identity/reset-password/reset-password').then(m => m.ResetPasswordComponent)
+  },
+  { 
+    path: 'Reset-Password', 
+    loadComponent: () => import('./features/identity/reset-password/reset-password').then(m => m.ResetPasswordComponent)
+  },
+  { 
+    path: 'reset-password', 
+    loadComponent: () => import('./features/identity/reset-password/reset-password').then(m => m.ResetPasswordComponent)
+  },
   { 
     path: 'active', 
     loadComponent: () => import('./features/identity/active/active').then(m => m.Active)
@@ -52,7 +68,7 @@ export const routes: Routes =
   { 
     path: 'Account/active', 
     loadComponent: () => import('./features/identity/active/active').then(m => m.Active)
-  } ,
+  } , 
    {
     path: 'orders',
     loadComponent: () => import('./features/orders/order/order').then(m => m.Order ),  canActivate:[authGuard]
