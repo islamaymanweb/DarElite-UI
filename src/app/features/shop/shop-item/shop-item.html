@@ -6,6 +6,7 @@
       [alt]="Product.name"
       class="product-img"
       loading="lazy"
+      [routerLink]="['/shop/product-details', Product.id]"
     />
 
     <!-- Discount Badge -->
@@ -77,10 +78,10 @@
     </h3>
 
     <!-- Short Description -->
-    <p class="description" *ngIf="Product.description">
+    <!-- <p class="description" *ngIf="Product.description">
       {{ Product.description.substring(0, 80) }}{{ Product.description.length >
       80 ? '...' : '' }}
-    </p>
+    </p> -->
 
     <!-- Rating -->
     <div class="rating">

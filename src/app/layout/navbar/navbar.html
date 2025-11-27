@@ -3,22 +3,26 @@
   [class.scrolled]="isScrolled()"
   [class.visible]="isVisible()"
 >
-  <!-- Animated Background -->
   <div class="navbar__background">
     <div class="navbar__shine"></div>
   </div>
 
   <div class="navbar__container">
-    <!-- Enhanced Logo -->
-    <a routerLink="/" class="navbar__logo" [class.animate]="isVisible()">
+    <!--    <a routerLink="/" class="navbar__logo" [class.animate]="isVisible()">
       <div class="logo__wrapper">
-        <span class="logo__icon">🏛️</span>
+        <span class="logo__icon"> </span>
         <span class="logo__text">Dar Elite</span>
         <div class="logo__glow"></div>
       </div>
     </a>
-
-    <!-- Desktop Navigation Links -->
+ -->
+    <div class="logo-container">
+      <div class="logo"></div>
+      <div class="logo-text">
+        <span class="logo-name">Dar Elite</span>
+        <span class="logo-tagline">Luxury Furniture</span>
+      </div>
+    </div>
     <ul class="navbar__links">
       @for (link of navigationLinks; track link.path; let i = $index) {
       <li [style.animation-delay]="i * 0.1 + 's'">
@@ -38,100 +42,7 @@
       }
     </ul>
 
-    <!-- User Actions -->
     <div class="navbar__actions">
-      <!-- User Account Dropdown -->
-      <!--   <div class="user-dropdown">
-        <button
-          class="action-btn user-btn"
-          aria-label="User account"
-          (click)="toggleUserDropdown()"
-          [class.active]="isUserDropdownOpen()"
-        >
-          <div class="user-avatar">
-            @if (isLoggedIn()) {
-            <div class="avatar-initials">{{ getUserInitials() }}</div>
-            <div class="avatar-status"></div>
-            } @else {
-            <svg
-              class="user-icon"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
-              />
-            </svg>
-            }
-          </div>
-          <div class="user-glow"></div>
-        </button>
-
-        @if (isUserDropdownOpen()) {
-        <div class="dropdown-menu" (click)="$event.stopPropagation()">
-          @if (isLoggedIn()) {
-          <div class="dropdown-header">
-            <div class="user-info">
-              <div class="user-name">Welcome, {{ getUserName() }}</div>
-              <div class="user-email">{{ getUserEmail() }}</div>
-            </div>
-          </div>
-
-          <div class="dropdown-divider"></div>
-
-          @for (item of userMenuItems; track item.path) {
-          <a
-            [routerLink]="item.path"
-            class="dropdown-item"
-            (click)="closeUserDropdown()"
-          >
-            <span class="item-icon">{{ item.icon }}</span>
-            <span class="item-text">{{ item.label }}</span>
-            <span class="item-arrow">→</span>
-          </a>
-          }
-
-          <div class="dropdown-divider"></div>
-          <button class="dropdown-item logout-btn" (click)="handleLogout()">
-            <span class="item-icon">🚪</span>
-            <span class="item-text">Logout</span>
-          </button>
-          } @else {
-          <div class="dropdown-header">
-            <div class="user-info">
-              <div class="user-name">Welcome Guest</div>
-              <div class="user-email">Sign in to your account</div>
-            </div>
-          </div>
-
-          <div class="dropdown-divider"></div>
-
-          <a
-            routerLink="/login"
-            class="dropdown-item"
-            (click)="closeUserDropdown()"
-          >
-            <span class="item-icon">🔑</span>
-            <span class="item-text">Login</span>
-          </a>
-          <a
-            routerLink="/register"
-            class="dropdown-item"
-            (click)="closeUserDropdown()"
-          >
-            <span class="item-icon">📝</span>
-            <span class="item-text">Register</span>
-          </a>
-          }
-        </div>
-        }
-      </div> 
- -->
-      <!-- Shopping Cart Dropdown -->
       <div class="cart-dropdown">
         <button
           routerLink="/basket"
@@ -178,19 +89,7 @@
             <div class="avatar-initials">{{ getUserInitials() }}</div>
             <div class="avatar-status"></div>
             } @else {
-            <!--  <svg
-              class="user-icon"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
-              />
-            </svg> -->
+
             <i class="fa-solid fa-user user-icon"></i>
 
             }
@@ -277,25 +176,20 @@
     </div>
   </div>
 
-  <!-- Navigation Indicator -->
   <div class="navbar__indicator" [style.transform]="indicatorTransform()"></div>
 </nav>
 
-<!-- Mobile Overlay -->
 @if (isMobileMenuOpen()) {
 <div class="mobile-overlay" (click)="closeMobileMenu()">
   <div class="overlay-background"></div>
 </div>
 }
 
-<!-- Mobile Sidebar -->
 <aside class="mobile-sidebar" [class.open]="isMobileMenuOpen()" #mobileSidebar>
-  <!-- Background -->
   <div class="sidebar-background">
     <div class="sidebar-particles"></div>
   </div>
 
-  <!-- Close Button -->
   <button
     class="sidebar-close"
     (click)="closeMobileMenu()"
@@ -314,16 +208,13 @@
     <div class="close-glow"></div>
   </button>
 
-  <!-- Logo -->
   <div class="sidebar-header">
     <div class="sidebar-logo">
-      <span class="logo-icon">🏛️</span>
       <span class="logo-text">Dar Elite</span>
       <div class="logo-shine"></div>
     </div>
   </div>
 
-  <!-- Navigation Links -->
   <nav class="sidebar-nav">
     <h3 class="sidebar-section-title">
       <span class="title-text">Categories</span>
@@ -381,7 +272,9 @@
       (click)="handleNavigation()"
       [style.animation-delay]="0.3 + 's'"
     >
-      <span class="link-icon">🔑</span>
+      <span class="item-icon"
+        ><i class="fa-solid fa-right-to-bracket"></i
+      ></span>
       <span class="link-text">Login</span>
       <span class="link-arrow">→</span>
       <div class="link-hover-effect"></div>
@@ -392,7 +285,7 @@
       (click)="handleNavigation()"
       [style.animation-delay]="0.35 + 's'"
     >
-      <span class="link-icon">📝</span>
+      <span class="item-icon"><i class="fa-solid fa-user-plus"></i></span>
       <span class="link-text">Register</span>
       <span class="link-arrow">→</span>
       <div class="link-hover-effect"></div>

@@ -203,8 +203,7 @@ isListActive = signal<boolean>(false);
     this.getAllProduct();
   }
 
-  
-  // ===== Reset Functionality =====
+   
   resetAllFilters(): void {
     console.log('🔄 Resetting all filters');
     
@@ -215,8 +214,7 @@ isListActive = signal<boolean>(false);
     this.searchTerm.set('');
     
     this.toastService.info('Filters Reset', 'All filters have been cleared. Showing all products.');
-
-    // Reset UI elements
+ 
     if (this.mobileSearchInput) {
       this.mobileSearchInput.nativeElement.value = '';
     }
@@ -230,8 +228,7 @@ isListActive = signal<boolean>(false);
     this.closeMobileFilters();
     this.getAllProduct();
   }
-
-  // ===== Categories =====
+ 
   getCategory(): void {
     this.shopService.getCategory().subscribe({
       next: (categories) => {
@@ -245,15 +242,13 @@ isListActive = signal<boolean>(false);
       }
     });
   }
-
-  // ===== Pagination =====
+ 
   OnChangePage(pageNumber: number): void {
     console.log('📄 Page changed to:', pageNumber);
     if (this.ProductParam.PageNumber !== pageNumber) {
       this.ProductParam.PageNumber = pageNumber;
       this.getAllProduct();
-      
-      // Scroll to top of products section
+       
       this.scrollToProducts();
     }
   }
@@ -265,9 +260,9 @@ isListActive = signal<boolean>(false);
     }
   }
 
-  // ===== Helper Methods =====
+ 
   private setupMobileBehavior(): void {
-    // Close filters when clicking outside on mobile
+ 
     document.addEventListener('click', (event) => {
       if (this.isMobileFiltersOpen() && window.innerWidth <= 1024) {
         const sidebar = document.querySelector('.luxury-sidebar');
@@ -279,8 +274,7 @@ isListActive = signal<boolean>(false);
         }
       }
     });
-
-    // Handle window resize
+ 
     window.addEventListener('resize', this.handleResize.bind(this));
   }
 
@@ -307,8 +301,7 @@ isListActive = signal<boolean>(false);
   hasNoResults(): boolean {
     return this.products().length === 0 && !this.isLoading() && !this.hasError();
   }
-
-  // ===== Legacy Methods (for compatibility) =====
+ 
   SelectedId(categoryId: number): void {
     this.onCategorySelect(categoryId);
   }
@@ -321,13 +314,12 @@ isListActive = signal<boolean>(false);
     this.resetAllFilters();
   }
   
-// دالة محسنة
- // استخدم طريقة أبسط
+ 
 setViewMode(mode: 'grid' | 'list'): void {
   console.log('🎯 Setting view mode to:', mode);
   this.viewMode.set(mode);
   
-  // طريقة مباشرة لتحديث الأزرار
+ 
   const buttons = document.querySelectorAll('.view-option');
   buttons.forEach(btn => {
     const title = btn.getAttribute('title');
