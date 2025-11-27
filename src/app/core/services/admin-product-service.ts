@@ -11,7 +11,7 @@ export interface AddProductDTO {
   newPrice: number;
   oldPrice: number;
   categoryId: number;
-  photo: FileList; // استخدام FileList بدلاً من File[]
+  photo: FileList;  
 }
 
 export interface UpdateProductDTO extends AddProductDTO {
@@ -35,7 +35,7 @@ export class AdminProductService {
     return this.http.get<any>(`${this.baseURL}/get-all`, { params })
       .pipe(
         map(response => {
-          // تعديل حسب هيكل ال response الفعلي
+         
           if (response && response.data) {
             return response.data;
           } else if (Array.isArray(response)) {
@@ -53,18 +53,17 @@ export class AdminProductService {
 
   addProduct(productData: AddProductDTO): Observable<any> {
     const formData = new FormData();
-    
-    // إضافة البيانات الأساسية
+     
     formData.append('Name', productData.name);
     formData.append('Description', productData.description);
     formData.append('NewPrice', productData.newPrice.toString());
     formData.append('OldPrice', productData.oldPrice.toString());
     formData.append('CategoryId', productData.categoryId.toString());
     
-    // إضافة جميع الصور - التصحيح هنا
+    
     if (productData.photo && productData.photo.length > 0) {
       for (let i = 0; i < productData.photo.length; i++) {
-        formData.append('Photo', productData.photo[i]); // يجب أن يكون 'Photo' وليس 'Photos'
+        formData.append('Photo', productData.photo[i]); 
       }
     }
 
@@ -84,11 +83,10 @@ export class AdminProductService {
     formData.append('NewPrice', productData.newPrice.toString());
     formData.append('OldPrice', productData.oldPrice.toString());
     formData.append('CategoryId', productData.categoryId.toString());
-    
-    // إضافة الصور الجديدة إذا وجدت
+     
     if (productData.photo && productData.photo.length > 0) {
       for (let i = 0; i < productData.photo.length; i++) {
-        formData.append('Photo', productData.photo[i]); // نفس الاسم 'Photo'
+        formData.append('Photo', productData.photo[i]);  
       }
     }
 
