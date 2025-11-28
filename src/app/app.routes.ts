@@ -3,6 +3,7 @@ import { Home } from './features/home/home';
 import { authGuard } from './core/guard/auth-guard';
  
 import { Dashboard } from './dashboard/dashboard/dashboard';
+import { adminGuard } from './core/guard/admin-guard';
  
 export const routes: Routes = 
 [
@@ -94,7 +95,16 @@ export const routes: Routes =
      { path: 'products', 
        loadComponent: () => import('./dashboard/products/products-list/products-list').then(m => m.ProductList )
      },
-
+  {
+    path: 'admin',
+    canActivate: [authGuard, adminGuard],
+    loadComponent: () => import('./features/admin/admin-list/admin-list').then(m => m.AdminList)
+  },
+  {
+    path: 'admin/add',
+    canActivate: [authGuard, adminGuard],
+    loadComponent: () => import('./features/admin/add-admin/add-admin').then(m => m.AddAdmin)
+  },
 /*  { path: 'admin-orders', 
        loadComponent: () => import('./dashboard/orders/admin-order-list/admin-order-list').then(m => m.AdminOrderList )
      }, */

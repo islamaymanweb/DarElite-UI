@@ -94,12 +94,12 @@
             <div class="input-container">
               <input
                 type="text"
-                formControlName="UserName"
+                formControlName="FirstName"
                 placeholder=" "
                 class="form-input"
-                [class.invalid]="_username?.invalid && _username?.touched"
+                [class.invalid]="_firstName?.invalid && _firstName?.touched"
               />
-              <label class="form-label">Username</label>
+              <label class="form-label">First Name</label>
               <div class="input-icon">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
                   <path
@@ -111,12 +111,12 @@
                 </svg>
               </div>
             </div>
-            @if (_username?.invalid && _username?.touched) {
+            @if (_firstName?.invalid && _firstName?.touched) {
             <div class="error-message">
-              @if (_username?.errors?.['required']) {
-              <span>Username is required</span>
-              } @if (_username?.errors?.['minlength']) {
-              <span>Username must be at least 6 characters</span>
+              @if (_firstName?.errors?.['required']) {
+              <span>First Name is required</span>
+              } @if (_firstName?.errors?.['minlength']) {
+              <span> First Name must be at least 6 characters</span>
               }
             </div>
             }
@@ -126,12 +126,12 @@
             <div class="input-container">
               <input
                 type="text"
-                formControlName="DisplayName"
+                formControlName="LastName"
                 placeholder=" "
                 class="form-input"
-                [class.invalid]="_DisplayName?.invalid && _DisplayName?.touched"
+                [class.invalid]="_lastName?.invalid && _lastName?.touched"
               />
-              <label class="form-label">Display Name</label>
+              <label class="form-label">Last Name</label>
               <div class="input-icon">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
                   <path
@@ -143,9 +143,9 @@
                 </svg>
               </div>
             </div>
-            @if (_DisplayName?.invalid && _DisplayName?.touched) {
+            @if (_lastName?.invalid && _lastName?.touched) {
             <div class="error-message">
-              <span>Display name is required</span>
+              <span>LastName name is required</span>
             </div>
             }
           </div>

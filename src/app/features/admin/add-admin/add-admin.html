@@ -1,0 +1,182 @@
+<div class="add-admin-container">
+  <div class="form-wrapper">
+    <div class="form-header">
+      <a routerLink="/admin" class="back-link">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+        </svg>
+        Back to Admins
+      </a>
+      <h1 class="page-title">Add New Admin</h1>
+      <p class="page-subtitle">Create a new administrator account</p>
+    </div>
+
+    <form [formGroup]="formGroup" (ngSubmit)="onSubmit()" class="admin-form">
+      <!-- First Name -->
+      <div class="form-group">
+        <label class="form-label">First Name</label>
+        <input
+          type="text"
+          formControlName="firstName"
+          placeholder="Enter first name"
+          class="form-input"
+          [class.invalid]="_firstName?.invalid && _firstName?.touched"
+        />
+        @if (_firstName?.invalid && _firstName?.touched) {
+          <div class="error-message">
+            @if (_firstName?.errors?.['required']) {
+              <span>First name is required</span>
+            }
+            @if (_firstName?.errors?.['minlength']) {
+              <span>First name must be at least 2 characters</span>
+            }
+          </div>
+        }
+      </div>
+
+      <!-- Last Name -->
+      <div class="form-group">
+        <label class="form-label">Last Name</label>
+        <input
+          type="text"
+          formControlName="lastName"
+          placeholder="Enter last name"
+          class="form-input"
+          [class.invalid]="_lastName?.invalid && _lastName?.touched"
+        />
+        @if (_lastName?.invalid && _lastName?.touched) {
+          <div class="error-message">
+            @if (_lastName?.errors?.['required']) {
+              <span>Last name is required</span>
+            }
+            @if (_lastName?.errors?.['minlength']) {
+              <span>Last name must be at least 2 characters</span>
+            }
+          </div>
+        }
+      </div>
+
+      <!-- Email -->
+      <div class="form-group">
+        <label class="form-label">Email Address</label>
+        <input
+          type="email"
+          formControlName="email"
+          placeholder="Enter email address"
+          class="form-input"
+          [class.invalid]="_email?.invalid && _email?.touched"
+        />
+        @if (_email?.invalid && _email?.touched) {
+          <div class="error-message">
+            @if (_email?.errors?.['required']) {
+              <span>Email is required</span>
+            }
+            @if (_email?.errors?.['email']) {
+              <span>Please enter a valid email address</span>
+            }
+          </div>
+        }
+      </div>
+
+      <!-- Password -->
+      <div class="form-group">
+        <label class="form-label">Password</label>
+        <div class="password-input-container">
+          <input
+            [type]="showPassword() ? 'text' : 'password'"
+            formControlName="password"
+            placeholder="Enter password"
+            class="form-input"
+            [class.invalid]="_password?.invalid && _password?.touched"
+          />
+          <button
+            type="button"
+            class="password-toggle"
+            (click)="togglePasswordVisibility()"
+          >
+            @if (showPassword()) {
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.88 9.88l-3.29-3.29m7.532 7.532l3.29 3.29M3 3l3.59 3.59m0 0A9.953 9.953 0 0112 5c4.478 0 8.268 2.943 9.543 7a10.025 10.025 0 01-4.132 5.411m0 0L21 21" />
+              </svg>
+            } @else {
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+              </svg>
+            }
+          </button>
+        </div>
+        @if (_password?.invalid && _password?.touched) {
+          <div class="error-message">
+            @if (_password?.errors?.['required']) {
+              <span>Password is required</span>
+            }
+            @if (_password?.errors?.['minlength']) {
+              <span>Password must be at least 8 characters</span>
+            }
+            @if (_password?.errors?.['pattern']) {
+              <span>Password must contain uppercase, lowercase, number, and special character</span>
+            }
+          </div>
+        }
+        <div class="password-hint">
+          Password must be at least 8 characters with uppercase, lowercase, number, and special character
+        </div>
+      </div>
+
+      <!-- Confirm Password -->
+      <div class="form-group">
+        <label class="form-label">Confirm Password</label>
+        <div class="password-input-container">
+          <input
+            [type]="showPassword() ? 'text' : 'password'"
+            formControlName="confirmPassword"
+            placeholder="Confirm password"
+            class="form-input"
+            [class.invalid]="_confirmPassword?.invalid && _confirmPassword?.touched"
+          />
+        </div>
+        @if (_confirmPassword?.invalid && _confirmPassword?.touched) {
+          <div class="error-message">
+            @if (_confirmPassword?.errors?.['required']) {
+              <span>Please confirm your password</span>
+            }
+          </div>
+        }
+        @if (formGroup.errors?.['passwordMismatch'] && _confirmPassword?.touched) {
+          <div class="error-message">
+            <span>Passwords do not match</span>
+          </div>
+        }
+      </div>
+
+      <!-- Submit Button -->
+      <div class="form-actions">
+        <button
+          type="button"
+          class="btn-cancel"
+          routerLink="/admin"
+        >
+          Cancel
+        </button>
+        <button
+          type="submit"
+          class="btn-submit"
+          [class.loading]="isLoading()"
+          [disabled]="!formGroup.valid || isLoading()"
+        >
+          @if (isLoading()) {
+            <div class="btn-spinner"></div>
+            <span>Adding Admin...</span>
+          } @else {
+            <span>Add Admin</span>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
+            </svg>
+          }
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
+

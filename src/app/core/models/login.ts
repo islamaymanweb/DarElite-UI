@@ -4,8 +4,8 @@ export interface LoginDTO {
 }
 
 export interface RegisterDTO extends LoginDTO {
-  userName: string;
-  displayName: string;
+  firstName: string;
+  lastName: string;
 }
 
 export interface ResetPasswordDTO extends LoginDTO {

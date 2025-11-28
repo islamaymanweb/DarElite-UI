@@ -1,0 +1,101 @@
+<div class="admin-container">
+  <div class="admin-header">
+    <div class="header-content">
+      <h1 class="page-title">Admin Management</h1>
+      <p class="page-subtitle">Manage system administrators</p>
+    </div>
+    <a routerLink="/admin/add" class="add-admin-btn">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
+      </svg>
+      Add New Admin
+    </a>
+  </div>
+
+  <div class="admin-content">
+    @if (isLoading()) {
+      <div class="loading-state">
+        <div class="spinner"></div>
+        <p>Loading admins...</p>
+      </div>
+    } @else if (admins().length === 0) {
+      <div class="empty-state">
+        <div class="empty-icon">👤</div>
+        <h3>No Admins Found</h3>
+        <p>Get started by adding your first admin user.</p>
+        <a routerLink="/admin/add" class="primary-btn">Add Admin</a>
+      </div>
+    } @else {
+      <div class="admins-table">
+        <table>
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Email</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            @for (admin of admins(); track admin.id) {
+              <tr>
+                <td>
+                  <div class="user-info">
+                    <div class="user-avatar">{{ admin.firstName[0] }}{{ admin.lastName[0] }}</div>
+                    <div class="user-details">
+                      <span class="user-name">{{ admin.fullName }}</span>
+                    </div>
+                  </div>
+                </td>
+                <td>
+                  <span class="email">{{ admin.email }}</span>
+                </td>
+                <td>
+                  <button 
+                    class="remove-btn" 
+                    (click)="openRemoveModal(admin)"
+                    [disabled]="admins().length === 1"
+                    title="Remove Admin"
+                  >
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                    </svg>
+                    Remove
+                  </button>
+                </td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+    }
+  </div>
+</div>
+
+<!-- Remove Confirmation Modal -->
+@if (showRemoveModal()) {
+  <div class="modal-overlay" (click)="closeRemoveModal()">
+    <div class="modal-container" (click)="$event.stopPropagation()">
+      <div class="modal-header">
+        <h3 class="modal-title">Remove Admin</h3>
+        <button class="modal-close" (click)="closeRemoveModal()">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        </button>
+      </div>
+
+      <div class="modal-content">
+        <p class="modal-description">
+          Are you sure you want to remove admin access from <strong>{{ selectedAdminEmail() }}</strong>?
+        </p>
+        <p class="modal-warning">This action cannot be undone.</p>
+      </div>
+
+      <div class="modal-footer">
+        <button class="btn-secondary" (click)="closeRemoveModal()">Cancel</button>
+        <button class="btn-danger" (click)="confirmRemove()">Remove Admin</button>
+      </div>
+    </div>
+  </div>
+}
+
