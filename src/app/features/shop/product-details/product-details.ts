@@ -1,22 +1,21 @@
-import { Component, inject, OnInit, signal } from '@angular/core';
  
+import { Component, inject, OnInit, signal } from '@angular/core';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
- 
 import { IProduct } from '../../../core/models/Product';
- 
 import { ShopService } from '../../../core/services/shop-service';
 import { ToastService } from '../../../core/services/toast-service';
 import { BasketService } from '../../../core/services/basket-service';
+import { ImageZoom } from '../../../core/Component/image-zoom/image-zoom';
+ 
 
 @Component({
   selector: 'app-product-details',
-  imports: [CommonModule, RouterModule ],
+  imports: [CommonModule, RouterModule, ImageZoom],
   templateUrl: './product-details.html',
   styleUrl: './product-details.scss',
 })
 export class ProductDetails implements OnInit {
- 
   private shopService = inject(ShopService);
   private basketService = inject(BasketService);
   private route = inject(ActivatedRoute);
@@ -55,7 +54,6 @@ export class ProductDetails implements OnInit {
         next: (product) => {
           this.product.set(product);
           this.isLoading.set(false);
-          // No toast on load - it's automatic and may be annoying
         },
         error: (error) => {
           this.error.set(error.message);
@@ -65,8 +63,7 @@ export class ProductDetails implements OnInit {
       });
     });
   }
-
-  // Image handling
+ 
   selectImage(index: number): void {
     this.selectedImageIndex.set(index);
   }
@@ -82,8 +79,7 @@ export class ProductDetails implements OnInit {
     }
     return `https://localhost:7293${product.photos[this.selectedImageIndex()].imageName}`;
   }
-
-  // Pricing
+ 
   hasDiscount(): boolean {
     const product = this.product();
     return product ? product.oldPrice > product.newPrice : false;
@@ -113,36 +109,32 @@ export class ProductDetails implements OnInit {
     }
   }
 
- 
-addToBasket(): void {
-  const product = this.product();
-  if (product) {
-    console.log('🛒 Adding to basket:', {
-      product: product.name,
-      quantity: this.quantity(),
-      price: product.newPrice
-    });
+  addToBasket(): void {
+    const product = this.product();
+    if (product) {
+      console.log('🛒 Adding to basket:', {
+        product: product.name,
+        quantity: this.quantity(),
+        price: product.newPrice
+      });
 
-    // ✅ إضافة المنتج مرة واحدة بالكمية المطلوبة
-    this.basketService.addItemToBasket(product, this.quantity());
-    
-    this.toastService.success(
-      'Added to Cart', 
-      `${this.quantity()} ${product.name} added to your collection`
-    );
+      this.basketService.addItemToBasket(product, this.quantity());
+      
+      this.toastService.success(
+        'Added to Cart', 
+        `${this.quantity()} ${product.name} added to your collection`
+      );
 
-    // إعادة تعيين الكمية إلى 1 بعد الإضافة
-    this.quantity.set(1);
+      this.quantity.set(1);
+    }
   }
-}
-  // Product information helpers
+ 
   getCraftedDescription(): string {
     const baseDescription = this.product()?.description;
     if (!baseDescription) {
       return 'An exquisite piece showcasing masterful craftsmanship and premium materials, designed to elevate your living space with timeless elegance.';
     }
     
-    // Keep it concise for minimal design
     return baseDescription.length > 150 
       ? baseDescription.substring(0, 150) + '...' 
       : baseDescription;

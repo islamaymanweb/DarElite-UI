@@ -1,17 +1,16 @@
-import { CommonModule, NgIf } from '@angular/common';
+ 
+ import { CommonModule, NgIf } from '@angular/common';
 import { AfterViewInit, Component, ElementRef, HostListener, Input, OnDestroy, OnInit, signal, ViewChild } from '@angular/core';
+import { Subject } from 'rxjs';
 
 @Component({
   selector: 'app-image-zoom',
-  imports: [CommonModule,NgIf],
+  imports: [CommonModule, NgIf],
   templateUrl: './image-zoom.html',
   styleUrl: './image-zoom.scss',
 })
-export class ImageZoom  implements AfterViewInit {
-  ngOnInit(): void {
-    throw new Error('Method not implemented.');
-  }
-    @Input() thumbImage!: string;
+export class ImageZoom implements AfterViewInit, OnInit, OnDestroy {
+  @Input() thumbImage!: string;
   @Input() fullImage!: string;
   @Input() magnification: number = 1.5;
   @Input() enableScrollZoom: boolean = true;
@@ -26,24 +25,41 @@ export class ImageZoom  implements AfterViewInit {
   isZoomActive = false;
   lensVisible = false;
   scrollZoomLevel = 1;
+  private destroy$ = new Subject<void>();
+ 
+  ngOnInit(): void {
+    console.log('ImageZoom component initialized');
+    
+  }
 
   ngAfterViewInit(): void {
-    this.setupZoom();
+    
+    setTimeout(() => {
+      if (this.enableLens && this.imageContainer) {
+        this.setupZoom();
+      }
+    }, 100);
+  }
+
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 
   private setupZoom(): void {
-    if (!this.enableLens) return;
+    if (!this.enableLens || !this.imageContainer) return;
 
     const container = this.imageContainer.nativeElement;
     const lens = this.zoomLens.nativeElement;
     const result = this.zoomResult.nativeElement;
-
-    // Calculate the ratio between result and container
+ 
+    if (!lens || !result) return;
+ 
     const cx = result.offsetWidth / lens.offsetWidth;
     const cy = result.offsetHeight / lens.offsetHeight;
 
     result.style.backgroundSize = `${container.offsetWidth * cx}px ${container.offsetHeight * cy}px`;
-
+ 
     container.addEventListener('mousemove', this.moveLens.bind(this));
     lens.addEventListener('mousemove', this.moveLens.bind(this));
     
@@ -61,6 +77,8 @@ export class ImageZoom  implements AfterViewInit {
   private moveLens(e: MouseEvent): void {
     e.preventDefault();
 
+    if (!this.imageContainer || !this.zoomLens || !this.zoomResult) return;
+
     const container = this.imageContainer.nativeElement;
     const lens = this.zoomLens.nativeElement;
     const result = this.zoomResult.nativeElement;
@@ -74,12 +92,10 @@ export class ImageZoom  implements AfterViewInit {
     if (x < 0) x = 0;
     if (y > container.offsetHeight - lens.offsetHeight) y = container.offsetHeight - lens.offsetHeight;
     if (y < 0) y = 0;
-
-    // Set lens position
+ 
     lens.style.left = x + 'px';
     lens.style.top = y + 'px';
-
-    // Display what the lens "sees"
+ 
     result.style.backgroundPosition = `-${x * this.magnification}px -${y * this.magnification}px`;
   }
 
@@ -88,8 +104,7 @@ export class ImageZoom  implements AfterViewInit {
     const a = container.getBoundingClientRect();
     let x = e.pageX - a.left;
     let y = e.pageY - a.top;
-
-    // Consider any page scrolling
+ 
     x = x - window.pageXOffset;
     y = y - window.pageYOffset;
 
@@ -103,10 +118,10 @@ export class ImageZoom  implements AfterViewInit {
     event.preventDefault();
     
     if (event.deltaY < 0) {
-      // Zoom in
+     
       this.scrollZoomLevel = Math.min(this.scrollZoomLevel + 0.1, 3);
     } else {
-      // Zoom out
+    
       this.scrollZoomLevel = Math.max(this.scrollZoomLevel - 0.1, 1);
     }
 

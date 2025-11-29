@@ -30,12 +30,18 @@
       <!-- Hero Image Gallery -->
       <section class="gallery-section">
         <div class="main-gallery">
+          <!-- Image Zoom Component -->
           <div class="main-image-container">
-            <img
-              [src]="getMainImage()"
-              [alt]="product()?.name"
-              class="main-image"
-            />
+            <app-image-zoom
+              [thumbImage]="getMainImage()"
+              [fullImage]="getMainImage()"
+              [magnification]="2"
+              [enableScrollZoom]="true"
+              [lensWidth]="150"
+              [lensHeight]="150"
+              [enableLens]="true"
+              class="zoom-component"
+            ></app-image-zoom>
 
             <!-- Discount Badge -->
             @if (hasDiscount()) {
