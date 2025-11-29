@@ -18,7 +18,7 @@ export const adminGuard: CanActivateFn = (route, state) => {
       }
     }),
     catchError(() => {
-      router.navigate(['/login'], { queryParams: { returnUrl: state.url } });
+      router.navigate(['/forbidden'])
       return of(false);
     })
   );

@@ -4,6 +4,7 @@ import { authGuard } from './core/guard/auth-guard';
  
 import { Dashboard } from './dashboard/dashboard/dashboard';
 import { adminGuard } from './core/guard/admin-guard';
+import { Forbidden } from './core/Component/forbidden/forbidden';
  
 export const routes: Routes = 
 [
@@ -88,11 +89,15 @@ export const routes: Routes =
     loadComponent: () => import('./features/checkout/success/success').then(m => m.Success ),
     canActivate: [authGuard]
   },
-    { path: 'dashboard', component: Dashboard  },
+    { path: 'dashboard',
+       canActivate: [authGuard, adminGuard],
+       loadComponent: () => import('./dashboard/dashboard/dashboard').then(m => m.Dashboard ) },
     { path: 'categories', 
+       canActivate: [authGuard, adminGuard],
        loadComponent: () => import('./dashboard/categories/category-list/category-list').then(m => m.CategoryList )
      },
      { path: 'products', 
+        canActivate: [authGuard, adminGuard],
        loadComponent: () => import('./dashboard/products/products-list/products-list').then(m => m.ProductList )
      },
   {
@@ -108,7 +113,8 @@ export const routes: Routes =
 /*  { path: 'admin-orders', 
        loadComponent: () => import('./dashboard/orders/admin-order-list/admin-order-list').then(m => m.AdminOrderList )
      }, */
-      
+      { path: 'forbidden', loadComponent: () => import('./core/Component/forbidden/forbidden').then(m => m.Forbidden ) },
+
   { path: '**', redirectTo: '/shop', pathMatch: 'full' }
  
     
