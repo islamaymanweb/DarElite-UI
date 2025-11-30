@@ -7,6 +7,7 @@ import { BasketService } from '../../../core/services/basket-service';
 import { ToastService } from '../../../core/services/toast-service';
 import { ImageZoom } from '../../../core/Component/image-zoom/image-zoom';
  
+ 
 
 @Component({
   selector: 'app-shop-item',
@@ -18,6 +19,8 @@ export class ShopItem {
 
    private basketService = inject(BasketService);
   private toastService = inject(ToastService);
+
+ 
 
   @Input({ required: true }) Product!: IProduct;
      
@@ -64,14 +67,17 @@ private router = inject(Router);
     return this.hasPhotos() && this.Product.photos.length > 1;
   }
 
-  toggleFavorite(event: Event): void {
+   toggleFavorite(event: Event): void {
     event.preventDefault();
     event.stopPropagation();
     this.isFavorited = !this.isFavorited;
 
     const message = this.isFavorited ? 'Added to favorites' : 'Removed from favorites';
     this.toastService.info('Favorites', message);
-  }
+  }  
+ 
+ 
+
 
   shareProduct(event: Event): void {
     event.preventDefault();

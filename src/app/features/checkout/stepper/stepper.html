@@ -52,6 +52,79 @@
   </div>
 </div>
  -->
+<!-- <div class="stepper-container">
+   
+  <div class="stepper-progress">
+    <div class="progress-fill" [style.width.%]="(currentStep() - 1) * 50"></div>
+  </div>
+ 
+  <div class="mobile-steps">
+    @for (step of steps(); track step.number) {
+    <div class="mobile-step" [class]="getStepClass(step)">
+      <div class="mobile-step-dot"></div>
+      <span class="mobile-step-title">{{ step.title }}</span>
+    </div>
+    }
+  </div>
+ 
+  <div class="stepper-header">
+    @for (step of steps(); track step.number) {
+    <div
+      class="step-item"
+      [class]="getStepClass(step)"
+      (click)="goToStep(step.number)"
+    >
+      <div class="step-number">
+        @if (step.completed) {
+        <i class="fas fa-check"></i>
+        } @else {
+        <span>{{ step.number }}</span>
+        }
+      </div>
+      <span class="step-title">{{ step.title }}</span>
+      @if (step.number < 3) {
+      <div class="step-connector"></div>
+      }
+    </div>
+    }
+  </div>
+ 
+  <div class="stepper-content">
+    
+    @if (currentStep() === 1) {
+    <div class="step-panel">
+      <app-address [addressForm]="addressForm" (next)="nextStep()">
+      </app-address>
+    </div>
+    }
+
+     
+    @if (currentStep() === 2) {
+    <div class="step-panel">
+      <app-delivery
+        [deliveryForm]="deliveryForm"
+        (previous)="previousStep()"
+        (next)="nextStep()"
+      >
+      </app-delivery>
+    </div>
+    }
+
+    
+    @if (currentStep() === 3) {
+    <div class="step-panel">
+      <app-payment
+        [paymentForm]="paymentForm"
+        [addressForm]="addressForm"
+        [deliveryForm]="deliveryForm"
+        (previous)="previousStep()"
+      >
+      </app-payment>
+    </div>
+    }
+  </div>
+</div>
+ -->
 <div class="stepper-container">
   <!-- Mobile Progress Bar -->
   <div class="stepper-progress">
@@ -75,6 +148,7 @@
       class="step-item"
       [class]="getStepClass(step)"
       (click)="goToStep(step.number)"
+      [title]="!isStepAccessible(step.number) ? 'Complete previous steps first' : ''"
     >
       <div class="step-number">
         @if (step.completed) {
@@ -96,8 +170,18 @@
     <!-- Step 1: Address -->
     @if (currentStep() === 1) {
     <div class="step-panel">
-      <app-address [addressForm]="addressForm" (next)="nextStep()">
-      </app-address>
+      <app-address
+        [addressForm]="addressForm"
+        (next)="nextStep()"
+      ></app-address>
+
+      <!-- Validation Message -->
+      @if (!addressForm.valid && addressForm.touched) {
+      <div class="validation-message error">
+        <i class="fas fa-exclamation-circle"></i>
+        Please complete all address fields before continuing
+      </div>
+      }
     </div>
     }
 
@@ -108,8 +192,15 @@
         [deliveryForm]="deliveryForm"
         (previous)="previousStep()"
         (next)="nextStep()"
-      >
-      </app-delivery>
+      ></app-delivery>
+
+      <!-- Validation Message -->
+      @if (!deliveryForm.valid && deliveryForm.touched) {
+      <div class="validation-message error">
+        <i class="fas fa-exclamation-circle"></i>
+        Please select a delivery method before continuing
+      </div>
+      }
     </div>
     }
 
@@ -121,9 +212,36 @@
         [addressForm]="addressForm"
         [deliveryForm]="deliveryForm"
         (previous)="previousStep()"
-      >
-      </app-payment>
+      ></app-payment>
+
+      <!-- Validation Message -->
+      @if (!paymentForm.valid && paymentForm.touched) {
+      <div class="validation-message error">
+        <i class="fas fa-exclamation-circle"></i>
+        Please complete payment information before submitting
+      </div>
+      }
     </div>
+    }
+  </div>
+
+  <!-- Step Navigation Buttons (بديل) -->
+  <div class="step-navigation">
+    @if (currentStep() > 1) {
+    <button type="button" class="btn btn-outline" (click)="previousStep()">
+      <i class="fas fa-arrow-left"></i>
+      Previous
+    </button>
+    } @if (currentStep() < 3) {
+    <button
+      type="button"
+      class="btn btn-primary"
+      (click)="nextStep()"
+      [disabled]="!isCurrentStepValid()"
+    >
+      Next
+      <i class="fas fa-arrow-right"></i>
+    </button>
     }
   </div>
 </div>

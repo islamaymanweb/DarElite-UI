@@ -8,6 +8,7 @@
     photos: IPhoto[]
     categoryName: string
     rating?:number
+ 
   }
   
   export interface IPhoto {
