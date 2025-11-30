@@ -4,7 +4,7 @@ import { RouterModule } from '@angular/router';
 import { ToastService } from '../../../core/services/toast-service';
 import { AdminInfoDTO } from '../../../core/models/admin';
 import { ResponseAPI } from '../../../core/models/login';
-import { AdminService } from '../../../core/models/admin-service';
+import { AdminService } from '../../../core/services/admin-service';
 
 @Component({
   selector: 'app-admin-list',

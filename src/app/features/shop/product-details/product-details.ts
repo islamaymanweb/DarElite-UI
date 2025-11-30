@@ -145,12 +145,12 @@ export class ProductDetails implements OnInit {
   }
 
   getMaterial(): string {
-    const materials = ['Solid Oak', 'Walnut Wood', 'Mahogany', 'Premium Fabric'];
+    const materials = [ 'Walnut Wood'  ];
     return materials[Math.floor(Math.random() * materials.length)];
   }
 
   getFinish(): string {
-    const finishes = ['Natural Oil', 'Matte Lacquer', 'Hand-rubbed Wax'];
+    const finishes = [  'Matte Lacquer'];
     return finishes[Math.floor(Math.random() * finishes.length)];
   }
 
@@ -159,6 +159,6 @@ export class ProductDetails implements OnInit {
   }
 
   getDeliveryEstimate(): string {
-    return '2-4 weeks';
+    return '1-2 weeks';
   }
 }

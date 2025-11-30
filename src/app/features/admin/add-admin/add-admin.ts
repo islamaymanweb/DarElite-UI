@@ -4,7 +4,7 @@ import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { Router, RouterModule } from '@angular/router';
  
 import { ToastService } from '../../../core/services/toast-service';
-import { AdminService } from '../../../core/models/admin-service';
+import { AdminService } from '../../../core/services/admin-service';
 
 @Component({
   selector: 'app-add-admin',

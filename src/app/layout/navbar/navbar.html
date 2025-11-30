@@ -1,4 +1,4 @@
-<nav
+<!-- <nav
   class="navbar"
   [class.scrolled]="isScrolled()"
   [class.visible]="isVisible()"
@@ -8,14 +8,7 @@
   </div>
 
   <div class="navbar__container">
-    <!--    <a routerLink="/" class="navbar__logo" [class.animate]="isVisible()">
-      <div class="logo__wrapper">
-        <span class="logo__icon"> </span>
-        <span class="logo__text">Dar Elite</span>
-        <div class="logo__glow"></div>
-      </div>
-    </a>
- -->
+ 
     <div class="logo-container">
       <div class="logo"></div>
       <div class="logo-text">
@@ -162,6 +155,8 @@
         </div>
         }
       </div>
+       
+
       <button
         class="mobile-menu-btn"
         aria-label="Toggle menu"
@@ -286,6 +281,367 @@
       [style.animation-delay]="0.35 + 's'"
     >
       <span class="item-icon"><i class="fa-solid fa-user-plus"></i></span>
+      <span class="link-text">Register</span>
+      <span class="link-arrow">→</span>
+      <div class="link-hover-effect"></div>
+    </a>
+    }
+
+    <div class="sidebar-divider"></div>
+  </nav>
+</aside>
+ -->
+<nav
+  class="navbar"
+  [class.scrolled]="isScrolled()"
+  [class.visible]="isVisible()"
+>
+  <div class="navbar__background">
+    <div class="navbar__shine"></div>
+  </div>
+
+  <div class="navbar__container">
+    <div class="logo-container">
+      <div class="logo"></div>
+      <div class="logo-text">
+        <span routerLink="/" class="logo-name">Dar Elite</span>
+        <span routerLink="/" class="logo-tagline">Luxury Furniture</span>
+      </div>
+    </div>
+
+    <!-- Debug info (يمكن إزالته لاحقاً) -->
+    <div
+      class="debug-info"
+      style="
+        display: none;
+        font-size: 10px;
+        color: red;
+        position: absolute;
+        top: 0;
+        left: 50%;
+        transform: translateX(-50%);
+      "
+    >
+      LoggedIn: {{isLoggedIn()}} | Admin: {{isAdmin()}} | Checking:
+      {{isCheckingAdmin()}}
+    </div>
+
+    <ul class="navbar__links">
+      @for (link of navigationLinksWithAdmin; track link.path; let i = $index) {
+      <li [style.animation-delay]="i * 0.1 + 's'">
+        <a
+          [routerLink]="link.path"
+          routerLinkActive="active"
+          [routerLinkActiveOptions]="{exact: link.path === '/'}"
+          class="navbar__link"
+          (mouseenter)="onLinkHover($event, link)"
+        >
+          <span class="link__icon">{{ link.icon }}</span>
+          <span class="link__text">{{ link.label }}</span>
+          <span class="link__hover-effect"></span>
+          <span class="link__active-indicator"></span>
+        </a>
+      </li>
+      }
+    </ul>
+
+    <div class="navbar__actions">
+      <div class="cart-dropdown">
+        <button
+          routerLink="/basket"
+          class="action-btn cart-btn"
+          aria-label="Shopping cart"
+          [class.pulse]="cartItemCount() > 0"
+          [class.active]="isCartDropdownOpen()"
+        >
+          <div class="cart-icon-wrapper">
+            <svg
+              class="action-icon"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"
+              />
+            </svg>
+            <div class="cart-glow"></div>
+          </div>
+
+          @if (cartItemCount() > 0) {
+          <span class="cart-badge">
+            <span class="badge-count">{{ cartItemCount() }}</span>
+            <div class="badge-pulse"></div>
+          </span>
+          }
+        </button>
+      </div>
+
+      <div class="user-dropdown">
+        <button
+          class="action-btn user-btn"
+          aria-label="User account"
+          (click)="toggleUserDropdown()"
+          [class.active]="isUserDropdownOpen()"
+        >
+          <div class="user-avatar">
+            @if (isLoggedIn()) {
+            <div class="avatar-initials">{{ getUserInitials() }}</div>
+            <div class="avatar-status" [class.admin]="isAdmin()"></div>
+            } @else {
+            <i class="fa-solid fa-user user-icon"></i>
+            }
+          </div>
+          <div class="user-glow"></div>
+        </button>
+
+        @if (isUserDropdownOpen()) {
+        <div class="dropdown-menu" (click)="$event.stopPropagation()">
+          @if (isLoggedIn()) {
+
+          <div class="dropdown-header">
+            <div class="user-info">
+              <div class="user-name">Welcome, {{ getUserName() }}</div>
+              <div class="user-email">{{ getUserEmail() }}</div>
+              <div
+                class="user-role"
+                style="font-size: 0.7rem; color: #666; margin-top: 2px"
+              >
+                @if (isCheckingAdmin()) { ⏳ Checking permissions... } @else if
+                (isAdmin()) { ✅ Administrator }
+                <!-- @else { 👤 Regular User } -->
+              </div>
+            </div>
+          </div>
+
+          <div class="dropdown-divider"></div>
+
+          @for (item of userMenuItems; track item.path) {
+          <a
+            [routerLink]="item.path"
+            class="dropdown-item"
+            (click)="closeUserDropdown()"
+          >
+            <span class="item-icon">{{ item.icon }}</span>
+            <span class="item-text">{{ item.label }}</span>
+            <span class="item-arrow">→</span>
+          </a>
+          }
+
+          <!-- قسم الأدمن - يظهر فقط للمسؤولين -->
+          @if (canAccessAdmin()) {
+          <div class="dropdown-divider"></div>
+
+          <div class="dropdown-header admin-header">
+            <div class="user-info">
+              <div class="user-name">Admin Panel</div>
+              <div class="user-email">Management Tools</div>
+            </div>
+          </div>
+
+          @for (item of adminMenuItems(); track item.path) {
+          <a
+            [routerLink]="item.path"
+            class="dropdown-item admin-item"
+            (click)="closeUserDropdown()"
+          >
+            <span class="item-icon">{{ item.icon }}</span>
+            <span class="item-text">{{ item.label }}</span>
+            <span class="item-arrow">→</span>
+          </a>
+          } }
+
+          <div class="dropdown-divider"></div>
+          <button class="dropdown-item logout-btn" (click)="handleLogout()">
+            <span class="item-icon"
+              ><i class="fa-solid fa-right-from-bracket"></i
+            ></span>
+            <span class="item-text">Logout</span>
+          </button>
+          } @else {
+
+          <div class="dropdown-header">
+            <div class="user-info">
+              <div class="user-name">Welcome Guest</div>
+              <div class="user-email">Sign in to your account</div>
+            </div>
+          </div>
+
+          <div class="dropdown-divider"></div>
+
+          <a
+            routerLink="/login"
+            class="dropdown-item"
+            (click)="closeUserDropdown()"
+          >
+            <span class="item-icon"
+              ><i class="fa-solid fa-right-to-bracket"></i
+            ></span>
+            <span class="item-text">Login</span>
+          </a>
+          <a
+            routerLink="/register"
+            class="dropdown-item"
+            (click)="closeUserDropdown()"
+          >
+            <span class="item-icon"><i class="fa-solid fa-user-plus"></i></span>
+            <span class="item-text">Register</span>
+          </a>
+          }
+        </div>
+        }
+      </div>
+
+      <button
+        class="mobile-menu-btn"
+        aria-label="Toggle menu"
+        (click)="toggleMobileMenu()"
+        [class.active]="isMobileMenuOpen()"
+      >
+        <span class="hamburger-line line-1"></span>
+        <span class="hamburger-line line-2"></span>
+        <span class="hamburger-line line-3"></span>
+        <div class="hamburger-glow"></div>
+      </button>
+    </div>
+  </div>
+
+  <div class="navbar__indicator" [style.transform]="indicatorTransform()"></div>
+</nav>
+
+@if (isMobileMenuOpen()) {
+<div class="mobile-overlay" (click)="closeMobileMenu()">
+  <div class="overlay-background"></div>
+</div>
+}
+
+<aside class="mobile-sidebar" [class.open]="isMobileMenuOpen()" #mobileSidebar>
+  <div class="sidebar-background">
+    <div class="sidebar-particles"></div>
+  </div>
+
+  <button
+    class="sidebar-close"
+    (click)="closeMobileMenu()"
+    aria-label="Close menu"
+  >
+    <div class="close-icon">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          d="M6 18L18 6M6 6l12 12"
+        />
+      </svg>
+    </div>
+    <div class="close-glow"></div>
+  </button>
+
+  <div class="sidebar-header">
+    <div class="sidebar-logo">
+      <span class="logo-text">Dar Elite</span>
+      <div class="logo-shine"></div>
+    </div>
+  </div>
+
+  <nav class="sidebar-nav">
+    <h3 class="sidebar-section-title">
+      <span class="title-text">Navigation</span>
+      <div class="title-underline"></div>
+    </h3>
+
+    @for (link of navigationLinksWithAdmin; track link.path; let i = $index) {
+    <a
+      [routerLink]="link.path"
+      class="sidebar-link"
+      (click)="handleNavigation()"
+      [style.animation-delay]="i * 0.05 + 's'"
+    >
+      <span class="link-icon">{{ link.icon }}</span>
+      <span class="link-text">{{ link.label }}</span>
+      <span class="link-arrow">→</span>
+      <div class="link-hover-effect"></div>
+    </a>
+    }
+
+    <div class="sidebar-divider"></div>
+
+    <h3 class="sidebar-section-title">
+      <span class="title-text">Account</span>
+      <div class="title-underline"></div>
+    </h3>
+
+    @if (isLoggedIn()) { @for (item of userMenuItems; track item.path; let i =
+    $index) {
+    <a
+      [routerLink]="item.path"
+      class="sidebar-link"
+      (click)="handleNavigation()"
+      [style.animation-delay]="i * 0.05 + 0.3 + 's'"
+    >
+      <span class="link-icon">{{ item.icon }}</span>
+      <span class="link-text">{{ item.label }}</span>
+      <span class="link-arrow">→</span>
+      <div class="link-hover-effect"></div>
+    </a>
+    }
+
+    <!-- قسم الأدمن في الموبايل -->
+    @if (canAccessAdmin()) {
+    <div class="sidebar-divider"></div>
+
+    <h3 class="sidebar-section-title">
+      <span class="title-text">Admin Panel</span>
+      <div class="title-underline"></div>
+    </h3>
+
+    @for (item of adminMenuItems(); track item.path; let i = $index) {
+    <a
+      [routerLink]="item.path"
+      class="sidebar-link admin-link"
+      (click)="handleNavigation()"
+      [style.animation-delay]="i * 0.05 + 0.3 + 's'"
+    >
+      <span class="link-icon">{{ item.icon }}</span>
+      <span class="link-text">{{ item.label }}</span>
+      <span class="link-arrow">→</span>
+      <div class="link-hover-effect"></div>
+    </a>
+    } }
+
+    <button
+      class="sidebar-link logout-btn"
+      (click)="handleLogout(); closeMobileMenu()"
+      [style.animation-delay]="0.5 + 's'"
+    >
+      <span class="link-icon">🚪</span>
+      <span class="link-text">Logout</span>
+    </button>
+    } @else {
+    <a
+      routerLink="/login"
+      class="sidebar-link"
+      (click)="handleNavigation()"
+      [style.animation-delay]="0.3 + 's'"
+    >
+      <span class="link-icon"
+        ><i class="fa-solid fa-right-to-bracket"></i
+      ></span>
+      <span class="link-text">Login</span>
+      <span class="link-arrow">→</span>
+      <div class="link-hover-effect"></div>
+    </a>
+    <a
+      routerLink="/register"
+      class="sidebar-link"
+      (click)="handleNavigation()"
+      [style.animation-delay]="0.35 + 's'"
+    >
+      <span class="link-icon"><i class="fa-solid fa-user-plus"></i></span>
       <span class="link-text">Register</span>
       <span class="link-arrow">→</span>
       <div class="link-hover-effect"></div>

@@ -1,4 +1,4 @@
-/* import { Component, EventEmitter, inject, Input, OnInit, Output, signal } from '@angular/core';
+ import { Component, EventEmitter, inject, Input, OnInit, Output, signal } from '@angular/core';
 import { CheckoutService } from '../../../core/services/checkout-service';
 import { FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
@@ -11,7 +11,7 @@ import { CommonModule } from '@angular/common';
 })
 export class Address implements OnInit {
   private checkoutService = inject(CheckoutService);
-
+hasExistingAddress = signal<boolean>(false);
   @Input() addressForm!: FormGroup;
   @Output() next = new EventEmitter<void>();
 
@@ -22,7 +22,7 @@ export class Address implements OnInit {
     this.loadAddress();
   }
 
-  loadAddress(): void {
+/*   loadAddress(): void {
     this.checkoutService.getAddress().subscribe({
       next: (address: any) => {
         this.addressForm.patchValue(address);
@@ -33,7 +33,7 @@ export class Address implements OnInit {
         this.isLoading.set(false);
       }
     });
-  }
+  } */
 
   updateAddress(): void {
     if (this.addressForm.valid) {
@@ -53,13 +53,79 @@ export class Address implements OnInit {
     this.canEdit.set(!this.canEdit());
   }
 
-  onNext(): void {
+ /*  onNext(): void {
     if (this.addressForm.valid) {
       this.next.emit();
     }
-  }
+  } */
+loadAddress(): void {
+  this.checkoutService.getAddress().subscribe({
+    next: (address: any) => {
+      if (address) {
+        this.addressForm.patchValue(address);
+        this.hasExistingAddress.set(this.hasAddressData());
+      }
+      this.isLoading.set(false);
+    }
+  });
+}
+
+hasAddressData(): boolean {
+  const addressFields = ['street', 'city', 'state', 'zipCode'];
+  return addressFields.some(field => {
+    const value = this.addressForm.get(field)?.value;
+    return value && value.trim() !== '';
+  });
+}
+
+/* // دالة للتحقق من وجود بيانات العنوان
+private hasAddressData(): boolean {
+    const address = this.addressForm.value;
+    return !!(address.street && address.city && address.state && address.zipCode);
 } */
-import { Component, EventEmitter, inject, Input, OnInit, Output, signal } from '@angular/core';
+// حفظ العنوان للمستخدم الجديد
+saveNewAddress(): void {
+    if (this.addressForm.valid) {
+        this.checkoutService.updateAddress(this.addressForm.value).subscribe({
+            next: (response) => {
+                console.log('New address saved successfully:', response);
+                this.hasExistingAddress.set(true);
+                this.canEdit.set(false);
+                this.onNext(); // الانتقال تلقائياً للخطوة التالية
+            },
+            error: (error) => {
+                console.error('Error saving new address:', error);
+            }
+        });
+    }
+}
+saveAndContinue(): void {
+    if (this.addressForm.valid) {
+      this.checkoutService.updateAddress(this.addressForm.value).subscribe({
+        next: (response) => {
+          this.hasExistingAddress.set(true);
+          this.canEdit.set(false);
+          this.next.emit();
+        },
+        error: (error) => {
+          console.error('Error saving address:', error);
+        }
+      });
+    }
+  }
+// تحسين دالة onNext
+onNext(): void {
+    if (this.addressForm.valid) {
+        // إذا كان مستخدم جديد ولا يملك عنوان، احفظ أولاً
+        if (!this.hasExistingAddress()) {
+            this.saveNewAddress();
+        } else {
+            this.next.emit();
+        }
+    }
+}
+}  
+ /* import { Component, EventEmitter, inject, Input, OnInit, Output, signal } from '@angular/core';
 import { CheckoutService } from '../../../core/services/checkout-service';
 import { FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
@@ -139,4 +205,4 @@ export class Address implements OnInit {
       this.next.emit();
     }
   }
-}
+}  */

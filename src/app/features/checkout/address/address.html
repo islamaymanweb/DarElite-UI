@@ -3,17 +3,14 @@
     <h2 class="section-title">Shipping Address</h2>
     <p class="section-subtitle">Where should we deliver your order?</p>
   </div>
- 
+
   @if (isLoading()) {
   <div class="loading-state">
     <div class="spinner"></div>
     <p>Loading your address...</p>
   </div>
-  }
- 
-  @if (!isLoading()) {
+  } @if (!isLoading()) {
   <div class="address-form-container">
-    
     <div class="edit-toggle">
       <button
         type="button"
@@ -136,7 +133,7 @@
           }
         </div>
       </div>
- 
+
       <div class="form-actions">
         @if (canEdit()) {
         <button
@@ -165,13 +162,19 @@
   }
 </div>
  -->
-<div class="address-container">
+ <div class="address-container">
   <div class="address-header">
-    <h2 class="section-title">Shipping Address</h2>
-    <p class="section-subtitle">Where should we deliver your order?</p>
+    <h2 class="section-title">
+      {{ hasExistingAddress() ? 'Your Shipping Address' : 'Add Shipping Address'
+      }}
+    </h2>
+    <p class="section-subtitle">
+      {{ hasExistingAddress() ? 'Your saved delivery address' : 'Where should we
+      deliver your order?' }}
+    </p>
   </div>
 
-  <!-- Loading State -->
+  
   @if (isLoading()) {
   <div class="loading-state">
     <div class="spinner"></div>
@@ -179,10 +182,17 @@
   </div>
   }
 
-  <!-- Address Form -->
+  
+  @if (!isLoading() && !hasExistingAddress()) {
+  <div class="new-user-notice">
+    <i class="fas fa-map-marker-alt"></i>
+    <p>Welcome! Please provide your shipping address to continue.</p>
+  </div>
+  }
+ 
   @if (!isLoading()) {
   <div class="address-form-container">
-    <!-- Edit Toggle - يظهر فقط للمستخدمين القدامى -->
+  
     @if (hasExistingAddress()) {
     <div class="edit-toggle">
       <button
@@ -202,7 +212,7 @@
     }
 
     <form [formGroup]="addressForm" class="address-form">
-      <!-- معلومات المستخدم الأساسية (دائمًا مقروءة) -->
+     
       <div class="form-row">
         <div class="form-group">
           <label for="firstName" class="form-label">First Name</label>
@@ -210,8 +220,10 @@
             id="firstName"
             type="text"
             formControlName="firstName"
-            readonly
-            class="form-control readonly"
+            placeholder="Enter your first name"
+            [readonly]="hasExistingAddress() && !canEdit()"
+            class="form-control"
+            [class.readonly]="hasExistingAddress() && !canEdit()"
           />
         </div>
 
@@ -221,13 +233,14 @@
             id="lastName"
             type="text"
             formControlName="lastName"
-            readonly
-            class="form-control readonly"
+            placeholder="Enter your last name"
+            [readonly]="hasExistingAddress() && !canEdit()"
+            class="form-control"
+            [class.readonly]="hasExistingAddress() && !canEdit()"
           />
         </div>
       </div>
-
-      <!-- معلومات العنوان (قابلة للتعديل بناءً على الحالة) -->
+ 
       <div class="form-group">
         <label for="street" class="form-label">Street Address</label>
         <input
@@ -239,10 +252,6 @@
           class="form-control"
           [class.readonly]="hasExistingAddress() && !canEdit()"
         />
-        @if (addressForm.get('street')?.invalid &&
-        addressForm.get('street')?.touched) {
-        <div class="error-message">Street address is required</div>
-        }
       </div>
 
       <div class="form-row">
@@ -257,10 +266,6 @@
             class="form-control"
             [class.readonly]="hasExistingAddress() && !canEdit()"
           />
-          @if (addressForm.get('city')?.invalid &&
-          addressForm.get('city')?.touched) {
-          <div class="error-message">City is required</div>
-          }
         </div>
 
         <div class="form-group">
@@ -274,10 +279,6 @@
             class="form-control"
             [class.readonly]="hasExistingAddress() && !canEdit()"
           />
-          @if (addressForm.get('state')?.invalid &&
-          addressForm.get('state')?.touched) {
-          <div class="error-message">State is required</div>
-          }
         </div>
 
         <div class="form-group">
@@ -291,17 +292,11 @@
             class="form-control"
             [class.readonly]="hasExistingAddress() && !canEdit()"
           />
-          @if (addressForm.get('zipCode')?.invalid &&
-          addressForm.get('zipCode')?.touched) {
-          <div class="error-message">ZIP code is required</div>
-          }
         </div>
       </div>
-
-      <!-- Action Buttons -->
+ 
       <div class="form-actions">
-        <!-- زر الحفظ يظهر فقط أثناء التعديل للمستخدمين القدامى -->
-        @if (hasExistingAddress() && canEdit()) {
+        @if (canEdit() && hasExistingAddress()) {
         <button
           type="button"
           class="btn btn-primary"
@@ -310,6 +305,16 @@
         >
           <i class="fas fa-save"></i>
           Save Changes
+        </button>
+        } @if (!hasExistingAddress()) {
+        <button
+          type="button"
+          class="btn btn-primary"
+          (click)="saveNewAddress()"
+          [disabled]="addressForm.invalid"
+        >
+          <i class="fas fa-save"></i>
+          Save Address
         </button>
         }
 
@@ -327,3 +332,5 @@
   </div>
   }
 </div>
+ 
+ 

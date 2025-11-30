@@ -1456,4 +1456,80 @@
 .symbol-chair {
   animation: chairAppear 0.6s $ease-out;
 }
- 
+ ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+ // Admin specific styles
+.admin-header {
+  background: linear-gradient(135deg, rgba($accent-warm, 0.1), rgba($primary-500, 0.1)) !important;
+  border-left: 3px solid $accent-warm;
+  
+  .user-name {
+    color: $primary-700 !important;
+    font-weight: 700;
+    font-size: 0.9rem;
+  }
+  
+  .user-email {
+    color: $primary-600 !important;
+    font-size: 0.75rem;
+    font-weight: 500;
+  }
+}
+
+.admin-item {
+  position: relative;
+  
+  &::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 3px;
+    height: 60%;
+    background: linear-gradient(to bottom, $accent-warm, $primary-500);
+     
+    opacity: 0;
+    transition: opacity $transition-base $ease-in-out;
+  }
+  
+  &:hover::before {
+    opacity: 1;
+  }
+  
+  .item-icon {
+    color: $primary-500;
+  }
+  
+  &:hover {
+    background: rgba($primary-500, 0.08) !important;
+    
+    .item-icon {
+      color: $primary-600;
+    }
+  }
+}
+
+// في الـ mobile sidebar
+.admin-link {
+  background: rgba($primary-500, 0.05);
+  border-left: 3px solid $accent-warm;
+  
+  .link-icon {
+    color: $accent-warm;
+  }
+  
+  &:hover {
+    background: rgba($primary-500, 0.1) !important;
+    border-left-color: $primary-500;
+    
+    .link-icon {
+      color: $primary-500;
+    }
+  }
+}
+
+// Loading state
+.admin-loading {
+  opacity: 0.6;
+  pointer-events: none;
+}

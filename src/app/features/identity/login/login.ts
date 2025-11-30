@@ -199,4 +199,5 @@ export class Login implements OnInit {
     this.showForgotPasswordModal.set(false);
     this.emailModel.set('');
   }
+    showPassword: boolean = false;
 }
